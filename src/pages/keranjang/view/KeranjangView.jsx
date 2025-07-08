@@ -374,6 +374,7 @@ function KeranjangPage() {
 
   useEffect(() => {
     fetchCartItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleUpdateQuantity = async (cartItemId, newQuantity) => {

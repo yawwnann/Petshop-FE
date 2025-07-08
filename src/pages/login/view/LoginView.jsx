@@ -1,9 +1,22 @@
 // src/pages/LoginPage.jsx
 import React, { useState } from "react";
-import logo from "../../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import {
+  EnvelopeIcon,
+  LockClosedIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  ExclamationTriangleIcon,
+  ShieldCheckIcon,
+  TruckIcon,
+  ChatBubbleLeftRightIcon,
+  StarIcon,
+  ClockIcon,
+} from "@heroicons/react/24/outline";
+import logo from "../../../assets/logo.png";
 import { LoginPresenter } from "../presenter/LoginPresenter";
-import PetshopImg from "../../../assets/Petshop.png";
+import bannerLogin from "../../../assets/banner-login.jpg";
+import PetshopImg from "../../../assets/petshop1.png";
 
 export default function LoginView() {
   const [presenter] = useState(() => new LoginPresenter());
@@ -11,10 +24,17 @@ export default function LoginView() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Set loading state immediately
+    setLoading(true);
+    setError(null);
+
     presenter.setEmail(email);
     presenter.setPassword(password);
 
@@ -24,149 +44,274 @@ export default function LoginView() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Left: Login Form */}
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-white px-6 py-12">
-        <div className="max-w-sm w-full mx-auto">
+      <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-white px-6 py-12 shadow-2xl md:shadow-none relative">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-2 "></div>
+
+        <div className="max-w-md w-full mx-auto">
           {/* Logo */}
-          <div className="flex items-center gap-2 mb-6">
-            <img src={logo} alt="Petshop Logo" className="h-43" />
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <img src={logo} alt="Petshop Logo" className="h-34 w-34" />
           </div>
+
           {/* Title */}
-          <h2 className="text-2xl font-bold mb-2 text-gray-900">
-            Log in to your Account
-          </h2>
-          <p className="text-gray-500 mb-6">
-            Welcome back! Select method to log in:
-          </p>
-          {/* Social Login */}
-          <div className="flex gap-3 mb-4">
-            <button
-              type="button"
-              className="flex-1 flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-2 font-medium hover:bg-gray-50 transition"
-            >
-              <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                alt="Google"
-                className="w-5 h-5"
-              />
-              Google
-            </button>
-            <button
-              type="button"
-              className="flex-1 flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-2 font-medium hover:bg-gray-50 transition"
-            >
-              <svg
-                className="w-5 h-5"
-                style={{ color: "#8CBCC7" }}
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M22.675 0h-21.35C.6 0 0 .6 0 1.326v21.348C0 23.4.6 24 1.326 24h11.495v-9.294H9.692v-3.622h3.129V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.4 24 24 23.4 24 22.674V1.326C24 .6 23.4 0 22.675 0" />
-              </svg>
-              Facebook
-            </button>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-3 text-gray-900">
+              Welcome Back!
+            </h2>
+            <p className="text-gray-600">
+              Sign in to access your pet care dashboard
+            </p>
           </div>
-          <div className="flex items-center my-4">
-            <div className="flex-grow border-t border-gray-200" />
-            <span className="mx-2 text-gray-400 text-xs">
-              or continue with email
-            </span>
-            <div className="flex-grow border-t border-gray-200" />
-          </div>
-          {/* Email/Password Form */}
+
+          {/* Error Alert */}
           {error && (
-            <div
-              className="bg-red-50 border-l-4 border-red-400 text-red-700 px-4 py-3 rounded-md relative shadow-sm mb-4"
-              role="alert"
-            >
-              <strong className="font-bold">Oops!</strong>
-              <span className="block sm:inline ml-1">{error}</span>
+            <div className="bg-[var(--petshop-pink-accent)]/10 border border-[var(--petshop-pink-dark)] text-[var(--petshop-pink-dark)] px-4 py-3 rounded-xl relative shadow-sm mb-6 animate-pulse">
+              <div className="flex items-center">
+                <ExclamationTriangleIcon className="w-5 h-5 mr-2 text-[var(--petshop-pink-dark)]" />
+                <span className="font-medium">{error}</span>
+              </div>
             </div>
           )}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2"
-              style={{
-                borderColor: "#8CBCC7",
-                color: "#222",
-                fontWeight: 500,
-                background: "#F8FAFC",
-              }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2"
-              style={{
-                borderColor: "#8CBCC7",
-                color: "#222",
-                fontWeight: 500,
-                background: "#F8FAFC",
-              }}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoComplete="current-password"
-            />
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="accent-[#8CBCC7]" /> Remember
-                me
+
+          {/* Login Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Email Field */}
+            <div className="relative">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-[var(--petshop-pink-dark)] mb-2"
+              >
+                Email Address
+              </label>
+              <div className="relative">
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  className={`w-full px-4 py-3 pl-11 border border-[var(--petshop-pink-dark)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--petshop-pink-dark)] focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white ${
+                    loading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="email"
+                  disabled={loading}
+                />
+                <EnvelopeIcon className="absolute left-3 top-3.5 h-5 w-5 text-[var(--petshop-pink-dark)]" />
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div className="relative">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-[var(--petshop-pink-dark)] mb-2"
+              >
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className={`w-full px-4 py-3 pl-11 pr-11 border border-[var(--petshop-pink-dark)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--petshop-pink-dark)] focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white ${
+                    loading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoComplete="current-password"
+                  disabled={loading}
+                />
+                <LockClosedIcon className="absolute left-3 top-3.5 h-5 w-5 text-[var(--petshop-pink-dark)]" />
+                <button
+                  type="button"
+                  className={`absolute right-3 top-3.5 h-5 w-5 text-[var(--petshop-pink-dark)] hover:text-[var(--petshop-pink-accent)] transition-colors ${
+                    loading ? "cursor-not-allowed opacity-50" : ""
+                  }`}
+                  onClick={() => setShowPassword(!showPassword)}
+                  disabled={loading}
+                >
+                  {showPassword ? (
+                    <EyeSlashIcon className="h-5 w-5" />
+                  ) : (
+                    <EyeIcon className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Remember Me & Forgot Password */}
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className={`w-4 h-4 rounded border-[var(--petshop-pink-dark)] text-[var(--petshop-pink-dark)] focus:ring-[var(--petshop-pink-dark)] focus:ring-2 ${
+                    loading ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+                  }`}
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  disabled={loading}
+                />
+                <span className="text-sm text-[var(--petshop-pink-dark)]">
+                  Remember me
+                </span>
               </label>
               <a
                 href="/forgot-password"
-                className="font-medium hover:underline"
-                style={{ color: "#8CBCC7" }}
+                className="text-sm font-medium text-[var(--petshop-pink-dark)] hover:text-[var(--petshop-pink-accent)] transition-colors hover:underline"
               >
                 Forgot Password?
               </a>
             </div>
+
+            {/* Login Button */}
             <button
               type="submit"
-              className="w-full py-3 text-white font-bold rounded-lg transition shadow-md"
-              style={{ background: "#8CBCC7" }}
               disabled={loading}
+              className={`w-full py-3 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none bg-[var(--petshop-pink-dark)] hover:bg-[var(--petshop-pink-accent)] relative overflow-hidden ${
+                loading ? "cursor-not-allowed" : ""
+              }`}
             >
-              {loading ? "Logging in..." : "Log in"}
+              {/* Loading overlay */}
+              {loading && (
+                <div className="absolute inset-0 bg-[var(--petshop-pink-dark)] opacity-90 flex items-center justify-center">
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="absolute inset-0 w-6 h-6 border-2 border-white border-opacity-30 rounded-full"></div>
+                    </div>
+                    <span className="text-white font-medium">
+                      Signing in...
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Button content */}
+              <div
+                className={`flex items-center justify-center gap-2 ${
+                  loading ? "opacity-0" : ""
+                }`}
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                  />
+                </svg>
+                Sign In
+              </div>
             </button>
           </form>
-          <div className="mt-6 text-center text-sm text-gray-500">
-            Don't have an account?{" "}
+
+          {/* Divider */}
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white text-gray-500">
+                New to PetShop?
+              </span>
+            </div>
+          </div>
+
+          {/* Sign Up Link */}
+          <div className="text-center">
             <a
               href="/register"
-              className="font-medium hover:underline"
-              style={{ color: "#8CBCC7" }}
+              className="inline-flex items-center gap-2 px-6 py-3 border border-[#8CBCC7] text-[#8CBCC7] font-medium rounded-xl hover:bg-[#8CBCC7] hover:text-white transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              Create an account
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                />
+              </svg>
+              Create New Account
             </a>
           </div>
         </div>
       </div>
+
       {/* Right: Illustration & Promo */}
-      <div
-        className="hidden md:flex w-1/2 items-center justify-center flex-col relative"
-        style={{ background: "#8CBCC7" }}
-      >
+      <div className="hidden md:flex w-1/2 items-center justify-center flex-col relative  overflow-hidden">
+        {/* Background Image */}
         <img
-          src={PetshopImg}
-          alt="Petshop"
-          className="max-w-md w-4/5 drop-shadow-2xl rounded-2xl mb-8"
+          src={bannerLogin}
+          alt="Petshop Banner"
+          className="absolute inset-0 w-full h-full object-cover opacity-90"
         />
-        <div className="text-white text-center px-8">
-          <h3 className="text-2xl font-bold mb-2">
-            Connect with every pet need.
-          </h3>
-          <p className="text-base opacity-90">
-            Everything you need for your beloved pets in one place. Easy, fast,
-            and secure shopping experience!
-          </p>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#8CBCC7]/80 to-[#A8D0DB]/80"></div>{" "}
+        {/* Background decorative elements */}
+        <div className="absolute top-10 left-10 w-20 h-20 bg-white opacity-10 rounded-full blur-xl"></div>
+        <div className="absolute bottom-20 right-20 w-32 h-32 bg-white opacity-10 rounded-full blur-xl"></div>
+        <div className="absolute top-1/2 left-0 w-16 h-16 bg-white opacity-10 rounded-full blur-xl"></div>
+        {/* Main content */}
+        <div className="relative z-10 text-center px-8 max-w-lg">
+          <div className="mb-8 transform hover:scale-105 transition-transform duration-300">
+            <img
+              src={PetshopImg}
+              alt="Petshop"
+              className="w-full max-w-sm mx-auto drop-shadow-2xl rounded-2xl"
+            />
+          </div>
+
+          <div className="text-white">
+            <h3 className="text-3xl font-bold mb-4 leading-tight">
+              Connect with every pet need.
+            </h3>
+            <p className="text-lg opacity-90 leading-relaxed mb-6">
+              Everything you need for your beloved pets in one place. Easy,
+              fast, and secure shopping experience!
+            </p>
+
+            {/* Feature highlights */}
+            <div className="grid grid-cols-2 gap-4 mt-8">
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
+                  <ShieldCheckIcon className="w-10 h-10" />
+                </div>
+                <span>Secure Shopping</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
+                  <TruckIcon className="w-10 h-10" />
+                </div>
+                <span>Fast Delivery</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
+                  <ClockIcon className="w-10 h-10" />
+                </div>
+                <span>24/7 Support</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
+                  <StarIcon className="w-10 h-10" />
+                </div>
+                <span>Best Quality</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

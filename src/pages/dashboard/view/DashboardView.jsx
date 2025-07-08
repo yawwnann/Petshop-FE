@@ -25,7 +25,7 @@ import {
   Clock,
 } from "lucide-react";
 
-import gambar1 from "../../../assets/gambar1.jpg";
+import gambar1 from "../../../assets/hero-dashboard.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
@@ -36,195 +36,204 @@ export default function DashboardView() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* 1. HERO SECTION - Background Image */}
-      <section className="relative w-full min-h-[340px] md:min-h-[480px] flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen bg-gray-50">
+      {/* HERO SECTION */}
+      <section
+        className="relative w-full min-h-[480px] md:min-h-[800px] flex items-center justify-center overflow-hidden"
+        style={{ backgroundColor: "var(--petshop-blue)" }}
+      >
         <img
           src={gambar1}
           alt="Petshop Banner"
-          className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          className="absolute inset-0 w-full h-full object-cover object-left md:object-center z-0 "
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#8CBCC7]/80 to-[#6BA4B0]/80 z-10" />
-        <div className="relative z-20 w-full max-w-4xl mx-auto text-center text-white py-20 px-4 flex flex-col items-center justify-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight drop-shadow-lg">
+        <div className="relative z-20 w-full max-w-7xl mx-auto flex flex-col items-center md:items-end text-center md:text-right text-white py-24 px-6">
+          <h1
+            className="text-5xl md:text-7xl font-bold mb-8 tracking-tight drop-shadow-lg mx-auto md:ml-auto md:mr-0"
+            data-aos="fade-left"
+          >
             Buana Petshop
           </h1>
-          <p className="text-xl md:text-2xl mb-8 opacity-90 font-light drop-shadow">
+          <p
+            className="text-xl md:text-2xl mb-12 opacity-95 font-light drop-shadow max-w-3xl mx-auto md:ml-auto md:mr-0 leading-relaxed"
+            data-aos="fade-left"
+            data-aos-delay="150"
+          >
             Solusi terpercaya untuk kesehatan & kebahagiaan hewan peliharaan
             Anda
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-[#8CBCC7] px-8 py-3 rounded-full font-semibold hover:bg-gray-50 transition-colors">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center md:justify-end mx-auto md:ml-auto md:mr-0">
+            <button
+              style={{ backgroundColor: "var(--petshop-pink-dark)" }}
+              className="px-10 py-4 rounded-full font-semibold text-white hover:opacity-90 transition-opacity shadow-lg"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
               Mulai Konsultasi
             </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-[#8CBCC7] transition-colors">
+            <button
+              style={{
+                backgroundColor: "transparent",
+                border: "3px solid white",
+                color: "white",
+              }}
+              className="px-10 py-4 rounded-full font-semibold hover:bg-white hover:text-[var(--petshop-blue)] transition-all shadow-lg"
+              data-aos="fade-up"
+              data-aos-delay="400"
+            >
               Lihat Layanan
             </button>
           </div>
         </div>
       </section>
 
-      {/* 2. LAYANAN SECTION - Modern Grid */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      {/* LAYANAN SECTION */}
+      <section className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold text-[var(--petshop-pink-dark)] mb-6">
               Layanan Kami
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 text-xl max-w-2xl mx-auto">
               Pelayanan terbaik untuk sahabat berbulu Anda
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Card 1 dengan gambar2 */}
-            <div
-              className="bg-[#8CBCC7]/5 p-8 rounded-2xl hover:shadow-lg transition-shadow group cursor-pointer flex flex-col items-center"
-              data-aos="fade-up"
-            >
-              <div className="text-[#8CBCC7] mb-4 group-hover:scale-110 transition-transform">
-                <Stethoscope size={32} />
+            {[
+              {
+                icon: <Stethoscope size={40} />,
+                title: "Konsultasi Dokter",
+                desc: "Konsultasi kesehatan online & offline dengan dokter hewan berpengalaman",
+                color: "var(--petshop-blue)",
+                bg: "var(--petshop-blue)",
+              },
+              {
+                icon: <Dog size={40} />,
+                title: "Grooming",
+                desc: "Perawatan lengkap untuk hewan kesayangan dengan peralatan modern",
+                color: "var(--petshop-pink-accent)",
+                bg: "var(--petshop-pink)",
+              },
+              {
+                icon: <Cat size={40} />,
+                title: "Penitipan",
+                desc: "Penitipan aman dengan pengawasan profesional 24/7",
+                color: "var(--petshop-blue)",
+                bg: "var(--petshop-blue-light)",
+              },
+              {
+                icon: <HeartHandshake size={40} />,
+                title: "Adopsi",
+                desc: "Bantu hewan menemukan rumah baru yang penuh kasih sayang",
+                color: "var(--petshop-pink-dark)",
+                bg: "var(--petshop-pink-accent)",
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-white p-8 rounded-3xl hover:shadow-xl transition-all group cursor-pointer border-4 hover:border-opacity-50"
+                style={{ borderColor: item.bg }}
+                data-aos="fade-up"
+                data-aos-delay={idx * 100}
+              >
+                <div
+                  style={{
+                    color: "white",
+                    backgroundColor: item.bg,
+                  }}
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-105 transition-transform"
+                >
+                  {item.icon}
+                </div>
+                <h3 className="font-bold text-2xl mb-4 text-gray-900">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  {item.desc}
+                </p>
+                <div
+                  style={{ color: item.color }}
+                  className="flex items-center text-sm font-bold group-hover:translate-x-1 transition-transform"
+                >
+                  Pelajari lebih lanjut{" "}
+                  <ArrowRight size={18} className="ml-2" />
+                </div>
               </div>
-              <h3 className="font-bold text-xl mb-3 text-gray-900">
-                Konsultasi Dokter
-              </h3>
-              <p className="text-gray-600 mb-4 text-center">
-                Konsultasi kesehatan online & offline
-              </p>
-              {/* <img
-                src={gambar1}
-                alt="Konsultasi"
-                className="rounded-xl shadow w-full max-w-[120px] mt-2"
-              /> */}
-              <div className="text-[#8CBCC7] flex items-center text-sm font-semibold mt-4">
-                Pelajari lebih lanjut <ArrowRight size={16} className="ml-1" />
-              </div>
-            </div>
-            {/* Card 2-4 tetap icon */}
-            <div
-              className="bg-pink-50 p-8 rounded-2xl hover:shadow-lg transition-shadow group cursor-pointer flex flex-col items-center"
-              data-aos="fade-up"
-            >
-              <div className="text-pink-500 mb-4 group-hover:scale-110 transition-transform">
-                <Dog size={32} />
-              </div>
-              <h3 className="font-bold text-xl mb-3 text-gray-900">Grooming</h3>
-              <p className="text-gray-600 mb-4 text-center">
-                Perawatan lengkap untuk hewan kesayangan
-              </p>
-              <div className="text-pink-500 flex items-center text-sm font-semibold mt-4">
-                Pelajari lebih lanjut <ArrowRight size={16} className="ml-1" />
-              </div>
-            </div>
-            <div
-              className="bg-[#8CBCC7]/5 p-8 rounded-2xl hover:shadow-lg transition-shadow group cursor-pointer flex flex-col items-center"
-              data-aos="fade-up"
-            >
-              <div className="text-[#8CBCC7] mb-4 group-hover:scale-110 transition-transform">
-                <Cat size={32} />
-              </div>
-              <h3 className="font-bold text-xl mb-3 text-gray-900">
-                Penitipan
-              </h3>
-              <p className="text-gray-600 mb-4 text-center">
-                Penitipan aman dengan pengawasan profesional
-              </p>
-              <div className="text-[#8CBCC7] flex items-center text-sm font-semibold mt-4">
-                Pelajari lebih lanjut <ArrowRight size={16} className="ml-1" />
-              </div>
-            </div>
-            <div
-              className="bg-pink-50 p-8 rounded-2xl hover:shadow-lg transition-shadow group cursor-pointer flex flex-col items-center"
-              data-aos="fade-up"
-            >
-              <div className="text-pink-500 mb-4 group-hover:scale-110 transition-transform">
-                <HeartHandshake size={32} />
-              </div>
-              <h3 className="font-bold text-xl mb-3 text-gray-900">Adopsi</h3>
-              <p className="text-gray-600 mb-4 text-center">
-                Bantu hewan menemukan rumah baru
-              </p>
-              <div className="text-pink-500 flex items-center text-sm font-semibold mt-4">
-                Pelajari lebih lanjut <ArrowRight size={16} className="ml-1" />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 3. EDUKASI SECTION - Clean Cards */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      {/* EDUKASI SECTION */}
+      <section
+        className="py-24 px-6"
+        style={{ backgroundColor: "var(--petshop-blue-light)" }}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold text-[var(--petshop-pink-dark)] mb-6">
               Edukasi Kesehatan
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-700 text-xl max-w-2xl mx-auto">
               Tips penting untuk merawat hewan peliharaan
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 dengan gambar3 */}
-            <div
-              className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col items-center"
-              data-aos="fade-up"
-            >
-              <div className="text-[#8CBCC7] mb-4">
-                <Syringe size={40} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {[
+              {
+                icon: <Syringe size={48} />,
+                title: "Vaksinasi Rutin",
+                desc: "Lindungi hewan dari penyakit menular dengan jadwal vaksinasi yang tepat dan teratur",
+                color: "var(--petshop-blue)",
+              },
+              {
+                icon: <Utensils size={48} />,
+                title: "Nutrisi Seimbang",
+                desc: "Berikan makanan bergizi sesuai kebutuhan spesies dan usia hewan peliharaan",
+                color: "var(--petshop-pink-accent)",
+              },
+              {
+                icon: <PawPrint size={48} />,
+                title: "Kebersihan Harian",
+                desc: "Jaga kebersihan hewan dan lingkungan untuk kesehatan optimal setiap hari",
+                color: "var(--petshop-pink-dark)",
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-white p-10 rounded-3xl shadow-lg hover:shadow-xl transition-all"
+                data-aos="fade-up"
+                data-aos-delay={idx * 150}
+              >
+                <div
+                  style={{
+                    backgroundColor: item.color,
+                    color: "white",
+                  }}
+                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 mx-auto"
+                >
+                  {item.icon}
+                </div>
+                <h3 className="font-bold text-2xl mb-4 text-gray-900 text-center">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed text-center text-lg">
+                  {item.desc}
+                </p>
               </div>
-              <h3 className="font-bold text-xl mb-3 text-gray-900">
-                Vaksinasi Rutin
-              </h3>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                Lindungi hewan dari penyakit menular dengan jadwal vaksinasi
-                yang tepat
-              </p>
-              {/* <img
-                src={gambar1}
-                alt="Vaksinasi"
-                className="rounded-xl shadow w-full max-w-[120px] mt-2"
-              /> */}
-            </div>
-            {/* Card 2-3 tetap icon */}
-            <div
-              className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col items-center"
-              data-aos="fade-up"
-            >
-              <div className="text-pink-500 mb-4">
-                <Utensils size={40} />
-              </div>
-              <h3 className="font-bold text-xl mb-3 text-gray-900">
-                Nutrisi Seimbang
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Berikan makanan bergizi sesuai kebutuhan spesies dan usia hewan
-              </p>
-            </div>
-            <div
-              className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col items-center"
-              data-aos="fade-up"
-            >
-              <div className="text-[#8CBCC7] mb-4">
-                <PawPrint size={40} />
-              </div>
-              <h3 className="font-bold text-xl mb-3 text-gray-900">
-                Kebersihan Harian
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Jaga kebersihan hewan dan lingkungan untuk kesehatan optimal
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 4. TESTIMONI SECTION - Modern Layout */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      {/* TESTIMONI SECTION */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold text-[var(--petshop-pink-dark)] mb-6">
               Kata Mereka
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 text-xl max-w-2xl mx-auto">
               Testimoni dari pelanggan yang puas
             </p>
           </div>
@@ -234,48 +243,54 @@ export default function DashboardView() {
               {
                 name: "Rina",
                 location: "Surabaya",
-                text: "Setelah rutin vaksin dan perawatan, kucing saya jadi lebih sehat dan aktif!",
-                color: "border-[#8CBCC7]",
+                text: "Setelah rutin vaksin dan perawatan, kucing saya jadi lebih sehat dan aktif! Pelayanannya sangat memuaskan.",
+                color: "var(--petshop-blue)",
               },
               {
                 name: "Budi",
                 location: "Jakarta",
-                text: "Tips nutrisinya sangat bermanfaat, anjing saya sekarang lebih lahap makan.",
-                color: "border-pink-500",
+                text: "Tips nutrisinya sangat bermanfaat, anjing saya sekarang lebih lahap makan dan terlihat lebih sehat.",
+                color: "var(--petshop-pink-accent)",
               },
               {
                 name: "Sari",
                 location: "Bandung",
-                text: "Dashboard ini sangat membantu, edukasinya mudah dipahami. Terima kasih!",
-                color: "border-[#8CBCC7]",
+                text: "Dashboard ini sangat membantu, edukasinya mudah dipahami. Tim yang profesional!",
+                color: "var(--petshop-pink-dark)",
               },
             ].map((testimonial, index) => (
               <div
                 key={index}
-                className={`bg-white p-8 rounded-2xl border-l-4 ${testimonial.color} shadow-sm`}
+                className="bg-gray-50 p-8 rounded-3xl border-l-8 hover:shadow-lg transition-all"
+                style={{ borderColor: testimonial.color }}
                 data-aos="fade-up"
+                data-aos-delay={index * 100}
               >
-                <div className="flex mb-4">
+                <div className="flex mb-6">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="text-yellow-400 fill-current"
-                      size={16}
+                      style={{ color: "var(--petshop-pink-accent)" }}
+                      className="fill-current"
+                      size={20}
                     />
                   ))}
                 </div>
-                <p className="text-gray-700 mb-6 italic">
+                <p className="text-gray-700 mb-8 italic text-lg leading-relaxed">
                   "{testimonial.text}"
                 </p>
                 <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
-                    <User size={20} className="text-gray-600" />
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center mr-4"
+                    style={{ backgroundColor: testimonial.color }}
+                  >
+                    <User size={24} className="text-white" />
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900">
+                    <div className="font-bold text-gray-900 text-lg">
                       {testimonial.name}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-gray-500 text-sm">
                       {testimonial.location}
                     </div>
                   </div>
@@ -286,52 +301,60 @@ export default function DashboardView() {
         </div>
       </section>
 
-      {/* 5. FAQ SECTION - Minimal */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      {/* FAQ SECTION */}
+      <section
+        className="py-24 px-6"
+        style={{ backgroundColor: "var(--petshop-pink)" }}
+      >
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold text-[var(--petshop-pink-dark)] mb-6">
               Pertanyaan Umum
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-700 text-xl max-w-2xl mx-auto">
               Jawaban untuk pertanyaan yang sering diajukan
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             {[
               {
                 q: "Bagaimana cara booking layanan grooming?",
-                a: "Anda bisa booking melalui aplikasi/website atau langsung datang ke cabang terdekat.",
+                a: "Anda bisa booking melalui aplikasi/website atau langsung datang ke cabang terdekat. Tim kami siap membantu Anda.",
               },
               {
                 q: "Apakah konsultasi dokter hewan berbayar?",
-                a: "Tersedia konsultasi gratis & berbayar, tergantung promo dan jenis layanan.",
+                a: "Tersedia konsultasi gratis & berbayar, tergantung promo dan jenis layanan yang Anda pilih.",
               },
               {
                 q: "Bagaimana cara adopsi hewan?",
-                a: "Lihat daftar hewan adopsi, isi formulir dan tunggu verifikasi tim kami.",
+                a: "Lihat daftar hewan adopsi, isi formulir dan tunggu verifikasi tim kami. Proses adopsi dilakukan dengan prosedur yang ketat.",
               },
               {
                 q: "Apakah penitipan hewan aman?",
-                a: "Penitipan dijaga staf profesional dengan update harian via WhatsApp.",
+                a: "Penitipan dijaga staf profesional dengan update harian via WhatsApp. Fasilitas kami dilengkapi CCTV dan dokter hewan standby.",
               },
             ].map((faq, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-xl shadow-sm"
+                className="bg-white p-8 rounded-3xl shadow-sm hover:shadow-md transition-all"
                 data-aos="fade-up"
+                data-aos-delay={index * 100}
               >
-                <div className="flex items-start gap-4">
-                  <HelpCircle
-                    className="text-[#8CBCC7] mt-1 flex-shrink-0"
-                    size={20}
-                  />
+                <div className="flex items-start gap-6">
+                  <div
+                    style={{ backgroundColor: "var(--petshop-blue)" }}
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                  >
+                    <HelpCircle className="text-white" size={24} />
+                  </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">
+                    <h3 className="font-bold text-gray-900 mb-3 text-xl">
                       {faq.q}
                     </h3>
-                    <p className="text-gray-600">{faq.a}</p>
+                    <p className="text-gray-600 text-lg leading-relaxed">
+                      {faq.a}
+                    </p>
                   </div>
                 </div>
               </div>

@@ -1,21 +1,12 @@
 @import "tailwindcss";
 
-@theme {
-  --color-atk-primary: #f7374f;
-  --color-atk-secondary: #88304e;
-  --color-atk-tertiary: #522546;
-  --color-atk-dark: #2c2c2c;
-}
-
 :root {
-  --atk-primary: #f7374f;
-  --atk-secondary: #88304e;
-  --atk-tertiary: #522546;
-  --atk-dark: #2c2c2c;
-  --atk-primary-rgb: 247, 55, 79;
-  --atk-secondary-rgb: 136, 48, 78;
-  --atk-tertiary-rgb: 82, 37, 70;
-  --atk-dark-rgb: 44, 44, 44;
+  /* Petshop Blue & Pink Theme */
+  --petshop-blue: #8cbcc7;
+  --petshop-blue-light: #a8d0db;
+  --petshop-pink: #f7c6d9;
+  --petshop-pink-accent: #f06292;
+  --petshop-pink-dark: #e64980;
 }
 
 body {
