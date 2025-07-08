@@ -9,6 +9,7 @@ import {
   Bars3Icon,
   XMarkIcon,
   ArchiveBoxIcon,
+  ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
 import apiClient from "../api/apiClient";
 import logo from "../assets/logo.png";
@@ -21,6 +22,7 @@ function Navbar() {
 
   const NAV_LINKS = [
     { to: "/dashboard", label: "Dashboard", icon: HomeIcon },
+    { to: "/konsultasi", label: "Konsultasi", icon: ChatBubbleLeftRightIcon },
     { to: "/katalog", label: "Shop", icon: ShoppingCartIcon },
     { to: "/about", label: "About", icon: HomeIcon }, // Changed from BuildingStorefrontIcon to HomeIcon
     { to: "/contact", label: "Contact", icon: UserCircleIcon },
@@ -33,12 +35,12 @@ function Navbar() {
       try {
         const parsedUser = storedUser ? JSON.parse(storedUser) : null;
         setUser({
-          name: parsedUser?.name || "Pengguna",
+          name: parsedUser?.name || "",
           email: parsedUser?.email || "",
           profile_photo_url: parsedUser?.profile_photo_url || null,
         });
       } catch {
-        setUser({ name: "Pengguna", email: "", profile_photo_url: null });
+        setUser({ name: " ", email: "", profile_photo_url: null });
       }
     } else {
       setUser(null);
@@ -67,12 +69,12 @@ function Navbar() {
     }
   };
 
-  const getMobileNavLinkClass = ({ isActive }) =>
-    `flex items-center gap-3 px-4 py-3 text-base font-medium transition-all duration-200 ${
-      isActive
-        ? "text-[#8CBCC7] bg-[#8CBCC7]/10"
-        : "text-gray-600 hover:text-[#8CBCC7] hover:bg-[#8CBCC7]/10"
-    }`;
+  // const getMobileNavLinkClass = ({ isActive }) =>
+  //   `flex items-center gap-3 px-4 py-3 text-base font-medium transition-all duration-200 rounded-lg ${
+  //     isActive
+  //       ? "text-[var(--petshop-blue)] bg-[var(--petshop-blue-light)]/40"
+  //       : "text-gray-600 hover:text-[var(--petshop-blue)] hover:bg-[var(--petshop-blue-light)]/30"
+  //   }`;
 
   const handleNavbarImageError = (e) => {
     e.target.onerror = null;
@@ -105,10 +107,13 @@ function Navbar() {
               <img
                 src={logo}
                 alt="Petshop Logo"
-                className="h-10 w-10 object-contain"
+                className="h-15 w-15 object-contain"
               />
               <div className="hidden sm:block">
-                <span className="text-xl font-bold text-[var(--petshop-pink-dark)">
+                <span
+                  className="text-xl font-bold"
+                  style={{ color: "var(--petshop-pink-dark)" }}
+                >
                   Buana PetShop
                 </span>
               </div>
@@ -190,7 +195,7 @@ function Navbar() {
                               to="/profile"
                               className={`${
                                 active
-                                  ? "bg-[#8CBCC7]/10 text-[#8CBCC7]"
+                                  ? "bg-[var(--petshop-blue-light)]/30 text-[var(--petshop-blue)]"
                                   : "text-gray-700"
                               } group flex rounded-lg items-center w-full px-3 py-2 text-sm font-medium transition-all duration-200`}
                             >
@@ -201,32 +206,14 @@ function Navbar() {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <NavLink
-                              to="/pesanan"
-                              className={`${
-                                active
-                                  ? "bg-[#8CBCC7]/10 text-[#8CBCC7]"
-                                  : "text-gray-700"
-                              } group flex rounded-lg items-center w-full px-3 py-2 text-sm font-medium transition-all duration-200`}
-                            >
-                              <ArchiveBoxIcon className="h-4 w-4 mr-3" />
-                              Pesanan
-                            </NavLink>
-                          )}
-                        </Menu.Item>
-                      </div>
-                      <div className="p-1">
-                        <Menu.Item>
-                          {({ active }) => (
                             <button
                               onClick={handleLogout}
-                              type="button"
-                              disabled={isLoggingOut}
                               className={`${
                                 active
-                                  ? "bg-red-50 text-red-600"
+                                  ? "bg-[var(--petshop-pink)]/40 text-[var(--petshop-pink-dark)]"
                                   : "text-gray-700"
                               } group flex rounded-lg items-center w-full px-3 py-2 text-sm font-medium transition-all duration-200`}
+                              disabled={isLoggingOut}
                             >
                               <ArrowRightOnRectangleIcon className="h-4 w-4 mr-3" />
                               {isLoggingOut ? "Logging out..." : "Logout"}
@@ -239,20 +226,12 @@ function Navbar() {
                 </Menu>
               </>
             ) : (
-              <div className="flex items-center gap-2">
-                <NavLink
-                  to="/register"
-                  className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#8CBCC7] transition-all duration-200"
-                >
-                  Daftar
-                </NavLink>
-                <NavLink
-                  to="/login"
-                  className="px-4 py-2 rounded-lg font-medium bg-gradient-to-r from-[#8CBCC7] to-[#A8D0DB] text-white hover:from-[#7AB3C0] hover:to-[#96C7D4] transition-all duration-200"
-                >
-                  Login
-                </NavLink>
-              </div>
+              <NavLink
+                to="/login"
+                className="px-4 py-2 rounded-lg font-bold text-white bg-[var(--petshop-pink-dark)] hover:bg-[var(--petshop-pink-accent)] transition-all duration-200"
+              >
+                Login
+              </NavLink>
             )}
           </div>
         </div>
@@ -262,70 +241,61 @@ function Navbar() {
       <Transition
         show={isMobileMenuOpen}
         as={Fragment}
-        enter="transition ease-out duration-300"
-        enterFrom="opacity-0 translate-y-1"
-        enterTo="opacity-100 translate-y-0"
-        leave="transition ease-in duration-200"
-        leaveFrom="opacity-100 translate-y-0"
-        leaveTo="opacity-0 translate-y-1"
+        enter="transition-all duration-300 ease-out"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-all duration-300 ease-in"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
       >
         <Dialog
           as="div"
-          className="lg:hidden fixed inset-0 z-50"
-          onClose={() => setIsMobileMenuOpen(false)}
+          className="lg:hidden"
+          open={isMobileMenuOpen}
+          onClose={setIsMobileMenuOpen}
         >
-          <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
-            aria-hidden="true"
-          />
-          <div className="fixed top-0 left-0 right-0 bg-white shadow-xl border-b border-gray-200 p-6 pt-4 z-50">
-            <div className="flex items-center justify-between mb-6">
-              <NavLink
-                to="/"
-                className="flex items-center gap-2 select-none"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <img
-                  src={logo}
-                  alt="Petshop Logo"
-                  className="h-10 w-10 object-contain"
-                />
-                <div>
-                  <span className="text-xl font-bold text-gray-900">
-                    PetShop
-                  </span>
-                </div>
-              </NavLink>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-[#8CBCC7] transition-all duration-200"
-              >
-                <XMarkIcon className="h-6 w-6" />
-              </button>
-            </div>
-
-            <div className="space-y-1 mb-6">
-              {NAV_LINKS.map((item) => {
-                const Icon = item.icon;
-                return (
+          <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" />
+          <div className="fixed inset-0 z-50 flex items-start justify-start">
+            <Transition.Child
+              as={Fragment}
+              enter="transition-all duration-300 ease-out"
+              enterFrom="transform -translate-x-full"
+              enterTo="transform translate-x-0"
+              leave="transition-all duration-300 ease-in"
+              leaveFrom="transform translate-x-0"
+              leaveTo="transform -translate-x-full"
+            >
+              <div className="w-80 bg-white h-full shadow-xl p-6 flex flex-col gap-6 border-r border-[var(--petshop-blue-light)]">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
                   <NavLink
-                    key={item.to}
-                    to={item.to}
-                    className={getMobileNavLinkClass}
-                    end={item.to === "/"}
+                    to="/"
+                    className="flex items-center gap-2 select-none"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <Icon className="h-5 w-5" />
-                    {item.label}
+                    <img
+                      src={logo}
+                      alt="Petshop Logo"
+                      className="h-12 w-12 object-contain"
+                    />
+                    <span
+                      className="text-xl font-bold"
+                      style={{ color: "var(--petshop-pink-dark)" }}
+                    >
+                      Buana PetShop
+                    </span>
                   </NavLink>
-                );
-              })}
-            </div>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 rounded-lg text-[var(--petshop-blue)] hover:bg-[var(--petshop-blue-light)]/30 hover:text-[var(--petshop-pink-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--petshop-blue)] transition-all duration-200"
+                  >
+                    <XMarkIcon className="h-6 w-6" />
+                  </button>
+                </div>
 
-            <div className="pt-4 border-t border-gray-200">
-              {user ? (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                {/* User Info (jika sudah login) */}
+                {user && (
+                  <div className="flex items-center gap-3 p-3 bg-[var(--petshop-blue-light)]/20 rounded-lg mb-4">
                     <div className="relative">
                       {user.profile_photo_url ? (
                         <img
@@ -335,47 +305,95 @@ function Navbar() {
                           onError={handleNavbarImageError}
                         />
                       ) : (
-                        <div className="h-10 w-10 rounded-lg bg-gradient-to-r from-[#8CBCC7] to-[#A8D0DB] flex items-center justify-center">
+                        <div className="h-10 w-10 rounded-lg bg-[var(--petshop-blue)] flex items-center justify-center">
                           <UserCircleIcon className="h-6 w-6 text-white" />
                         </div>
                       )}
                     </div>
                     <div>
-                      <p className="font-medium text-gray-700">{user.name}</p>
-                      <p className="text-sm text-gray-500">{user.email}</p>
+                      <p className="text-sm font-medium text-[var(--petshop-blue)]">
+                        {user.name}
+                      </p>
+                      <p className="text-xs text-gray-500">{user.email}</p>
                     </div>
                   </div>
-                  <button
-                    onClick={handleLogout}
-                    type="button"
-                    disabled={isLoggingOut}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium bg-red-600 text-white hover:bg-red-700 transition-all duration-200"
-                  >
-                    <ArrowRightOnRectangleIcon className="h-5 w-5" />
-                    {isLoggingOut ? "Logging out..." : "Logout"}
-                  </button>
+                )}
+
+                {/* Navigation Links */}
+                <div className="flex flex-col gap-2">
+                  {NAV_LINKS.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <NavLink
+                        key={item.to}
+                        to={item.to}
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 px-4 py-3 text-base font-medium transition-all duration-200 rounded-lg ${
+                            isActive
+                              ? "text-[var(--petshop-pink-dark)] bg-[var(--petshop-pink-dark)]/10"
+                              : "text-gray-600 hover:text-[var(--petshop-blue)] hover:bg-[var(--petshop-blue-light)]/30"
+                          }`
+                        }
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <Icon className="h-5 w-5" />
+                        <span>{item.label}</span>
+                      </NavLink>
+                    );
+                  })}
+
+                  {/* Keranjang (jika sudah login) */}
+                  {user && (
+                    <NavLink
+                      to="/keranjang"
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 px-4 py-3 text-base font-medium transition-all duration-200 rounded-lg ${
+                          isActive
+                            ? "text-[var(--petshop-pink-dark)] bg-[var(--petshop-pink-dark)]/10"
+                            : "text-gray-600 hover:text-[var(--petshop-blue)] hover:bg-[var(--petshop-blue-light)]/30"
+                        }`
+                      }
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <ShoppingCartIcon className="h-5 w-5" />
+                      <span>Keranjang</span>
+                    </NavLink>
+                  )}
                 </div>
-              ) : (
-                <div className="space-y-3">
-                  <NavLink
-                    to="/register"
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium text-gray-600 border-2 border-gray-200 hover:bg-gray-50 hover:text-[#8CBCC7] transition-all duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <UserCircleIcon className="h-5 w-5" />
-                    Daftar
-                  </NavLink>
-                  <NavLink
-                    to="/login"
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium bg-gradient-to-r from-[#8CBCC7] to-[#A8D0DB] text-white hover:from-[#7AB3C0] hover:to-[#96C7D4] transition-all duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <ArrowRightOnRectangleIcon className="h-5 w-5" />
-                    Login
-                  </NavLink>
+
+                {/* Action Buttons */}
+                <div className="mt-auto pt-4 border-t border-[var(--petshop-blue-light)]/20">
+                  {user ? (
+                    <div className="flex flex-col gap-2">
+                      <NavLink
+                        to="/profile"
+                        className="flex items-center gap-3 px-4 py-3 text-base font-medium text-[var(--petshop-blue)] hover:bg-[var(--petshop-blue-light)]/30 rounded-lg transition-all duration-200"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <UserCircleIcon className="h-5 w-5" />
+                        Profile
+                      </NavLink>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 px-4 py-3 text-base font-medium text-[var(--petshop-pink-dark)] hover:bg-[var(--petshop-pink)]/40 rounded-lg transition-all duration-200"
+                        disabled={isLoggingOut}
+                      >
+                        <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                        {isLoggingOut ? "Logging out..." : "Logout"}
+                      </button>
+                    </div>
+                  ) : (
+                    <NavLink
+                      to="/login"
+                      className="flex items-center justify-center gap-3 px-4 py-3 text-base font-bold text-white bg-[var(--petshop-pink-dark)] hover:bg-[var(--petshop-pink-accent)] rounded-lg transition-all duration-200"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Login
+                    </NavLink>
+                  )}
                 </div>
-              )}
-            </div>
+              </div>
+            </Transition.Child>
           </div>
         </Dialog>
       </Transition>

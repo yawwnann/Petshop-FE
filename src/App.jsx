@@ -15,7 +15,7 @@ import RegisterView from "./pages/register/view/RegisterView";
 import DashboardView from "./pages/dashboard/view/DashboardView";
 import ProfileView from "./pages/profile/view/ProfileView";
 import KatalogView from "./pages/katalog/view/KatalogView";
-import DetailAtkView from "./pages/detailatk/view/DetailAtkView";
+import DetailItemView from "./pages/Detail/view/DetailItemView";
 import KeranjangView from "./pages/keranjang/view/KeranjangView";
 import CheckoutView from "./pages/checkout/view/CheckoutView";
 import PaymentView from "./pages/payment/view/PaymentView";
@@ -24,6 +24,7 @@ import PesananDetailView from "./pages/pesanan/view/PesananDetailView";
 import AboutUs from "./pages/About/AboutUs";
 import ServiceView from "./pages/service";
 import ContactView from "./pages/contact/ContactView";
+import KonsultasiView from "./pages/konsultasi/view/KonsultasiView";
 
 import "@fontsource/inter";
 
@@ -54,8 +55,9 @@ function App() {
           <Route path="/dashboard" element={<DashboardView />} />
           <Route path="/profile" element={<ProfileView />} />
           <Route path="/katalog" element={<KatalogView />} />
-          {/* Route untuk detail ATK */}
-          <Route path="/atk/:slug" element={<DetailAtkView />} />
+          {/* Route untuk detail Item */}
+
+          <Route path="/produk/:slug" element={<DetailItemView />} />
           <Route path="/keranjang" element={<KeranjangView />} />
           <Route path="/checkout" element={<CheckoutView />} />
           <Route path="/payment/:orderId" element={<PaymentView />} />
@@ -71,6 +73,7 @@ function App() {
           <Route path="/service" element={<ServiceView />} />
           {/* Route Contact */}
           <Route path="/contact" element={<ContactView />} />
+          <Route path="/konsultasi" element={<KonsultasiView />} />
         </Route>
       </Routes>
     </Router>

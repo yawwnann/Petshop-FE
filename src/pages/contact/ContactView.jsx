@@ -25,7 +25,7 @@ export default function ContactView() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* HERO */}
-      <section className="w-full py-16 px-4 bg-[var(--petshop-blue)] text-white text-center relative overflow-hidden">
+      <section className="w-full py-16 px-4 bg-[var(--petshop-blue)] text-white text-center relative overflow-hidden mt-10">
         {/* Background Image */}
         <img
           src={gambar1}

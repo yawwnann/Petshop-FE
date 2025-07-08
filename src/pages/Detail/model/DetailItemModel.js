@@ -1,20 +1,20 @@
 import apiClient from "../../../api/apiClient";
 
-export class DetailAtkModel {
+export class DetailItemModel {
   constructor() {
-    this.atkDetail = null;
+    this.itemDetail = null;
     this.loading = true;
     this.error = null;
     this.quantity = 1;
-    this.relatedAtkList = [];
+    this.relatedItemList = [];
     this.relatedLoading = false;
     this.relatedError = null;
     this.isAddingToCart = false;
     this.addToCartStatus = null;
   }
 
-  setAtkDetail(atkDetail) {
-    this.atkDetail = atkDetail;
+  setItemDetail(itemDetail) {
+    this.itemDetail = itemDetail;
   }
 
   setLoading(loading) {
@@ -29,8 +29,8 @@ export class DetailAtkModel {
     this.quantity = quantity;
   }
 
-  setRelatedAtkList(relatedAtkList) {
-    this.relatedAtkList = relatedAtkList;
+  setRelatedItemList(relatedItemList) {
+    this.relatedItemList = relatedItemList;
   }
 
   setRelatedLoading(relatedLoading) {
@@ -49,8 +49,8 @@ export class DetailAtkModel {
     this.addToCartStatus = addToCartStatus;
   }
 
-  getAtkDetail() {
-    return this.atkDetail;
+  getItemDetail() {
+    return this.itemDetail;
   }
 
   getLoading() {
@@ -65,8 +65,8 @@ export class DetailAtkModel {
     return this.quantity;
   }
 
-  getRelatedAtkList() {
-    return this.relatedAtkList;
+  getRelatedItemList() {
+    return this.relatedItemList;
   }
 
   getRelatedLoading() {
@@ -95,59 +95,59 @@ export class DetailAtkModel {
     }).format(angka);
   }
 
-  async fetchDetailAtk(slug) {
+  async fetchDetailItem(slug) {
     this.loading = true;
     this.error = null;
-    this.atkDetail = null;
-    this.relatedAtkList = [];
+    this.itemDetail = null;
+    this.relatedItemList = [];
 
     try {
-      const response = await apiClient.get(`/atk/${slug}`);
+      const response = await apiClient.get(`/produks/${slug}`);
       if (response.data && response.data.data) {
-        this.atkDetail = response.data.data;
+        this.itemDetail = response.data.data;
         this.quantity = 1;
       } else {
-        this.error = "Data ATK tidak ditemukan atau format tidak sesuai.";
+        this.error = "Data Item tidak ditemukan atau format tidak sesuai.";
       }
     } catch (err) {
-      console.error(`Gagal memuat detail ATK (slug: ${slug}):`, err);
+      console.error(`Gagal memuat detail Item (slug: ${slug}):`, err);
       if (err.response && err.response.status === 404) {
-        this.error = "ATK yang Anda cari tidak ditemukan.";
+        this.error = "Item yang Anda cari tidak ditemukan.";
       } else {
-        this.error = "Terjadi kesalahan saat memuat detail ATK.";
+        this.error = "Terjadi kesalahan saat memuat detail Item.";
       }
     } finally {
       this.loading = false;
     }
   }
 
-  async fetchRelatedAtk(categorySlug, currentAtkId) {
+  async fetchRelatedItem(categorySlug, currentItemId) {
     this.relatedLoading = true;
     this.relatedError = null;
 
     try {
       const response = await apiClient.get(
-        `/atk?kategori=${categorySlug}&per_page=4`
+        `/produks?kategori=${categorySlug}&per_page=4`
       );
-      const relatedAtk = response.data.data || [];
-
-      // Filter out current ATK from related list
-      this.relatedAtkList = relatedAtk.filter((atk) => atk.id !== currentAtkId);
+      const relatedItem = response.data.data || [];
+      this.relatedItemList = relatedItem.filter(
+        (item) => item.id !== currentItemId
+      );
     } catch (err) {
-      console.error("Gagal memuat ATK terkait:", err);
+      console.error("Gagal memuat Item terkait:", err);
       this.relatedError = "Gagal memuat produk terkait";
-      this.relatedAtkList = [];
+      this.relatedItemList = [];
     } finally {
       this.relatedLoading = false;
     }
   }
 
-  async addToCart(atkId, quantity) {
+  async addToCart(itemId, quantity) {
     this.isAddingToCart = true;
     this.addToCartStatus = null;
 
     try {
-      await apiClient.post("/keranjang", { atk_id: atkId, quantity });
+      await apiClient.post("/keranjang", { item_id: itemId, quantity });
       this.addToCartStatus = {
         type: "success",
         message: "Berhasil ditambahkan ke keranjang!",
@@ -180,6 +180,6 @@ export class DetailAtkModel {
   }
 
   isProductAvailable() {
-    return this.atkDetail?.status_ketersediaan?.toLowerCase() === "tersedia";
+    return this.itemDetail?.status_ketersediaan?.toLowerCase() === "tersedia";
   }
 }

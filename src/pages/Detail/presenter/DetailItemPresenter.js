@@ -1,22 +1,25 @@
-import { DetailAtkModel } from "../model/DetailAtkModel";
+import { DetailItemModel } from "../model/DetailItemModel";
 
-export class DetailAtkPresenter {
+export class DetailItemPresenter {
   constructor() {
-    this.model = new DetailAtkModel();
+    this.model = new DetailItemModel();
   }
 
   async initialize(slug) {
-    await this.model.fetchDetailAtk(slug);
+    await this.model.fetchDetailItem(slug);
 
-    // Fetch related ATK if we have category info
-    const atkDetail = this.model.getAtkDetail();
-    if (atkDetail?.kategori?.slug && atkDetail?.id) {
-      await this.model.fetchRelatedAtk(atkDetail.kategori.slug, atkDetail.id);
+    // Fetch related Item if we have category info
+    const itemDetail = this.model.getItemDetail();
+    if (itemDetail?.kategori?.slug && itemDetail?.id) {
+      await this.model.fetchRelatedItem(
+        itemDetail.kategori.slug,
+        itemDetail.id
+      );
     }
   }
 
-  getAtkDetail() {
-    return this.model.getAtkDetail();
+  getItemDetail() {
+    return this.model.getItemDetail();
   }
 
   getLoading() {
@@ -31,8 +34,8 @@ export class DetailAtkPresenter {
     return this.model.getQuantity();
   }
 
-  getRelatedAtkList() {
-    return this.model.getRelatedAtkList();
+  getRelatedItemList() {
+    return this.model.getRelatedItemList();
   }
 
   getRelatedLoading() {
@@ -62,18 +65,18 @@ export class DetailAtkPresenter {
   }
 
   async handleAddToCart() {
-    const atkDetail = this.model.getAtkDetail();
+    const itemDetail = this.model.getItemDetail();
     const quantity = this.model.getQuantity();
 
-    if (!atkDetail || !this.model.isProductAvailable()) {
+    if (!itemDetail || !this.model.isProductAvailable()) {
       return { success: false, error: "Produk tidak tersedia" };
     }
 
-    return await this.model.addToCart(atkDetail.id, quantity);
+    return await this.model.addToCart(itemDetail.id, quantity);
   }
 
-  handleNavigateToDetail(navigate, atk) {
-    navigate(`/atk/${atk?.slug || atk?.id}`);
+  handleNavigateToDetail(navigate, item) {
+    navigate(`/anjr/${item?.slug || item?.id}`);
   }
 
   getStatusBadgeColor(statusKetersediaan) {

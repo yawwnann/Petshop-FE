@@ -77,7 +77,7 @@ function AtkCard({ atk }) {
   };
 
   return (
-    <div className="atk-card group bg-white rounded-lg border border-slate-200/80 overflow-hidden transition-shadow duration-300 hover:shadow-md flex flex-col h-full relative">
+    <div className=" group bg-white rounded-lg border border-slate-200/80 overflow-hidden transition-shadow duration-300 hover:shadow-md flex flex-col h-full relative">
       {" "}
       {/* <--- Diubah: pupuk-card -> atk-card */}
       {feedback.message && (
@@ -172,7 +172,7 @@ function Pagination({ meta, onPageChange }) {
     }
   };
   return (
-    <nav className="flex items-center justify-between border-t border-slate-200 px-4 sm:px-0 mt-10 py-5">
+    <nav className="flex items-center justify-between border-t border-slate-200 px-4 sm:px-0 mt-20 py-5">
       <div className="hidden sm:block">
         <p className="text-sm text-slate-700">
           {" "}
@@ -430,10 +430,6 @@ function KeranjangPage() {
     return (
       <div className="bg-white">
         <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
-          <h1 className="flex items-center gap-2 text-3xl font-extrabold tracking-tight text-atk-dark sm:text-4xl mb-2">
-            <ShoppingCartIcon className="h-8 w-8 text-emerald-500" />
-            Keranjang Belanja
-          </h1>
           <CartSkeleton />
         </div>
       </div>
@@ -461,9 +457,9 @@ function KeranjangPage() {
 
   return (
     <div className="bg-white">
-      <div className="container mx-auto px-4 pt-16 pb-24 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 pt-16 mt-20 pb-24 sm:px-6 lg:px-8">
         <h1 className="flex items-center gap-2 text-3xl font-extrabold tracking-tight text-atk-dark sm:text-4xl mb-2">
-          <ShoppingCartIcon className="h-8 w-8 text-emerald-500" />
+          <ShoppingCartIcon className="h-8 w-8 var(--petshop-pink-accent)" />
           Keranjang Belanja
           {cartItems.length > 0 && (
             <span className="ml-2 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded-full">
@@ -492,7 +488,7 @@ function KeranjangPage() {
               </>
             ) : (
               <div className="text-center py-16 px-6 border-2 border-dashed border-slate-200 rounded-lg">
-                <ShoppingCartIcon className="h-16 w-16 text-emerald-200 animate-bounce mx-auto mb-4" />
+                <ShoppingCartIcon className="h-16 w-16 text-var(--petshop-pink) animate-bounce mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-slate-700">
                   Keranjang Anda kosong
                 </h3>
@@ -568,7 +564,7 @@ function KeranjangPage() {
               <div className="mt-6">
                 <button
                   onClick={handleCheckout}
-                  className="w-full flex items-center justify-center rounded-md border border-transparent bg-atk-primary px-6 py-3 text-base font-bold text-white shadow-sm hover:bg-[#8CBCC7] hover:scale-[1.03] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center rounded-md border border-transparent bg-[var(--petshop-pink-dark)] px-6 py-3 text-base font-bold text-white shadow-sm hover:bg-[var(--petshop-pink-accent)] hover:scale-[1.03] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={cartItems.length === 0}
                 >
                   <CreditCardIcon className="h-5 w-5 mr-2" />

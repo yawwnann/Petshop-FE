@@ -96,10 +96,10 @@ function ProdukCard({ produk, presenter, navigate }) {
     presenter.handleNavigateToDetail(navigate, produk);
   };
 
-  const navigateToDetailFromButton = (e) => {
-    e.stopPropagation();
-    presenter.handleNavigateToDetail(navigate, produk);
-  };
+  // const navigateToDetailFromButton = (e) => {
+  //   e.stopPropagation();
+  //   presenter.handleNavigateToDetail(navigate, produk);
+  // };
 
   const statusKetersediaan = produk?.status_ketersediaan?.toLowerCase();
   const isTersedia = presenter.isProductAvailable(produk);
@@ -236,9 +236,18 @@ function ProdukCard({ produk, presenter, navigate }) {
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-        <div className="absolute top-4 left-4 z-10 flex flex-col space-y-2">
+        <div className="absolute top-4 left-4 z-10 hidden sm:flex flex-col gap-2 items-start">
           {kategoriNama && (
-            <span className="bg-[#598c96]/95 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg tracking-wide flex items-center">
+            <span
+              className="bg-[#598c96]/90 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg tracking-wide flex items-center"
+              style={{
+                marginBottom: 2,
+                maxWidth: "90%",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
               <TagIcon className="w-3 h-3 mr-1" /> {kategoriNama}
             </span>
           )}
@@ -248,6 +257,15 @@ function ProdukCard({ produk, presenter, navigate }) {
                 "text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg tracking-wide backdrop-blur-sm",
                 statusBadgeColor
               )}
+              style={{
+                background: "rgba(34,197,94,0.85)",
+                color: "#fff",
+                marginTop: 2,
+                maxWidth: "90%",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
             >
               {statusKetersediaan.charAt(0).toUpperCase() +
                 statusKetersediaan.slice(1)}
@@ -306,14 +324,14 @@ function ProdukCard({ produk, presenter, navigate }) {
           {formatRupiah(hargaProduk)}
         </p>
 
-        <div className="mt-auto grid grid-cols-2 gap-3">
-          <button
+        <div className="mt-auto ">
+          {/* <button
             onClick={navigateToDetailFromButton}
             className="view-detail-button w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-2xl shadow-sm transition-all duration-200 flex items-center justify-center text-sm focus:outline-none focus:ring-2 focus:ring-[#598c96] focus:ring-offset-1"
             aria-label={`Lihat detail ${namaProdukDisplay}`}
           >
             <EyeIcon className="w-4 h-4 mr-2" /> Detail
-          </button>
+          </button> */}
           <button
             onClick={handleAddToCart}
             disabled={!isTersedia || isAddingToCart}
@@ -352,7 +370,7 @@ function Pagination({ meta, onPageChange }) {
   };
 
   return (
-    <nav className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-200/70 bg-white/95 backdrop-blur-sm px-6 py-6 mt-10 rounded-3xl shadow-xl">
+    <nav className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-200/70 bg-white/95 backdrop-blur-sm px-6 py-6 mt-14 rounded-3xl shadow-xl">
       <div className="text-sm text-slate-600 mb-4 sm:mb-0">
         Menampilkan{" "}
         <span className="font-bold text-slate-800">{meta.from || 0}</span> -{" "}
@@ -508,7 +526,7 @@ function KatalogPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#fff" }}>
+    <div style={{ minHeight: "100vh", background: "#fff", marginTop: "2rem" }}>
       <header style={{ padding: "2.5rem 0 1.5rem 0", textAlign: "center" }}>
         <h1
           style={{
@@ -588,7 +606,7 @@ function KatalogPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {loading
             ? Array.from({ length: meta?.per_page || 12 }).map((_, index) => (
                 <SkeletonCard key={index} />
@@ -635,7 +653,7 @@ function KatalogPage() {
         </div>
 
         {!loading && meta && meta.last_page > 1 && (
-          <nav className="flex justify-center mt-10">
+          <nav className="flex justify-center mt-14">
             <div style={{ display: "flex", gap: 4 }}>
               {meta.links.map((link, idx) => {
                 if (link.label === "...") {

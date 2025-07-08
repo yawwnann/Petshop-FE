@@ -42,7 +42,7 @@ function RegisterView() {
     setLoading(presenter.getLoading());
     setError(presenter.getError());
     setIsSuccessModalOpen(presenter.getIsSuccessModalOpen());
-  }, []);
+  }, [presenter]);
 
   const closeModalAndNavigate = () => {
     presenter.closeModalAndNavigate(navigate);
