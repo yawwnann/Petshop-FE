@@ -91,16 +91,16 @@ function PesananPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [paginationData, setPaginationData] = useState(null);
-  const [activeTab, setActiveTab] = useState("semua");
+  const [activeTab] = useState("semua");
 
-  const statusTabs = [
-    { key: "semua", label: "Semua", icon: null },
-    { key: "belum_bayar", label: "Belum Bayar", icon: null },
-    { key: "diproses", label: "Diproses", icon: null },
-    { key: "dikirim", label: "Dikirim", icon: null },
-    { key: "selesai", label: "Selesai", icon: null },
-    { key: "dibatalkan", label: "Dibatalkan", icon: null },
-  ];
+  // const statusTabs = [
+  //   { key: "semua", label: "Semua", icon: null },
+  //   { key: "belum_bayar", label: "Belum Bayar", icon: null },
+  //   { key: "diproses", label: "Diproses", icon: null },
+  //   { key: "dikirim", label: "Dikirim", icon: null },
+  //   { key: "selesai", label: "Selesai", icon: null },
+  //   { key: "dibatalkan", label: "Dibatalkan", icon: null },
+  // ];
 
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
