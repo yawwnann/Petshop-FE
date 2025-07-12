@@ -4,9 +4,10 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 // Import images from assets
-import gambar1 from "../../assets/gambar1.jpg";
-import gambar2 from "../../assets/gambar2.jpg";
-import gambar3 from "../../assets/gambar3.jpg";
+import gambar1 from "../../assets/gambar1.webp";
+import gambar2 from "../../assets/gambar2.webp";
+import gambar3 from "../../assets/gambar3.webp";
+import gambar2webp from "../../assets/gambar2.webp";
 
 import dokter1 from "../../assets/dokter1.png";
 import dokter2 from "../../assets/dokter2.png";
@@ -144,11 +145,17 @@ export default function AboutUs() {
                 className="absolute inset-0 rounded-3xl transform rotate-6"
                 style={{ backgroundColor: "var(--petshop-blue-light)" }}
               ></div>
-              <img
-                src={gambar2}
-                alt="Buana Petshop Team"
-                className="relative rounded-3xl shadow-2xl w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-300 z-10"
-              />
+              <picture>
+                <source srcSet={gambar2webp} type="image/webp" />
+                <img
+                  src={gambar2}
+                  alt="Buana Petshop Team"
+                  loading="lazy"
+                  width={800}
+                  height={500}
+                  className="relative rounded-3xl shadow-2xl w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-300 z-10"
+                />
+              </picture>
             </div>
           </div>
         </div>

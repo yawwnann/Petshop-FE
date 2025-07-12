@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MapPin, Phone, Mail } from "lucide-react";
-import gambar1 from "../../assets/gambar1.jpg";
+import gambar1 from "../../assets/gambar1.webp";
 
 const CONTACT = {
   address: "Kasihan, Kabupaten Bantul, Daerah Istimewa Yogyakarta",

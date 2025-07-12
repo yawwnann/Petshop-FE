@@ -14,6 +14,7 @@ import {
   QrCodeIcon,
   CreditCardIcon,
 } from "@heroicons/react/24/outline";
+import qris2 from "../../../assets/qris2.webp";
 import { formatRupiah } from "../../../components/formatRupiah.jsx"; // Sesuaikan path jika berbeda
 
 function PaymentPage() {
@@ -254,7 +255,7 @@ function PaymentPage() {
                     </p>
                     <div className="bg-white border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
                       <img
-                        src="/src/assets/qris.png"
+                        src={qris2}
                         alt="QRIS Code"
                         className="mx-auto max-w-xs mb-4"
                         style={{ maxHeight: "300px" }}
@@ -287,7 +288,7 @@ function PaymentPage() {
 
             {/* Upload Form */}
             <div className="p-8">
-              <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+              <div className="bg-var--(petshop-blue) border border-gray-200 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">
                   Upload Bukti Pembayaran
                 </h3>

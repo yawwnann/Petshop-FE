@@ -183,9 +183,10 @@ function PaymentProofUploadForm({
         )}
 
         <button
+          style={{ backgroundColor: "var(--petshop-blue)" }}
           type="submit"
           disabled={isUploading || !selectedFile}
-          className="w-full bg-gradient-to-r from-atk-primary to-atk-secondary 
+          className="w-full from-atk-primary to-atk-secondary 
                    hover:from-atk-secondary hover:to-atk-tertiary
                    text-white font-medium py-3 px-4 rounded-lg 
                    focus:outline-none focus:ring-2 focus:ring-atk-primary focus:ring-offset-2 

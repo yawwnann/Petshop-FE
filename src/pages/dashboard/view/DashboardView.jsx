@@ -25,7 +25,7 @@ import {
   Clock,
 } from "lucide-react";
 
-import gambar1 from "../../../assets/hero-dashboard.png";
+import gambar1 from "../../../assets/hero-dashboard.webp";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
@@ -39,13 +39,13 @@ export default function DashboardView() {
     <div className="min-h-screen bg-gray-50">
       {/* HERO SECTION */}
       <section
-        className="relative w-full min-h-[480px] md:min-h-[800px] flex items-center justify-center overflow-hidden"
+        className="relative w-full min-h-[300px] md:min-h-[480px] lg:min-h-[800px] flex items-center justify-center overflow-hidden"
         style={{ backgroundColor: "var(--petshop-blue)" }}
       >
         <img
           src={gambar1}
           alt="Petshop Banner"
-          className="absolute inset-0 w-full h-full object-cover object-left md:object-center z-0 "
+          className="absolute inset-0 w-full h-full object-cover object-[20%] md:object-center z-0"
         />
         <div className="relative z-20 w-full max-w-7xl mx-auto flex flex-col items-center md:items-end text-center md:text-right text-white py-24 px-6">
           <h1
