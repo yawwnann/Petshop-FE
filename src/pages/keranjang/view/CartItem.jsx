@@ -24,13 +24,30 @@ function CartItem({
   isRemoving,
   onUpdateQuantity,
   onRemove,
-  gambar_url,
+  gambar_url = null,
 }) {
   const { produk, quantity } = item;
   const namaProduk = produk?.nama_produk || "Nama Produk Tidak Tersedia";
   const hargaProduk = parseInt(produk?.harga, 10) || 0;
   const subtotal = hargaProduk * quantity;
   const slug = produk?.slug || "#";
+
+  // Ambil gambar utama seperti di katalog
+  const gambarUtama =
+    gambar_url || item.produk?.gambar_utama_url || item.produk?.gambar_utama;
+
+  // Pastikan path gambar benar (auto prefix /storage/ jika perlu)
+  const getFinalImageUrl = (url) => {
+    if (!url) return "https://placehold.co/100x100/e2e8f0/94a3b8?text=Gambar";
+    if (url.startsWith("http")) return url;
+    if (url.startsWith("/storage/"))
+      return "https://petshop-be-production.up.railway.app" + url;
+    if (url.startsWith("produk/"))
+      return "https://petshop-be-production.up.railway.app/storage/" + url;
+    return "https://petshop-be-production.up.railway.app/storage/" + url;
+  };
+
+  const finalImageUrl = getFinalImageUrl(gambarUtama);
 
   const handleImageError = (e) => {
     e.target.onerror = null;
@@ -45,13 +62,11 @@ function CartItem({
     >
       <div className="flex-shrink-0">
         <img
-          src={
-            gambar_url ||
-            "https://placehold.co/100x100/e2e8f0/94a3b8?text=Gambar"
-          }
+          src={finalImageUrl}
           alt={namaProduk}
           className="w-24 h-24 rounded-md object-cover object-center sm:w-32 sm:h-32"
           onError={handleImageError}
+          loading="lazy"
         />
       </div>
 

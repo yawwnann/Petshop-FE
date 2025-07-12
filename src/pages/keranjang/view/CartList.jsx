@@ -21,7 +21,6 @@ function CartList({
           isRemoving={removingItemId === item.id}
           onUpdateQuantity={onUpdateQuantity}
           onRemove={onRemove}
-          gambar_url={item.produk?.gambar_utama}
         />
       ))}
     </ul>
