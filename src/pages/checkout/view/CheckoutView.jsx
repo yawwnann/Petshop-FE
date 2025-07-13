@@ -11,6 +11,9 @@ import {
   MapPinIcon,
   PhoneIcon,
   PencilIcon,
+  BanknotesIcon,
+  QrCodeIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/24/outline";
 import { CheckoutPageSkeleton as CheckoutSkeleton } from "../../../components/CheckoutSkeletons";
 import { formatRupiah } from "../../../components/formatRupiah";
@@ -113,6 +116,7 @@ function CheckoutPage() {
     catatan: "",
   });
   const [isProcessing, setIsProcessing] = useState(false);
+  const [metodePembayaran, setMetodePembayaran] = useState("");
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -188,17 +192,28 @@ function CheckoutPage() {
     setError(null);
     setValidationErrors({});
 
+    if (!metodePembayaran) {
+      setValidationErrors((prev) => ({
+        ...prev,
+        metode_pembayaran: ["Metode pembayaran wajib dipilih"],
+      }));
+      setIsProcessing(false);
+      return;
+    }
+
     const orderPayload = {
       nama_pelanggan: formData.nama_pelanggan,
       alamat_pengiriman: formData.alamat_pengiriman,
       nomor_whatsapp: formData.nomor_whatsapp,
       catatan: formData.catatan || null,
-      metode_pembayaran: "transfer", // Default ke transfer, bisa diubah nanti
+      metode_pembayaran: metodePembayaran, // <-- use selected value
       items: cartItems.map((item) => ({
         produk_id: item.produk.id,
         quantity: item.quantity,
       })),
     };
+
+    console.log("Payload order yang dikirim:", orderPayload);
 
     try {
       const response = await apiClient.post("/pesanan", orderPayload);
@@ -303,6 +318,85 @@ function CheckoutPage() {
                 placeholder="Misalnya: Patokan alamat, permintaan khusus, dll."
                 icon={PencilIcon}
               />
+
+              {/* Payment Method Selection */}
+              <div className="mb-4">
+                <label className="block font-medium mb-2">
+                  Metode Pembayaran
+                </label>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {/* Transfer Bank */}
+                  <label
+                    className={`flex-1 cursor-pointer border rounded-xl p-4 flex items-center gap-4 transition-all
+                      ${
+                        metodePembayaran === "transfer"
+                          ? "border-[#3B82F6] bg-blue-50 shadow"
+                          : "border-slate-200 bg-white hover:border-[#6BA4B0]"
+                      }
+                    `}
+                  >
+                    <input
+                      type="radio"
+                      name="metode_pembayaran"
+                      value="transfer"
+                      checked={metodePembayaran === "transfer"}
+                      onChange={() => setMetodePembayaran("transfer")}
+                      className="sr-only"
+                    />
+                    <BanknotesIcon className="h-7 w-7 text-[#3B82F6]" />
+                    <span className="font-semibold text-base">
+                      Transfer Bank
+                    </span>
+                  </label>
+                  {/* QRIS */}
+                  <label
+                    className={`flex-1 cursor-pointer border rounded-xl p-4 flex items-center gap-4 transition-all
+                      ${
+                        metodePembayaran === "qris"
+                          ? "border-[#3B82F6] bg-blue-50 shadow"
+                          : "border-slate-200 bg-white hover:border-[#6BA4B0]"
+                      }
+                    `}
+                  >
+                    <input
+                      type="radio"
+                      name="metode_pembayaran"
+                      value="qris"
+                      checked={metodePembayaran === "qris"}
+                      onChange={() => setMetodePembayaran("qris")}
+                      className="sr-only"
+                    />
+                    <QrCodeIcon className="h-7 w-7 text-[#3B82F6]" />
+                    <span className="font-semibold text-base">QRIS</span>
+                  </label>
+                  {/* Cash */}
+                  <label
+                    className={`flex-1 cursor-pointer border rounded-xl p-4 flex items-center gap-4 transition-all
+                      ${
+                        metodePembayaran === "cash"
+                          ? "border-[#3B82F6] bg-blue-50 shadow"
+                          : "border-slate-200 bg-white hover:border-[#6BA4B0]"
+                      }
+                    `}
+                  >
+                    <input
+                      type="radio"
+                      name="metode_pembayaran"
+                      value="cash"
+                      checked={metodePembayaran === "cash"}
+                      onChange={() => setMetodePembayaran("cash")}
+                      className="sr-only"
+                    />
+                    <CurrencyDollarIcon className="h-7 w-7 text-[#3B82F6]" />
+                    <span className="font-semibold text-base">Cash</span>
+                  </label>
+                </div>
+                {validationErrors.metode_pembayaran && (
+                  <p className="mt-1 text-xs text-rose-600">
+                    {validationErrors.metode_pembayaran[0]}
+                  </p>
+                )}
+              </div>
             </div>
           </section>
 

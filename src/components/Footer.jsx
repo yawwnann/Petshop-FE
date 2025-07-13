@@ -7,12 +7,12 @@ const Footer = () => {
   return (
     <footer
       style={{ background: "#598c96" }}
-      className="pt-12 pb-6 px-4 sm:px-8 lg:px-16 text-white"
+      className="pt-10 pb-6 px-4 sm:px-8 lg:px-16 text-white"
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-10">
         {/* Logo & Deskripsi */}
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2 mb-2">
+        <div className="flex flex-col items-center md:items-start gap-3 mb-6 md:mb-0">
+          <div className="flex items-center gap-2 mb-3">
             <img
               src={logo}
               alt="Buana Petshop Logo"
@@ -22,7 +22,7 @@ const Footer = () => {
               Buana Petshop
             </span>
           </div>
-          <p className="text-sm text-white/80 max-w-xs">
+          <p className="text-sm text-white/80 max-w-xs text-center md:text-left">
             Buana Petshop menyediakan kebutuhan hewan peliharaan Anda dengan
             produk terbaik, harga terjangkau, dan layanan ramah. Temukan hewan,
             makanan, aksesoris, dan perawatan di satu tempat!
@@ -31,7 +31,7 @@ const Footer = () => {
             <a
               href="#"
               title="Instagram"
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-[#8CBCC7] hover:bg-white/30 transition"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-[#8CBCC7] hover:bg-white/30 transition-colors duration-200"
             >
               <svg
                 className="w-5 h-5 text-white"
@@ -50,7 +50,7 @@ const Footer = () => {
             <a
               href="#"
               title="Facebook"
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-[#8CBCC7] hover:bg-white/30 transition"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-[#8CBCC7] hover:bg-white/30 transition-colors duration-200"
             >
               <svg
                 className="w-5 h-5 text-white"
@@ -63,7 +63,7 @@ const Footer = () => {
             <a
               href="#"
               title="WhatsApp"
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-[#8CBCC7] hover:bg-white/30 transition"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-[#8CBCC7] hover:bg-white/30 transition-colors duration-200"
             >
               <svg
                 className="w-5 h-5 text-white"
@@ -77,14 +77,14 @@ const Footer = () => {
         </div>
         {/* Link Navigasi */}
         <div>
-          <p className="text-sm font-semibold tracking-widest text-white/70 uppercase mb-4">
+          <p className="text-xs font-semibold tracking-widest text-white/60 uppercase mb-3">
             Perusahaan
           </p>
-          <ul className="space-y-3">
+          <ul className="space-y-2">
             <li>
               <a
                 href="#"
-                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition"
+                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition-colors duration-200"
               >
                 Tentang Kami
               </a>
@@ -92,7 +92,7 @@ const Footer = () => {
             <li>
               <a
                 href="#"
-                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition"
+                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition-colors duration-200"
               >
                 Cara Pesan
               </a>
@@ -100,7 +100,7 @@ const Footer = () => {
             <li>
               <a
                 href="#"
-                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition"
+                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition-colors duration-200"
               >
                 Katalog Produk
               </a>
@@ -108,7 +108,7 @@ const Footer = () => {
             <li>
               <a
                 href="#"
-                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition"
+                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition-colors duration-200"
               >
                 Hubungi Kami
               </a>
@@ -116,14 +116,14 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <p className="text-sm font-semibold tracking-widest text-white/70 uppercase mb-4">
+          <p className="text-xs font-semibold tracking-widest text-white/60 uppercase mb-3">
             Bantuan
           </p>
-          <ul className="space-y-3">
+          <ul className="space-y-2">
             <li>
               <a
                 href="#"
-                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition"
+                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition-colors duration-200"
               >
                 Tanya Jawab (FAQ)
               </a>
@@ -131,7 +131,7 @@ const Footer = () => {
             <li>
               <a
                 href="#"
-                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition"
+                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition-colors duration-200"
               >
                 Syarat &amp; Ketentuan
               </a>
@@ -139,7 +139,7 @@ const Footer = () => {
             <li>
               <a
                 href="#"
-                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition"
+                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition-colors duration-200"
               >
                 Kebijakan Privasi
               </a>
@@ -147,38 +147,15 @@ const Footer = () => {
             <li>
               <a
                 href="#"
-                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition"
+                className="text-white/90 hover:underline hover:text-[#8CBCC7] transition-colors duration-200"
               >
                 Lacak Pengiriman
               </a>
             </li>
           </ul>
         </div>
-        {/* Newsletter */}
-        <div>
-          <p className="text-sm font-semibold tracking-widest text-white/70 uppercase mb-4">
-            Langganan Info & Promo
-          </p>
-          <form action="#" method="POST" className="mt-2">
-            <div className="flex flex-col gap-3">
-              <input
-                type="email"
-                name="footer-email"
-                id="footer-email"
-                placeholder="Masukkan alamat email Anda"
-                className="block w-full p-3 text-base text-[#598c96] placeholder-white/70 bg-white/80 border border-[#8CBCC7] rounded-md focus:outline-none focus:ring-2 focus:ring-[#8CBCC7] focus:border-transparent caret-[#8CBCC7]"
-              />
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center w-full px-6 py-3 font-semibold text-white transition-all duration-200 bg-[#8CBCC7] rounded-md hover:bg-white/30 focus:bg-white/30"
-              >
-                Berlangganan
-              </button>
-            </div>
-          </form>
-        </div>
       </div>
-      <div className="mt-10 pt-6 border-t border-white/20 text-center text-white/70 text-sm">
+      <div className="mt-10 pt-6 border-t border-white/20 text-center text-white/70 text-xs">
         © {currentYear} Buana Petshop. All rights reserved.
       </div>
     </footer>

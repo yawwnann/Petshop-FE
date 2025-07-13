@@ -141,9 +141,9 @@ export default function ContactView() {
         <div className="rounded-3xl overflow-hidden shadow-lg">
           <iframe
             title="Buana Petshop Location"
-            src="https://www.google.com/maps?q=Kasihan,+Kabupaten+Bantul,+Daerah+Istimewa+Yogyakarta&output=embed"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63241.62981113082!2d110.31295435183905!3d-7.8318930679675125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af9119d1c2cc5%3A0xaffe62fa56ae8f5a!2sBuana%20PETSHOP%20dan%20KLINIK%203!5e0!3m2!1sid!2sid!4v1752402124371!5m2!1sid!2sid"
             width="100%"
-            height="300"
+            height="450"
             style={{ border: 0 }}
             allowFullScreen=""
             loading="lazy"

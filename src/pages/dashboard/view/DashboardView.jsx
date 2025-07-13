@@ -29,11 +29,22 @@ import gambar1 from "../../../assets/hero-dashboard.webp";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardView() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
   }, []);
+
+  const handleMulaiKonsultasi = () => {
+    navigate("/konsultasi");
+  };
+
+  const handleLihatLayanan = () => {
+    navigate("/service");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -64,20 +75,22 @@ export default function DashboardView() {
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center md:justify-end mx-auto md:ml-auto md:mr-0">
             <button
+              onClick={handleMulaiKonsultasi}
               style={{ backgroundColor: "var(--petshop-pink-dark)" }}
-              className="px-10 py-4 rounded-full font-semibold text-white hover:opacity-90 transition-opacity shadow-lg"
+              className="px-10 py-4 rounded-full font-semibold text-white hover:opacity-90 hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl active:shadow-md transform"
               data-aos="fade-up"
               data-aos-delay="300"
             >
               Mulai Konsultasi
             </button>
             <button
+              onClick={handleLihatLayanan}
               style={{
                 backgroundColor: "transparent",
                 border: "3px solid white",
                 color: "white",
               }}
-              className="px-10 py-4 rounded-full font-semibold hover:bg-white hover:text-[var(--petshop-blue)] transition-all shadow-lg"
+              className="px-10 py-4 rounded-full font-semibold hover:bg-white hover:text-[var(--petshop-blue)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl active:shadow-md transform"
               data-aos="fade-up"
               data-aos-delay="400"
             >

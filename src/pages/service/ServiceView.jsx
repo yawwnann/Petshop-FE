@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { CheckCircle, Stethoscope, Home, Award, PawPrint } from "lucide-react";
-import gambar1 from "../../assets/gambar1.jpg";
-import gambar2 from "../../assets/gambar2.jpg";
-import gambar3 from "../../assets/gambar3.jpg";
+import { useNavigate } from "react-router-dom";
+import gambar1 from "../../assets/gambar1.webp";
+import gambar2 from "../../assets/gambar2.webp";
+import gambar3 from "../../assets/gambar3.webp";
 import dokter1 from "../../assets/dokter1.png";
 import dokter2 from "../../assets/dokter2.png";
 import AOS from "aos";
@@ -77,12 +78,22 @@ const PRICES = [
 ];
 
 export default function ServiceView() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
   }, []);
 
+  const handleMulaiKonsultasi = () => {
+    navigate("/konsultasi");
+  };
+
+  const handleLihatLayanan = () => {
+    navigate("/katalog");
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 pb-16">
+    <div className="min-h-screen mt-10 bg-gray-50 pb-16">
       {/* Hero Section */}
       <div className="relative min-h-[320px] flex items-center justify-center overflow-hidden mb-16">
         <img
@@ -95,10 +106,33 @@ export default function ServiceView() {
           <h1 className="text-5xl font-extrabold text-white drop-shadow mb-4">
             Our Services & Pricing
           </h1>
-          <p className="text-lg text-white/90 max-w-2xl mx-auto">
+          <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
             Discover the comprehensive care we offer for your beloved pets, from
             grooming to medical examinations, all at transparent prices.
           </p>
+
+          {/* Navigation Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button
+              onClick={handleMulaiKonsultasi}
+              className="group relative px-8 py-4 bg-white text-[#6BA4B0] font-bold rounded-2xl shadow-lg hover:shadow-xl active:shadow-md transform hover:scale-105 active:scale-95 transition-all duration-300 border-2 border-white hover:bg-[#6BA4B0] hover:text-white"
+            >
+              <span className="flex items-center gap-2">
+                <Stethoscope className="w-5 h-5" />
+                Mulai Konsultasi
+              </span>
+            </button>
+
+            <button
+              onClick={handleLihatLayanan}
+              className="group relative px-8 py-4 bg-transparent text-white font-bold rounded-2xl shadow-lg hover:shadow-xl active:shadow-md transform hover:scale-105 active:scale-95 transition-all duration-300 border-2 border-white hover:bg-white hover:text-[#6BA4B0]"
+            >
+              <span className="flex items-center gap-2">
+                <Award className="w-5 h-5" />
+                Lihat Layanan
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 

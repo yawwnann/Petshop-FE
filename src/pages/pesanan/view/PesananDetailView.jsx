@@ -392,8 +392,7 @@ function PesananDetailPage() {
     (acc, item) => acc + (item.harga_saat_pesanan || 0) * (item.jumlah || 0),
     0
   );
-  const ongkir = 15000; // Contoh statis
-  const totalPembayaran = order.total_harga || subtotal + ongkir;
+  const totalPembayaran = order.total_harga || subtotal;
 
   return (
     <div className="bg-slate-50 min-h-screen py-10 sm:py-16">
@@ -425,7 +424,7 @@ function PesananDetailPage() {
 
         {/* Konten Utama */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-          {/* Kolom Kiri: Rincian Produk & Pengiriman */}
+          {/* Kolom Kiri: Rincian Produk */}
           <div className="lg:col-span-3 space-y-8">
             <InfoCard title="Produk Dipesan" icon={ShoppingBagIcon}>
               <div className="divide-y divide-slate-100">
@@ -459,35 +458,11 @@ function PesananDetailPage() {
                 ))}
               </div>
             </InfoCard>
-
-            <InfoCard title="Info Pengiriman" icon={TruckIcon}>
-              <InfoRow label="Kurir" value="JNE Express (Contoh)" />
-              <InfoRow label="Nomor Resi">
-                {order.nomor_resi ? (
-                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-atk-tertiary bg-atk-tertiary/10 px-2 py-1 rounded-md">
-                    <CubeTransparentIcon className="h-4 w-4" />
-                    {order.nomor_resi}
-                  </span>
-                ) : (
-                  <span className="text-sm text-slate-400 italic">
-                    Belum tersedia
-                  </span>
-                )}
-              </InfoRow>
-              <InfoRow label="Alamat Pengiriman" />
-              <div className="text-sm text-slate-600 pt-2">
-                <p className="font-semibold">{order.nama_pelanggan}</p>
-                <p>{order.nomor_whatsapp}</p>
-                <p>{order.alamat_pengiriman}</p>
-              </div>
-            </InfoCard>
           </div>
 
           {/* Kolom Kanan: Rincian Pembayaran, Pelanggan, Aksi */}
           <div className="lg:col-span-2 space-y-8">
             <InfoCard title="Rincian Pembayaran" icon={BanknotesIcon}>
-              <InfoRow label="Subtotal Produk" value={formatRupiah(subtotal)} />
-              <InfoRow label="Ongkos Kirim" value={formatRupiah(ongkir)} />
               <InfoRow
                 label="Total Pembayaran"
                 value={formatRupiah(totalPembayaran)}

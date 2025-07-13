@@ -27,6 +27,8 @@ function PaymentPage() {
   const [fetchError, setFetchError] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState("transfer");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   useEffect(() => {
     if (!order && orderId) {
@@ -54,6 +56,38 @@ function PaymentPage() {
       setLoadingOrder(false);
     }
   }, [orderId, order]);
+
+  const handleSubmitPaymentMethod = async () => {
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      // For cash payment, we don't need to call API since the payment method
+      // is already set when the order was created
+      // Just show success message and redirect
+
+      // Update local order data with cash payment method
+      setOrder((prevOrder) => ({
+        ...prevOrder,
+        metode_pembayaran: "cash",
+      }));
+
+      // Show success message
+      alert(
+        "Pembayaran cash berhasil dikonfirmasi! Silakan datang ke toko kami untuk melakukan pembayaran dan pengambilan barang."
+      );
+
+      // Redirect to orders page
+      navigate("/pesanan");
+    } catch (err) {
+      console.error("Gagal mengkonfirmasi pembayaran cash:", err);
+      setSubmitError(
+        "Gagal mengkonfirmasi pembayaran cash. Silakan coba lagi."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleProofUploadSuccess = (data) => {
     alert(
@@ -201,6 +235,17 @@ function PaymentPage() {
                     <QrCodeIcon className="h-5 w-5" />
                     QRIS
                   </button>
+                  <button
+                    onClick={() => setSelectedPaymentMethod("cash")}
+                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md font-medium transition-colors ${
+                      selectedPaymentMethod === "cash"
+                        ? "bg-[#E0F2F7] text-[#3B82F6] shadow-sm"
+                        : "text-slate-600 hover:text-[#3B82F6]"
+                    }`}
+                  >
+                    <BanknotesIcon className="h-5 w-5" />
+                    Cash
+                  </button>
                 </div>
 
                 {/* Transfer Bank Instructions */}
@@ -283,26 +328,150 @@ function PaymentPage() {
                     </div>
                   </div>
                 )}
+
+                {/* Cash Payment Instructions */}
+                {selectedPaymentMethod === "cash" && (
+                  <div>
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-green-800 mb-2">
+                            Pembayaran Cash di Toko
+                          </h3>
+                          <p className="text-green-700 text-sm leading-relaxed">
+                            Anda dapat melakukan pembayaran secara cash langsung
+                            di toko kami. Barang akan disiapkan dan dapat
+                            diambil setelah pembayaran selesai.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="bg-white border border-gray-200 rounded-lg p-4">
+                        <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                          <ClockIcon className="h-5 w-5 text-[#3B82F6]" />
+                          Informasi Pengambilan
+                        </h4>
+                        <div className="space-y-2 text-sm text-gray-600">
+                          <p>
+                            <strong>Total Pembayaran:</strong>{" "}
+                            {formatRupiah(order.total_harga)}
+                          </p>
+                          <p>
+                            <strong>ID Pesanan:</strong> #{order.id}
+                          </p>
+                          <p>
+                            <strong>Status:</strong> Menunggu pembayaran cash
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                          <InformationCircleIcon className="h-5 w-5" />
+                          Langkah Pembayaran Cash
+                        </h4>
+                        <ol className="list-decimal list-inside space-y-1 text-sm text-blue-700">
+                          <li>Datang ke toko kami dengan membawa ID pesanan</li>
+                          <li>Berikan ID pesanan kepada staff kami</li>
+                          <li>
+                            Lakukan pembayaran cash sesuai total yang tertera
+                          </li>
+                          <li>
+                            Barang akan disiapkan dan dapat langsung diambil
+                          </li>
+                        </ol>
+                      </div>
+
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <h4 className="font-semibold text-yellow-800 mb-2 flex items-center gap-2">
+                          <ClockIcon className="h-5 w-5" />
+                          Batas Waktu
+                        </h4>
+                        <p className="text-sm text-yellow-700">
+                          Pesanan akan dibatalkan otomatis jika pembayaran cash
+                          tidak dilakukan dalam waktu 24 jam.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
+
+              {/* Submit Payment Method Button - Only for Cash */}
+              {selectedPaymentMethod === "cash" && (
+                <div className="mt-6">
+                  <button
+                    onClick={handleSubmitPaymentMethod}
+                    disabled={isSubmitting}
+                    className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <ArrowPathIcon className="h-5 w-5 animate-spin" />
+                        Mengirim...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircleIcon className="h-5 w-5" />
+                        Konfirmasi Pembayaran Cash
+                      </>
+                    )}
+                  </button>
+
+                  {submitError && (
+                    <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-sm text-red-700">{submitError}</p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Upload Form */}
             <div className="p-8">
               <div className="bg-var--(petshop-blue) border border-gray-200 rounded-lg p-6 shadow-sm">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  Upload Bukti Pembayaran
+                  {selectedPaymentMethod === "cash"
+                    ? "Informasi Pembayaran Cash"
+                    : "Upload Bukti Pembayaran"}
                 </h3>
                 <p className="text-gray-600 mb-4">
                   {selectedPaymentMethod === "transfer"
                     ? "Setelah melakukan transfer bank, silakan upload bukti transfer Anda."
-                    : "Setelah melakukan pembayaran QRIS, silakan upload screenshot bukti pembayaran dari aplikasi e-wallet Anda."}
+                    : selectedPaymentMethod === "qris"
+                    ? "Setelah melakukan pembayaran QRIS, silakan upload screenshot bukti pembayaran dari aplikasi e-wallet Anda."
+                    : "Untuk pembayaran cash, tidak perlu upload bukti pembayaran. Pembayaran akan dilakukan langsung di toko saat pengambilan barang."}
                 </p>
-                <PaymentProofUploadForm
-                  orderId={order.id}
-                  paymentMethod={selectedPaymentMethod}
-                  onUploadSuccess={handleProofUploadSuccess}
-                  onUploadError={handleProofUploadError}
-                />
+                {selectedPaymentMethod !== "cash" ? (
+                  <PaymentProofUploadForm
+                    orderId={order.id}
+                    paymentMethod={selectedPaymentMethod}
+                    onUploadSuccess={handleProofUploadSuccess}
+                    onUploadError={handleProofUploadError}
+                  />
+                ) : (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <div className="flex items-center gap-3">
+                      <CheckCircleIcon className="h-6 w-6 text-green-600" />
+                      <div>
+                        <h4 className="font-semibold text-green-800 mb-1">
+                          Pembayaran Cash Dikonfirmasi
+                        </h4>
+                        <p className="text-green-700 text-sm">
+                          Pesanan Anda telah dikonfirmasi untuk pembayaran cash.
+                          Silakan datang ke toko kami dengan membawa ID pesanan
+                          #{order.id}
+                          untuk melakukan pembayaran dan pengambilan barang.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

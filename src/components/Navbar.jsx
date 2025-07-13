@@ -25,8 +25,9 @@ function Navbar() {
     { to: "/konsultasi", label: "Konsultasi", icon: ChatBubbleLeftRightIcon },
     { to: "/katalog", label: "Shop", icon: ShoppingCartIcon },
     { to: "/pesanan", label: "Riwayat Pesanan", icon: ArchiveBoxIcon },
-    { to: "/about", label: "About", icon: HomeIcon }, // Changed from BuildingStorefrontIcon to HomeIcon
+    { to: "/about", label: "About", icon: HomeIcon },
     { to: "/contact", label: "Contact", icon: UserCircleIcon },
+    { to: "/service", label: "Service", icon: HomeIcon },
   ];
 
   useEffect(() => {
