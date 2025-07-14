@@ -141,7 +141,8 @@ export default function ContactView() {
         <div className="rounded-3xl overflow-hidden shadow-lg">
           <iframe
             title="Buana Petshop Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63241.62981113082!2d110.31295435183905!3d-7.8318930679675125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af9119d1c2cc5%3A0xaffe62fa56ae8f5a!2sBuana%20PETSHOP%20dan%20KLINIK%203!5e0!3m2!1sid!2sid!4v1752402124371!5m2!1sid!2sid"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4958838722728!2d110.3756653!3d-7.9475973999999985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5551b5a15a07%3A0x55297fa1daf66ade!2sBuana%20klinik%20dan%20petshop!5e0!3m2!1sid!2sid!4v1752511464523!5m2!1sid!2sid"
+            //<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4958838722728!2d110.3756653!3d-7.9475973999999985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5551b5a15a07%3A0x55297fa1daf66ade!2sBuana%20klinik%20dan%20petshop!5e0!3m2!1sid!2sid!4v1752511464523!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             width="100%"
             height="450"
             style={{ border: 0 }}
