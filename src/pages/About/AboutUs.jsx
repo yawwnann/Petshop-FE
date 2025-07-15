@@ -16,47 +16,47 @@ import dokter3 from "../../assets/dokter3.png";
 const TEAM = [
   {
     name: "Dr. Rahayu",
-    role: "PET INSTRUCTOR",
+    role: "DOKTER HEWAN",
     img: dokter1,
-    specialty: "Veterinary Medicine",
-    experience: "8+ years",
+    specialty: "Dokter Hewan",
+    experience: "8+ tahun pengalaman",
   },
   {
     name: "Dr. Ninik",
-    role: "PET INSTRUCTOR",
+    role: "DOKTER HEWAN",
     img: dokter2,
-    specialty: "Animal Behavior",
-    experience: "6+ years",
+    specialty: "Perilaku Hewan",
+    experience: "6+ tahun pengalaman",
   },
   {
     name: "Dr. Yuli",
-    role: "ASSISTANT",
+    role: "ASISTEN",
     img: dokter3,
-    specialty: "Pet Grooming",
-    experience: "4+ years",
+    specialty: "Perawatan Hewan",
+    experience: "4+ tahun pengalaman",
   },
 ];
 
 const VALUES = [
   {
     icon: Smile,
-    title: "YOUR SATISFACTION",
+    title: "KEPUASAN ANDA",
     description:
-      "We understand that entrusting your beloved pet to someone else is not an easy thing. Therefore, we always strive to provide the best service—not only for your pet, but also for you as a caring owner.",
+      "Kami memahami bahwa mempercayakan hewan kesayangan Anda kepada orang lain bukanlah hal yang mudah. Oleh karena itu, kami selalu berusaha memberikan pelayanan terbaik—bukan hanya untuk hewan peliharaan Anda, tetapi juga untuk Anda sebagai pemilik yang peduli.",
     color: "var(--petshop-blue)",
   },
   {
     icon: Award,
-    title: "FUN ACTIVITIES",
+    title: "AKTIVITAS SERU",
     description:
-      "We provide a variety of fun activities to keep your pets active, happy and stress-free. From play sessions to relaxing times, everything is designed to keep them happy throughout the day.",
+      "Kami menyediakan berbagai aktivitas seru agar hewan peliharaan Anda tetap aktif, bahagia, dan bebas stres. Mulai dari sesi bermain hingga waktu santai, semuanya dirancang untuk membuat mereka senang sepanjang hari.",
     color: "var(--petshop-pink-accent)",
   },
   {
     icon: HeartHandshake,
-    title: "SERVICE WITH HEART",
+    title: "PELAYANAN DENGAN HATI",
     description:
-      "We are not just here for today. With a professional team and a sincere spirit of service, we are ready to be your partner in caring for your beloved furry friends for the long term.",
+      "Kami tidak hanya hadir untuk hari ini. Dengan tim profesional dan semangat pelayanan yang tulus, kami siap menjadi mitra Anda dalam merawat sahabat berbulu kesayangan Anda untuk jangka panjang.",
     color: "var(--petshop-pink-dark)",
   },
 ];
@@ -101,10 +101,11 @@ export default function AboutUs() {
 
         <div className="relative px-6 py-20 max-w-5xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 drop-shadow-lg">
-            About Buana Petshop
+            Tentang Buana Petshop
           </h1>
           <p className="text-2xl text-white max-w-3xl mx-auto drop-shadow-lg opacity-95">
-            Where every pet is family, and every moment is filled with love
+            Di mana setiap hewan adalah keluarga, dan setiap momen penuh kasih
+            sayang
           </p>
         </div>
       </div>
@@ -123,19 +124,20 @@ export default function AboutUs() {
                   <Heart className="text-white" size={32} />
                 </div>
                 <h2 className="text-4xl font-bold text-[var(--petshop-pink-dark)]">
-                  Our Story
+                  Kisah Kami
                 </h2>
               </div>
               <p className="text-gray-700 text-xl leading-relaxed mb-8">
-                At Buana Petshop, we believe that every pet is part of the
-                family. With love, we create a safe, comfortable, and fun
-                environment for your furry friends.
+                Di Buana Petshop, kami percaya bahwa setiap hewan adalah bagian
+                dari keluarga. Dengan kasih sayang, kami menciptakan lingkungan
+                yang aman, nyaman, dan menyenangkan untuk sahabat berbulu Anda.
               </p>
               <p className="text-gray-700 text-xl leading-relaxed">
-                Our team not only cares for, but also interacts and understands
-                the unique needs of each animal. From playing, feeding, to
-                grooming and health services, we are here to ensure their
-                happiness when you are not by their side.
+                Tim kami tidak hanya merawat, tetapi juga berinteraksi dan
+                memahami kebutuhan unik setiap hewan. Mulai dari bermain,
+                memberi makan, hingga perawatan dan layanan kesehatan, kami
+                hadir untuk memastikan kebahagiaan mereka saat Anda tidak di
+                sisi mereka.
               </p>
             </div>
           </div>
@@ -164,10 +166,10 @@ export default function AboutUs() {
         <div className="mb-32">
           <div className="text-center mb-20" data-aos="fade-up">
             <h2 className="text-5xl font-bold text-[var(--petshop-pink-dark)] mb-6">
-              Our Values
+              Nilai-Nilai Kami
             </h2>
             <p className="text-2xl text-gray-600 max-w-2xl mx-auto">
-              What makes us different and special
+              Apa yang membuat kami berbeda dan istimewa
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-10">
@@ -201,10 +203,10 @@ export default function AboutUs() {
         <div className="mb-32">
           <div className="text-center mb-20">
             <h2 className="text-5xl font-bold text-[var(--petshop-pink-dark)] mb-6">
-              Meet Our Expert Team
+              Kenali Tim Ahli Kami
             </h2>
             <p className="text-2xl text-gray-600 max-w-2xl mx-auto">
-              Dedicated professionals who love what they do
+              Profesional berdedikasi yang mencintai pekerjaannya
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-10">
@@ -285,18 +287,19 @@ export default function AboutUs() {
 
           <div className="max-w-5xl mx-auto text-center relative z-10">
             <h3 className="text-4xl font-bold text-[var(--petshop-pink-dark)] mb-10">
-              A Story of Dedication
+              Kisah Dedikasi
             </h3>
             <p className="text-gray-700 text-xl leading-relaxed mb-8 relative z-10">
-              Robert is a NYC native from the Upper East Side and takes care of
-              our pups in Pawsitive Pet Hotel & Spa in Astoria, Queens.
+              Robert adalah penduduk asli NYC dari Upper East Side dan merawat
+              anjing-anjing kami di Pawsitive Pet Hotel & Spa di Astoria,
+              Queens.
             </p>
             <p className="text-gray-700 text-xl leading-relaxed relative z-10">
-              He grew up with hamsters, fish and cats. In his free time, he
-              helps to read, explore and do photography. He set up Help a
-              Homeless Dog which is a charity that collects food, sleeping bags
-              and donation for dogs living on the streets, distributes vital
-              items himself or via a distress shelter.
+              Ia tumbuh bersama hamster, ikan, dan kucing. Di waktu luangnya, ia
+              suka membaca, menjelajah, dan fotografi. Ia mendirikan Help a
+              Homeless Dog, sebuah amal yang mengumpulkan makanan, kantong
+              tidur, dan donasi untuk anjing jalanan, serta menyalurkan bantuan
+              secara langsung atau melalui penampungan darurat.
             </p>
           </div>
         </div>

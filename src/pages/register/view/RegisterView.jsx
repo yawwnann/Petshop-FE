@@ -82,11 +82,11 @@ function RegisterView() {
 
     const levels = [
       { strength: 0, label: "", color: "" },
-      { strength: 1, label: "Very Weak", color: "bg-red-500" },
-      { strength: 2, label: "Weak", color: "bg-orange-500" },
-      { strength: 3, label: "Fair", color: "bg-yellow-500" },
-      { strength: 4, label: "Good", color: "bg-blue-500" },
-      { strength: 5, label: "Strong", color: "bg-green-500" },
+      { strength: 1, label: "Sangat Lemah", color: "bg-red-500" },
+      { strength: 2, label: "Lemah", color: "bg-orange-500" },
+      { strength: 3, label: "Cukup", color: "bg-yellow-500" },
+      { strength: 4, label: "Baik", color: "bg-blue-500" },
+      { strength: 5, label: "Kuat", color: "bg-green-500" },
     ];
 
     return levels[strength];
@@ -110,23 +110,21 @@ function RegisterView() {
           {/* Title */}
           <div className="text-center mb-6">
             <h2 className="text-3xl font-bold mb-3 text-gray-900">
-              Join PetShop Family
+              Bergabung dengan Buana PetShop
             </h2>
             <p className="text-gray-600">
-              Create your account to start caring for your pets
+              Buat akun Anda untuk mulai merawat hewan peliharaan
             </p>
           </div>
 
           {/* Login Link */}
           <div className="text-center mb-6">
-            <span className="text-sm text-gray-600">
-              Already have an account?{" "}
-            </span>
+            <span className="text-sm text-gray-600">Sudah punya akun? </span>
             <a
               href="/login"
               className="text-sm font-medium text-[#8CBCC7] hover:text-[#7AB3C0] transition-colors hover:underline"
             >
-              Sign in here
+              Masuk di sini
             </a>
           </div>
 
@@ -154,7 +152,7 @@ function RegisterView() {
                 <input
                   id="name"
                   type="text"
-                  placeholder="Enter your full name"
+                  placeholder="Masukkan nama lengkap Anda"
                   className={`w-full px-4 py-3 pl-11 border border-[var(--petshop-pink-dark)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--petshop-pink-dark)] focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white ${
                     loading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
@@ -180,7 +178,7 @@ function RegisterView() {
                 <input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Masukkan email Anda"
                   className={`w-full px-4 py-3 pl-11 border border-[var(--petshop-pink-dark)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--petshop-pink-dark)] focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white ${
                     loading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
@@ -206,7 +204,7 @@ function RegisterView() {
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
+                  placeholder="Masukkan kata sandi Anda"
                   className={`w-full px-4 py-3 pl-11 border border-[var(--petshop-pink-dark)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--petshop-pink-dark)] focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white ${
                     loading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
@@ -246,7 +244,21 @@ function RegisterView() {
                       ></div>
                     </div>
                     <span className="text-xs text-gray-600">
-                      {passwordStrength.label}
+                      {/* Password strength label translation */}
+                      {passwordStrength.label === "Sangat Lemah" &&
+                        "Sangat Lemah"}
+                      {passwordStrength.label === "Lemah" && "Lemah"}
+                      {passwordStrength.label === "Cukup" && "Cukup"}
+                      {passwordStrength.label === "Baik" && "Baik"}
+                      {passwordStrength.label === "Kuat" && "Kuat"}
+                      {![
+                        "Sangat Lemah",
+                        "Lemah",
+                        "Cukup",
+                        "Baik",
+                        "Kuat",
+                      ].includes(passwordStrength.label) &&
+                        passwordStrength.label}
                     </span>
                   </div>
                 </div>
@@ -265,7 +277,7 @@ function RegisterView() {
                 <input
                   id="passwordConfirmation"
                   type={showPasswordConfirmation ? "text" : "password"}
-                  placeholder="Confirm your password"
+                  placeholder="Konfirmasi kata sandi Anda"
                   className={`w-full px-4 py-3 pl-11 border border-[var(--petshop-pink-dark)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--petshop-pink-dark)] focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white ${
                     loading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
@@ -300,12 +312,12 @@ function RegisterView() {
                   {password === passwordConfirmation ? (
                     <div className="flex items-center gap-2 text-green-600">
                       <CheckIcon className="w-4 h-4" />
-                      <span className="text-xs">Passwords match</span>
+                      <span className="text-xs">Kata sandi cocok</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 text-red-600">
                       <XMarkIcon className="w-4 h-4" />
-                      <span className="text-xs">Passwords don't match</span>
+                      <span className="text-xs">Kata sandi tidak cocok</span>
                     </div>
                   )}
                 </div>
@@ -330,23 +342,23 @@ function RegisterView() {
                 htmlFor="agree"
                 className="text-sm text-[var(--petshop-pink-dark)] select-none"
               >
-                I agree to the{" "}
+                Saya setuju dengan{" "}
                 <a
                   href="/terms"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--petshop-pink-dark)] hover:text-[var(--petshop-pink-accent)] font-medium hover:underline"
                 >
-                  Terms of Service
+                  Syarat Layanan
                 </a>{" "}
-                and{" "}
+                dan{" "}
                 <a
                   href="/privacy"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--petshop-pink-dark)] hover:text-[var(--petshop-pink-accent)] font-medium hover:underline"
                 >
-                  Privacy Policy
+                  Kebijakan Privasi
                 </a>
               </label>
             </div>
@@ -368,7 +380,7 @@ function RegisterView() {
                       <div className="absolute inset-0 w-6 h-6 border-2 border-white border-opacity-30 rounded-full"></div>
                     </div>
                     <span className="text-white font-medium">
-                      Creating Account...
+                      Membuat Akun...
                     </span>
                   </div>
                 </div>
@@ -393,7 +405,7 @@ function RegisterView() {
                     d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
                   />
                 </svg>
-                Create Account
+                Buat Akun
               </div>
             </button>
           </form>
@@ -429,11 +441,12 @@ function RegisterView() {
 
           <div className="text-white">
             <h3 className="text-3xl font-bold mb-4 leading-tight">
-              Everything for your pet in one place.
+              Semua kebutuhan hewan peliharaan Anda dalam satu tempat.
             </h3>
             <p className="text-lg opacity-90 leading-relaxed mb-6">
-              Join thousands of pet owners who trust us for their pet care
-              needs. Fast, secure, and reliable!
+              Bergabunglah dengan ribuan pemilik hewan peliharaan yang
+              mempercayai kami untuk kebutuhan perawatan hewan mereka. Cepat,
+              aman, dan terpercaya!
             </p>
 
             {/* Feature highlights */}
@@ -442,25 +455,25 @@ function RegisterView() {
                 <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
                   <StarIcon className="w-10 h-10" />
                 </div>
-                <span>Quality Products</span>
+                <span>Produk Berkualitas</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-8 h-8  bg-opacity-20 rounded-full flex items-center justify-center">
                   <TruckIcon className="w-10 h-10" />
                 </div>
-                <span>Free Shipping</span>
+                <span>Gratis Ongkir</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-8 h-8  bg-opacity-20 rounded-full flex items-center justify-center">
                   <ChatBubbleLeftRightIcon className="w-10 h-10" />
                 </div>
-                <span>Expert Support</span>
+                <span>Dukungan Ahli</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-8 h-8  bg-opacity-20 rounded-full flex items-center justify-center">
                   <ShieldCheckIcon className="w-10 h-10" />
                 </div>
-                <span>Safe & Secure</span>
+                <span>Aman & Terjamin</span>
               </div>
             </div>
           </div>
@@ -513,13 +526,13 @@ function RegisterView() {
                       as="h3"
                       className="text-2xl font-bold text-gray-900 mb-2"
                     >
-                      Welcome to PetShop!
+                      Selamat datang di PetShop!
                     </Dialog.Title>
 
                     <p className="text-center text-gray-600 mb-6 leading-relaxed">
-                      Your account has been successfully created. You're now
-                      ready to explore our amazing pet care products and
-                      services.
+                      Akun Anda berhasil dibuat. Anda sekarang siap untuk
+                      menjelajahi produk dan layanan perawatan hewan peliharaan
+                      terbaik dari kami.
                     </p>
 
                     <button
@@ -527,7 +540,7 @@ function RegisterView() {
                       className="w-full py-3 px-6 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
                       onClick={closeModalAndNavigate}
                     >
-                      Get Started
+                      Mulai
                     </button>
                   </div>
                 </Dialog.Panel>

@@ -12,41 +12,41 @@ import "aos/dist/aos.css";
 const SERVICES = [
   {
     icon: <PawPrint className="text-white w-10 h-10" />,
-    title: "Grooming",
+    title: "Grooming (Perawatan)",
     points: [
-      "Seamlessly enhancing pet appearance and comfort",
-      "Provide pet wellness through expert handling",
-      "Efficiently maintaining hygiene and style",
+      "Meningkatkan penampilan dan kenyamanan hewan peliharaan dengan mulus",
+      "Memberikan perawatan kesehatan melalui penanganan ahli",
+      "Menjaga kebersihan dan gaya secara efisien",
     ],
     img: gambar1,
   },
   {
     icon: <Award className="text-white w-10 h-10" />,
-    title: "Vaccination",
+    title: "Vaksinasi",
     points: [
-      "Maintain health with pet immunization coverage",
-      "Prevent disease proactively with precision",
-      "Provide timely and reliable vaccination services",
+      "Menjaga kesehatan dengan imunisasi hewan peliharaan",
+      "Mencegah penyakit secara proaktif dan tepat",
+      "Memberikan layanan vaksinasi yang tepat waktu dan terpercaya",
     ],
     img: gambar2,
   },
   {
     icon: <Stethoscope className="text-white w-10 h-10" />,
-    title: "Medical Examination",
+    title: "Pemeriksaan Medis",
     points: [
-      "Thoroughly assessing pet well-being",
-      "Collaboratively managing health risks",
-      "Efficiently delivering accurate diagnostic insights",
+      "Menilai kesehatan hewan peliharaan secara menyeluruh",
+      "Mengelola risiko kesehatan bersama pemilik",
+      "Memberikan diagnosis yang cepat dan akurat",
     ],
     img: gambar3,
   },
   {
     icon: <Home className="text-white w-10 h-10" />,
-    title: "Pet Boarding",
+    title: "Penitipan Hewan",
     points: [
-      "Providing secure and caring stay solutions",
-      "Empowering pet comfort with attentive care",
-      "Collaboratively ensuring peace of mind for owners",
+      "Memberikan tempat menginap yang aman dan penuh perhatian",
+      "Menjaga kenyamanan hewan dengan perawatan terbaik",
+      "Memberikan ketenangan pikiran bagi pemilik",
     ],
     img: gambar2, // Using gambar2 for consistency in demo, consider unique image
   },
@@ -54,26 +54,26 @@ const SERVICES = [
 
 const PRICES = [
   {
-    title: "GROOMING KUTU + JAMUR KITTEN",
+    title: "GROOMING KUTU + JAMUR ANAK KUCING",
     price: "20K",
     highlight: true,
-    desc: `This grooming service for kittens includes bathing, fur brushing, ear cleaning, nail trimming, and dental care. It also covers flea and fungus treatment to ensure your kitten stays clean, healthy, and comfortable.`,
+    desc: `Layanan grooming untuk anak kucing meliputi mandi, menyikat bulu, membersihkan telinga, memotong kuku, dan perawatan gigi. Termasuk juga perawatan kutu dan jamur agar anak kucing tetap bersih, sehat, dan nyaman.`,
   },
   {
-    title: "GROOMING KUTU + JAMUR ADULT",
+    title: "GROOMING KUTU + JAMUR KUCING DEWASA",
     price: "40K",
     highlight: true,
-    desc: `This adult cat grooming package includes bathing, fur brushing, ear cleaning, nail trimming, and dental care. Flea and fungus treatment is also provided to maintain your cat's hygiene, health, and overall well-being.`,
+    desc: `Paket grooming kucing dewasa meliputi mandi, menyikat bulu, membersihkan telinga, memotong kuku, dan perawatan gigi. Termasuk juga perawatan kutu dan jamur untuk menjaga kebersihan, kesehatan, dan kesejahteraan kucing Anda.`,
   },
   {
-    title: "VACCINATION",
+    title: "VAKSINASI",
     price: "180K",
-    desc: `Vaccination protects cats from dangerous diseases by boosting their immune system. It helps prevent infections like rabies, flu, and other viruses.`,
+    desc: `Vaksinasi melindungi kucing dari penyakit berbahaya dengan meningkatkan sistem imun. Membantu mencegah infeksi seperti rabies, flu, dan virus lainnya.`,
   },
   {
-    title: "MEDICAL EXAMINATION",
+    title: "PEMERIKSAAN MEDIS",
     price: "50K",
-    desc: `We assess pet well-being thoroughly, manage health risks with owners, and provide fast, accurate diagnostics for effective care.`,
+    desc: `Kami menilai kesehatan hewan secara menyeluruh, mengelola risiko kesehatan bersama pemilik, dan memberikan diagnosis yang cepat serta akurat untuk perawatan yang efektif.`,
   },
 ];
 
@@ -104,11 +104,11 @@ export default function ServiceView() {
         <div className="absolute inset-0 bg-[#6BA4B0]/60 z-10" />
         <div className="relative z-20 text-center py-16 px-4">
           <h1 className="text-5xl font-extrabold text-white drop-shadow mb-4">
-            Our Services & Pricing
+            Layanan & Harga Kami
           </h1>
           <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
-            Discover the comprehensive care we offer for your beloved pets, from
-            grooming to medical examinations, all at transparent prices.
+            Temukan layanan lengkap untuk hewan kesayangan Anda, mulai dari
+            grooming hingga pemeriksaan medis, semua dengan harga transparan.
           </p>
 
           {/* Navigation Buttons */}
@@ -140,7 +140,7 @@ export default function ServiceView() {
         {/* Services Section */}
         <div className="mb-20">
           <h2 className="text-4xl font-bold text-[#6BA4B0] mb-12 text-center tracking-tight">
-            Comprehensive Pet Services
+            Layanan Hewan Peliharaan Lengkap
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {SERVICES.map((service) => (
@@ -213,7 +213,7 @@ export default function ServiceView() {
           </div>
 
           <h2 className="text-4xl font-bold text-[#6BA4B0] mb-12 text-center tracking-tight relative z-10">
-            Transparent Pricing
+            Harga Transparan
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
             {PRICES.map((item) => (

@@ -59,10 +59,10 @@ export default function LoginView() {
           {/* Title */}
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold mb-3 text-gray-900">
-              Welcome Back!
+              Selamat Datang Kembali!
             </h2>
             <p className="text-gray-600">
-              Sign in to access your pet care dashboard
+              Masuk untuk mengakses dashboard perawatan hewan peliharaan Anda
             </p>
           </div>
 
@@ -90,7 +90,7 @@ export default function LoginView() {
                 <input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Masukkan email Anda"
                   className={`w-full px-4 py-3 pl-11 border border-[var(--petshop-pink-dark)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--petshop-pink-dark)] focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white ${
                     loading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
@@ -116,7 +116,7 @@ export default function LoginView() {
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
+                  placeholder="Masukkan kata sandi Anda"
                   className={`w-full px-4 py-3 pl-11 pr-11 border border-[var(--petshop-pink-dark)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--petshop-pink-dark)] focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white ${
                     loading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
@@ -157,14 +157,14 @@ export default function LoginView() {
                   disabled={loading}
                 />
                 <span className="text-sm text-[var(--petshop-pink-dark)]">
-                  Remember me
+                  Ingat saya
                 </span>
               </label>
               <a
                 href="/forgot-password"
                 className="text-sm font-medium text-[var(--petshop-pink-dark)] hover:text-[var(--petshop-pink-accent)] transition-colors hover:underline"
               >
-                Forgot Password?
+                Lupa Kata Sandi?
               </a>
             </div>
 
@@ -185,7 +185,7 @@ export default function LoginView() {
                       <div className="absolute inset-0 w-6 h-6 border-2 border-white border-opacity-30 rounded-full"></div>
                     </div>
                     <span className="text-white font-medium">
-                      Signing in...
+                      Sedang masuk...
                     </span>
                   </div>
                 </div>
@@ -210,7 +210,7 @@ export default function LoginView() {
                     d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
                   />
                 </svg>
-                Sign In
+                Masuk
               </div>
             </button>
           </form>
@@ -222,7 +222,7 @@ export default function LoginView() {
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-4 bg-white text-gray-500">
-                New to PetShop?
+                Baru di PetShop?
               </span>
             </div>
           </div>
@@ -246,7 +246,7 @@ export default function LoginView() {
                   d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
                 />
               </svg>
-              Create New Account
+              Buat Akun Baru
             </a>
           </div>
         </div>
@@ -277,11 +277,11 @@ export default function LoginView() {
 
           <div className="text-white">
             <h3 className="text-3xl font-bold mb-4 leading-tight">
-              Connect with every pet need.
+              Terhubung dengan semua kebutuhan hewan peliharaan Anda.
             </h3>
             <p className="text-lg opacity-90 leading-relaxed mb-6">
-              Everything you need for your beloved pets in one place. Easy,
-              fast, and secure shopping experience!
+              Semua yang Anda butuhkan untuk hewan peliharaan tercinta dalam
+              satu tempat. Pengalaman belanja mudah, cepat, dan aman!
             </p>
 
             {/* Feature highlights */}
@@ -290,25 +290,25 @@ export default function LoginView() {
                 <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
                   <ShieldCheckIcon className="w-10 h-10" />
                 </div>
-                <span>Secure Shopping</span>
+                <span>Belanja Aman</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
                   <TruckIcon className="w-10 h-10" />
                 </div>
-                <span>Fast Delivery</span>
+                <span>Pengiriman Cepat</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
                   <ClockIcon className="w-10 h-10" />
                 </div>
-                <span>24/7 Support</span>
+                <span>Dukungan 24/7</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
                   <StarIcon className="w-10 h-10" />
                 </div>
-                <span>Best Quality</span>
+                <span>Kualitas Terbaik</span>
               </div>
             </div>
           </div>

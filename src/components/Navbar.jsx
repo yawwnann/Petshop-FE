@@ -21,13 +21,13 @@ function Navbar() {
   const navigate = useNavigate();
 
   const NAV_LINKS = [
-    { to: "/dashboard", label: "Dashboard", icon: HomeIcon },
+    { to: "/dashboard", label: "Beranda", icon: HomeIcon },
     { to: "/konsultasi", label: "Konsultasi", icon: ChatBubbleLeftRightIcon },
-    { to: "/katalog", label: "Shop", icon: ShoppingCartIcon },
+    { to: "/katalog", label: "Toko", icon: ShoppingCartIcon },
     { to: "/pesanan", label: "Riwayat Pesanan", icon: ArchiveBoxIcon },
-    { to: "/about", label: "About", icon: HomeIcon },
-    { to: "/contact", label: "Contact", icon: UserCircleIcon },
-    { to: "/service", label: "Service", icon: HomeIcon },
+    { to: "/about", label: "Tentang", icon: HomeIcon },
+    { to: "/contact", label: "Kontak", icon: UserCircleIcon },
+    { to: "/service", label: "Layanan", icon: HomeIcon },
   ];
 
   useEffect(() => {
@@ -202,7 +202,7 @@ function Navbar() {
                               } group flex rounded-lg items-center w-full px-3 py-2 text-sm font-medium transition-all duration-200`}
                             >
                               <UserCircleIcon className="h-4 w-4 mr-3" />
-                              Profile
+                              Profil
                             </NavLink>
                           )}
                         </Menu.Item>
@@ -218,7 +218,7 @@ function Navbar() {
                               disabled={isLoggingOut}
                             >
                               <ArrowRightOnRectangleIcon className="h-4 w-4 mr-3" />
-                              {isLoggingOut ? "Logging out..." : "Logout"}
+                              {isLoggingOut ? "Keluar..." : "Keluar"}
                             </button>
                           )}
                         </Menu.Item>
@@ -232,7 +232,7 @@ function Navbar() {
                 to="/login"
                 className="px-4 py-2 rounded-lg font-bold text-white bg-[var(--petshop-pink-dark)] hover:bg-[var(--petshop-pink-accent)] transition-all duration-200"
               >
-                Login
+                Masuk
               </NavLink>
             )}
           </div>
@@ -373,7 +373,7 @@ function Navbar() {
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         <UserCircleIcon className="h-5 w-5" />
-                        Profile
+                        Profil
                       </NavLink>
                       <button
                         onClick={handleLogout}
@@ -381,7 +381,7 @@ function Navbar() {
                         disabled={isLoggingOut}
                       >
                         <ArrowRightOnRectangleIcon className="h-5 w-5" />
-                        {isLoggingOut ? "Logging out..." : "Logout"}
+                        {isLoggingOut ? "Keluar..." : "Keluar"}
                       </button>
                     </div>
                   ) : (
@@ -390,7 +390,7 @@ function Navbar() {
                       className="flex items-center justify-center gap-3 px-4 py-3 text-base font-bold text-white bg-[var(--petshop-pink-dark)] hover:bg-[var(--petshop-pink-accent)] rounded-lg transition-all duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      Login
+                      Masuk
                     </NavLink>
                   )}
                 </div>
