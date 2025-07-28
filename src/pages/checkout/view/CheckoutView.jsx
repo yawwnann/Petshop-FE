@@ -347,17 +347,7 @@ function CheckoutPage() {
                     <span className="font-semibold text-base">
                       Transfer Bank
                     </span>
-                  </label>
-                  {/* QRIS */}
-                  <label
-                    className={`flex-1 cursor-pointer border rounded-xl p-4 flex items-center gap-4 transition-all
-                      ${
-                        metodePembayaran === "qris"
-                          ? "border-[#3B82F6] bg-blue-50 shadow"
-                          : "border-slate-200 bg-white hover:border-[#6BA4B0]"
-                      }
-                    `}
-                  >
+
                     <input
                       type="radio"
                       name="metode_pembayaran"

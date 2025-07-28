@@ -11,10 +11,9 @@ import {
   XCircleIcon,
   ArrowLeftIcon,
   ClockIcon,
-  QrCodeIcon,
   CreditCardIcon,
 } from "@heroicons/react/24/outline";
-import qris2 from "../../../assets/qris2.webp";
+
 import { formatRupiah } from "../../../components/formatRupiah.jsx"; // Sesuaikan path jika berbeda
 
 function PaymentPage() {
@@ -225,17 +224,6 @@ function PaymentPage() {
                     Transfer Bank
                   </button>
                   <button
-                    onClick={() => setSelectedPaymentMethod("qris")}
-                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md font-medium transition-colors ${
-                      selectedPaymentMethod === "qris"
-                        ? "bg-[#E0F2F7] text-[#3B82F6] shadow-sm"
-                        : "text-slate-600 hover:text-[#3B82F6]"
-                    }`}
-                  >
-                    <QrCodeIcon className="h-5 w-5" />
-                    QRIS
-                  </button>
-                  <button
                     onClick={() => setSelectedPaymentMethod("cash")}
                     className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md font-medium transition-colors ${
                       selectedPaymentMethod === "cash"
@@ -286,44 +274,6 @@ function PaymentPage() {
                       <p className="text-xs text-yellow-700">
                         Setelah melakukan transfer, mohon unggah bukti
                         pembayaran Anda di bawah ini dalam waktu 1x24 jam.
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* QRIS Instructions */}
-                {selectedPaymentMethod === "qris" && (
-                  <div>
-                    <p className="text-gray-600 mb-4">
-                      Scan QRIS di bawah ini menggunakan aplikasi e-wallet atau
-                      mobile banking Anda:
-                    </p>
-                    <div className="bg-white border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                      <img
-                        src={qris2}
-                        alt="QRIS Code"
-                        className="mx-auto max-w-xs mb-4"
-                        style={{ maxHeight: "300px" }}
-                      />
-                      <p className="text-sm text-gray-600">
-                        Total:{" "}
-                        <span className="font-bold text-atk-primary">
-                          {formatRupiah(order.total_harga)}
-                        </span>
-                      </p>
-                      <p className="text-xs text-gray-500 mt-2">
-                        Setelah melakukan pembayaran QRIS, mohon unggah bukti
-                        pembayaran di bawah ini.
-                      </p>
-                    </div>
-                    <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                      <p className="text-sm font-medium text-blue-800 mb-2">
-                        TIP: Screenshot bukti pembayaran dari aplikasi e-wallet
-                        Anda
-                      </p>
-                      <p className="text-xs text-blue-700">
-                        Pastikan screenshot menampilkan nominal pembayaran dan
-                        status berhasil.
                       </p>
                     </div>
                   </div>
@@ -443,8 +393,6 @@ function PaymentPage() {
                 <p className="text-gray-600 mb-4">
                   {selectedPaymentMethod === "transfer"
                     ? "Setelah melakukan transfer bank, silakan upload bukti transfer Anda."
-                    : selectedPaymentMethod === "qris"
-                    ? "Setelah melakukan pembayaran QRIS, silakan upload screenshot bukti pembayaran dari aplikasi e-wallet Anda."
                     : "Untuk pembayaran cash, tidak perlu upload bukti pembayaran. Pembayaran akan dilakukan langsung di toko saat pengambilan barang."}
                 </p>
                 {selectedPaymentMethod !== "cash" ? (
@@ -465,8 +413,8 @@ function PaymentPage() {
                         <p className="text-green-700 text-sm">
                           Pesanan Anda telah dikonfirmasi untuk pembayaran cash.
                           Silakan datang ke toko kami dengan membawa ID pesanan
-                          #{order.id}
-                          untuk melakukan pembayaran dan pengambilan barang.
+                          #{order.id} untuk melakukan pembayaran dan pengambilan
+                          barang.
                         </p>
                       </div>
                     </div>

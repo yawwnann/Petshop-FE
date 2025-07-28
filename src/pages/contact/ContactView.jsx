@@ -3,9 +3,11 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import gambar1 from "../../assets/gambar1.webp";
 
 const CONTACT = {
-  address: "Kasihan, Kabupaten Bantul, Daerah Istimewa Yogyakarta",
-  phone: "+62 812-3456-7890",
-  email: "petshop@email.com",
+  address:
+    "Jl. Siluk Panggang, Siuk 1, Selopamioro, Kec. Imogiri, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55782",
+  phone: "+6282134346802", // Changed to the primary number for href
+  phoneDisplay1: "0821-3434-6802", // For display
+  email: "buanapetshop19@gmail.com",
 };
 
 export default function ContactView() {
@@ -15,6 +17,7 @@ export default function ContactView() {
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     setSuccess(true);
@@ -44,7 +47,8 @@ export default function ContactView() {
               href={`tel:${CONTACT.phone}`}
               className="flex items-center gap-2 text-lg font-semibold hover:underline justify-center"
             >
-              <Phone size={28} /> {CONTACT.phone}
+              <Phone size={28} /> {CONTACT.phoneDisplay1}{" "}
+              {CONTACT.phoneDisplay2}
             </a>
             <a
               href={`mailto:${CONTACT.email}`}
@@ -71,7 +75,7 @@ export default function ContactView() {
             <Phone size={36} className="text-[var(--petshop-pink-accent)]" />
             <div>
               <div className="font-bold text-lg mb-1">Telepon</div>
-              <div>{CONTACT.phone}</div>
+              <div>{CONTACT.phoneDisplay1}</div>
             </div>
           </div>
           <div className="bg-white rounded-2xl border-l-8 border-[var(--petshop-pink-dark)] p-6 flex items-center gap-4 shadow">
@@ -140,9 +144,7 @@ export default function ContactView() {
       <section className="max-w-4xl mx-auto pb-20 px-4">
         <div className="rounded-3xl overflow-hidden shadow-lg">
           <iframe
-            title="Buana Petshop Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4958838722728!2d110.3756653!3d-7.9475973999999985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5551b5a15a07%3A0x55297fa1daf66ade!2sBuana%20klinik%20dan%20petshop!5e0!3m2!1sid!2sid!4v1752511464523!5m2!1sid!2sid"
-            //<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4958838722728!2d110.3756653!3d-7.9475973999999985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5551b5a15a07%3A0x55297fa1daf66ade!2sBuana%20klinik%20dan%20petshop!5e0!3m2!1sid!2sid!4v1752511464523!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d252982.0530239896!2d110.21211512311547!3d-7.806272877433629!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5551b5a15a07%3A0x55297fa1daf66ade!2sBuana%20klinik%20dan%20petshop!5e0!3m2!1sid!2sid!4v1753709387012!5m2!1sid!2sid"
             width="100%"
             height="450"
             style={{ border: 0 }}

@@ -1,4 +1,5 @@
 import { KatalogModel } from "../model/KatalogModel";
+import apiClient from "../../../api/apiClient"; // Adjust the path as needed
 
 export class KatalogPresenter {
   constructor() {
@@ -92,5 +93,15 @@ export class KatalogPresenter {
 
   isProductAvailable(produk) {
     return produk?.status_ketersediaan?.toLowerCase() === "tersedia";
+  }
+
+  async getCategories() {
+    try {
+      const response = await apiClient.get("/kategori"); // Changed from /categories to /kategori
+      return response.data.data;
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      return [];
+    }
   }
 }

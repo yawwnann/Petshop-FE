@@ -21,7 +21,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { ArrowsUpDownIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { cn } from "../../../lib/utils";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, Menu } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 
 const formatRupiah = (angka) => {
@@ -82,7 +82,7 @@ function FilterChips({ filters, onRemoveFilter, onResetAll }) {
 
 function ProdukCard({ produk, presenter, navigate }) {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [feedback, setFeedback] = useState({ type: "", message: "" });
+  // Removed unused feedback state to resolve compile error.
   const [isLiked, setIsLiked] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -96,49 +96,28 @@ function ProdukCard({ produk, presenter, navigate }) {
     presenter.handleNavigateToDetail(navigate, produk);
   };
 
-  // const navigateToDetailFromButton = (e) => {
-  //   e.stopPropagation();
-  //   presenter.handleNavigateToDetail(navigate, produk);
-  // };
-
-  const statusKetersediaan = produk?.status_ketersediaan?.toLowerCase();
   const isTersedia = presenter.isProductAvailable(produk);
-  const statusBadgeColor = presenter.getStatusBadgeColor(
-    produk?.status_ketersediaan
-  );
 
   const namaProdukDisplay =
     produk?.nama_produk || produk?.nama || "Nama Produk Tidak Tersedia";
   const gambarUtama = produk?.gambar_utama_url || produk?.gambar_utama;
   const hargaProduk = produk?.harga;
-  const kategoriNama =
-    produk?.kategori?.nama_kategori || produk?.kategori?.nama;
 
   const handleAddToCart = async (e) => {
     e.stopPropagation();
     if (isAddingToCart || !isTersedia) return;
     setIsAddingToCart(true);
-    setFeedback({ type: "", message: "" });
-    console.log("Mulai proses add to cart");
+    // Removed feedback usage to resolve compile error.
 
     const result = await presenter.handleAddToCart(produk.id, 1);
-    console.log("Hasil addToCart:", result);
 
     if (result.success) {
-      setFeedback({
-        type: "success",
-        message: `${namaProdukDisplay} ditambahkan!`,
-      });
       setShowSuccessModal(true);
-      console.log("setShowSuccessModal(true) dipanggil");
       setTimeout(() => {
         setShowSuccessModal(false);
-        console.log("setShowSuccessModal(false) dipanggil (timeout)");
       }, 2000);
-      setTimeout(() => setFeedback({ type: "", message: "" }), 2000);
     } else {
-      setFeedback({ type: "error", message: result.error });
-      setTimeout(() => setFeedback({ type: "", message: "" }), 2500);
+      // Optionally handle error feedback with another method if needed.
     }
 
     setIsAddingToCart(false);
@@ -149,74 +128,19 @@ function ProdukCard({ produk, presenter, navigate }) {
     setIsLiked(!isLiked);
   };
 
-  // Tambahkan log render modal
   useEffect(() => {
     if (showSuccessModal) {
-      console.log("Modal sukses sedang dirender!");
+      // Modal sukses sedang dirender
     }
   }, [showSuccessModal]);
 
+  // STATUS KETERSEDIAAN DI ATAS GAMBAR
   return (
     <div
       className="group bg-white rounded-3xl overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-2 flex flex-col h-full relative shadow-lg border border-slate-100 hover:border-[#8CBCC7]"
       onClick={viewDetail}
     >
-      {/* Modal sukses */}
-      <Transition.Root show={showSuccessModal} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-50"
-          onClose={setShowSuccessModal}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 backdrop-blur-md bg-opacity-30 transition-opacity" />
-          </Transition.Child>
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel className="bg-white rounded-xl shadow-xl p-6 max-w-sm w-full text-center">
-                <div className="flex flex-col items-center gap-2">
-                  <ShoppingCartIcon className="w-10 h-10 text-[#598c96] mb-2" />
-                  <h3 className="text-lg font-bold text-[#598c96] mb-1">
-                    Berhasil Ditambahkan!
-                  </h3>
-                  <p className="text-sm text-slate-600">
-                    {namaProdukDisplay} telah masuk ke keranjang.
-                  </p>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition.Root>
-      {feedback.message && (
-        <div
-          className={cn(
-            "absolute inset-x-0 top-0 z-30 p-3 text-center text-xs font-bold transition-all duration-300",
-            feedback.type === "success"
-              ? "bg-gradient-to-r from-[#598c96] to-[#8CBCC7] text-white"
-              : "bg-gradient-to-r from-rose-500 to-rose-600 text-white"
-          )}
-        >
-          {feedback.message}
-        </div>
-      )}
-
+      {/* Gambar Produk */}
       <div className="relative overflow-hidden aspect-[4/3] cursor-pointer">
         <img
           src={
@@ -233,45 +157,6 @@ function ProdukCard({ produk, presenter, navigate }) {
               "https://placehold.co/450x338/fecaca/991b1b?text=Error";
           }}
         />
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-        <div className="absolute top-4 left-4 z-10 hidden sm:flex flex-col gap-2 items-start">
-          {kategoriNama && (
-            <span
-              className="bg-[#598c96]/90 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg tracking-wide flex items-center"
-              style={{
-                marginBottom: 2,
-                maxWidth: "90%",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              <TagIcon className="w-3 h-3 mr-1" /> {kategoriNama}
-            </span>
-          )}
-          {statusKetersediaan && (
-            <span
-              className={cn(
-                "text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg tracking-wide backdrop-blur-sm",
-                statusBadgeColor
-              )}
-              style={{
-                background: "rgba(34,197,94,0.85)",
-                color: "#fff",
-                marginTop: 2,
-                maxWidth: "90%",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {statusKetersediaan.charAt(0).toUpperCase() +
-                statusKetersediaan.slice(1)}
-            </span>
-          )}
-        </div>
 
         <button
           onClick={handleLike}
@@ -467,12 +352,105 @@ const SkeletonCard = () => (
   </div>
 );
 
+// Update the FilterDropdown component
+const FilterDropdown = ({ filters, onFilterChange }) => {
+  // Helper function to get button label based on current filter
+  const getButtonLabel = () => {
+    if (filters?.sort === "latest") return "Terbaru";
+    if (filters?.sort === "oldest") return "Terlama";
+    return "Urutan";
+  };
+
+  const handleReset = () => {
+    onFilterChange("sort", "latest");
+  };
+
+  return (
+    <Menu as="div" className="relative">
+      <Menu.Button className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition-colors duration-200 min-w-[140px]">
+        <FunnelIcon className="w-5 h-5 text-slate-600" />
+        <span className="text-sm font-medium text-slate-700">
+          {getButtonLabel()}
+        </span>
+        <ChevronDownIcon className="w-4 h-4 text-slate-600 ml-auto" />
+      </Menu.Button>
+
+      <Transition
+        enter="transition duration-100 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
+      >
+        <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-slate-100 z-50 divide-y divide-slate-100">
+          {/* Sort Options */}
+          <div className="p-2">
+            <div className="px-2 py-1.5">
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Urutan
+              </p>
+            </div>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${active ? "bg-slate-50" : ""} ${
+                    filters?.sort === "latest"
+                      ? "text-[#598c96] font-medium"
+                      : "text-slate-700"
+                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-colors`}
+                  onClick={() => onFilterChange("sort", "latest")}
+                >
+                  <ArrowPathIcon className="w-4 h-4" />
+                  Terbaru
+                </button>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${active ? "bg-slate-50" : ""} ${
+                    filters?.sort === "oldest"
+                      ? "text-[#598c96] font-medium"
+                      : "text-slate-700"
+                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-colors`}
+                  onClick={() => onFilterChange("sort", "oldest")}
+                >
+                  <ArrowsUpDownIcon className="w-4 h-4" />
+                  Terlama
+                </button>
+              )}
+            </Menu.Item>
+          </div>
+
+          {/* Reset Option */}
+          <div className="p-2">
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${
+                    active ? "bg-red-50" : ""
+                  } text-red-600 group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-colors`}
+                  onClick={handleReset}
+                >
+                  <XMarkIcon className="w-4 h-4" />
+                  Reset Urutan
+                </button>
+              )}
+            </Menu.Item>
+          </div>
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  );
+};
 function KatalogPage() {
   const [presenter] = useState(() => new KatalogPresenter());
   const [produkList, setProdukList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [meta, setMeta] = useState(null);
+  const [kategoriList, setKategoriList] = useState([]); // Tambahan
   const [filters, setFilters] = useState({
     search: "",
     kategori: "",
@@ -489,7 +467,12 @@ function KatalogPage() {
       setLoading(presenter.getLoading());
       setError(presenter.getError());
       setMeta(presenter.getMeta());
+
+      // Ambil kategori dari presenter
+      const kategoriData = await presenter.getCategories();
+      setKategoriList(kategoriData);
     };
+
     initializeData();
   }, [presenter]);
 
@@ -504,21 +487,6 @@ function KatalogPage() {
 
   const handlePageChange = async (page) => {
     await presenter.handlePageChange(page);
-    setProdukList(presenter.getProdukList());
-    setMeta(presenter.getMeta());
-    setLoading(presenter.getLoading());
-    setError(presenter.getError());
-  };
-
-  const resetAllFilters = async () => {
-    setFilters({
-      search: "",
-      kategori: "",
-      sort: "latest",
-      minPrice: "",
-      maxPrice: "",
-    });
-    await presenter.resetAllFilters();
     setProdukList(presenter.getProdukList());
     setMeta(presenter.getMeta());
     setLoading(presenter.getLoading());
@@ -551,6 +519,7 @@ function KatalogPage() {
       </header>
 
       <div className="container mx-auto px-4 sm:px-5 lg:px-6 py-4 md:py-6">
+        {/* Filter Search + Kategori + Sort */}
         <div className="mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
           <input
             type="text"
@@ -568,44 +537,32 @@ function KatalogPage() {
               color: "var(--atk-dark)",
             }}
           />
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-3">
+            {/* Dropdown kategori */}
             <select
-              value={filters.sort}
-              onChange={(e) => handleFilterOrSortChange("sort", e.target.value)}
-              style={{
-                border: "1px solid #eee",
-                borderRadius: 10,
-                padding: "0.5rem 1rem",
-                fontSize: 15,
-                background: "#fafafa",
-                color: "var(--atk-dark)",
-              }}
+              value={filters.kategori}
+              onChange={(e) =>
+                handleFilterOrSortChange("kategori", e.target.value)
+              }
+              className="border border-slate-200 rounded-xl px-4 py-2.5 bg-white text-sm text-slate-700 min-w-[140px]"
             >
-              <option value="latest">Terbaru</option>
-              <option value="oldest">Terlama</option>
-              <option value="price_low">Harga Terendah</option>
-              <option value="price_high">Harga Tertinggi</option>
-              <option value="name_asc">Nama A-Z</option>
-              <option value="name_desc">Nama Z-A</option>
+              <option value="">Semua Kategori</option>
+              {kategoriList.map((kategori) => (
+                <option key={kategori.id} value={kategori.slug}>
+                  {kategori.nama_kategori}
+                </option>
+              ))}
             </select>
-            <button
-              onClick={resetAllFilters}
-              style={{
-                border: "1px solid var(--atk-primary)",
-                background: "none",
-                color: "var(--atk-primary)",
-                borderRadius: 10,
-                padding: "0.5rem 1.2rem",
-                fontWeight: 500,
-                fontSize: 15,
-                cursor: "pointer",
-              }}
-            >
-              Reset
-            </button>
+
+            {/* Dropdown sorting */}
+            <FilterDropdown
+              filters={filters}
+              onFilterChange={handleFilterOrSortChange}
+            />
           </div>
         </div>
 
+        {/* Produk List */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {loading
             ? Array.from({ length: meta?.per_page || 12 }).map((_, index) => (
@@ -628,76 +585,18 @@ function KatalogPage() {
                   <div
                     style={{ fontWeight: 700, fontSize: 20, marginBottom: 8 }}
                   >
-                    Hewan Tidak Ditemukan
+                    Tidak Ditemukan
                   </div>
                   <div style={{ fontSize: 15, marginBottom: 18 }}>
-                    Coba kata kunci lain atau reset filter.
+                    Coba kata kunci lain.
                   </div>
-                  <button
-                    onClick={resetAllFilters}
-                    style={{
-                      border: "1px solid var(--atk-primary)",
-                      background: "none",
-                      color: "var(--atk-primary)",
-                      borderRadius: 10,
-                      padding: "0.5rem 1.2rem",
-                      fontWeight: 500,
-                      fontSize: 15,
-                      cursor: "pointer",
-                    }}
-                  >
-                    Reset Filter
-                  </button>
                 </div>
               )}
         </div>
 
+        {/* Pagination */}
         {!loading && meta && meta.last_page > 1 && (
-          <nav className="flex justify-center mt-14">
-            <div style={{ display: "flex", gap: 4 }}>
-              {meta.links.map((link, idx) => {
-                if (link.label === "...") {
-                  return (
-                    <span
-                      key={idx}
-                      style={{
-                        padding: "0.5rem 0.9rem",
-                        color: "#bbb",
-                        fontSize: 15,
-                      }}
-                    >
-                      ...
-                    </span>
-                  );
-                }
-                return (
-                  <button
-                    key={idx}
-                    onClick={() =>
-                      link.url &&
-                      handlePageChange(
-                        new URL(link.url).searchParams.get("page")
-                      )
-                    }
-                    disabled={!link.url || link.active}
-                    style={{
-                      padding: "0.5rem 0.9rem",
-                      border: "1px solid #eee",
-                      background: link.active ? "var(--atk-primary)" : "#fff",
-                      color: link.active ? "#fff" : "var(--atk-dark)",
-                      borderRadius: 8,
-                      fontWeight: link.active ? 700 : 500,
-                      fontSize: 15,
-                      cursor: link.url ? "pointer" : "not-allowed",
-                      opacity: link.url ? 1 : 0.5,
-                    }}
-                  >
-                    {link.label.replace(/&laquo;|&raquo;/g, "").trim()}
-                  </button>
-                );
-              })}
-            </div>
-          </nav>
+          <Pagination meta={meta} onPageChange={handlePageChange} />
         )}
       </div>
     </div>

@@ -160,12 +160,6 @@ export default function LoginView() {
                   Ingat saya
                 </span>
               </label>
-              <a
-                href="/forgot-password"
-                className="text-sm font-medium text-[var(--petshop-pink-dark)] hover:text-[var(--petshop-pink-accent)] transition-colors hover:underline"
-              >
-                Lupa Kata Sandi?
-              </a>
             </div>
 
             {/* Login Button */}
@@ -285,19 +279,14 @@ export default function LoginView() {
             </p>
 
             {/* Feature highlights */}
-            <div className="grid grid-cols-2 gap-4 mt-8">
+            <div className="flex flex-col items-center gap-4 mt-8">
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
                   <ShieldCheckIcon className="w-10 h-10" />
                 </div>
                 <span>Belanja Aman</span>
               </div>
-              <div className="flex items-center gap-2 text-sm">
-                <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
-                  <TruckIcon className="w-10 h-10" />
-                </div>
-                <span>Pengiriman Cepat</span>
-              </div>
+
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
                   <ClockIcon className="w-10 h-10" />
