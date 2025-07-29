@@ -347,17 +347,6 @@ function CheckoutPage() {
                     <span className="font-semibold text-base">
                       Transfer Bank
                     </span>
-
-                    <input
-                      type="radio"
-                      name="metode_pembayaran"
-                      value="qris"
-                      checked={metodePembayaran === "qris"}
-                      onChange={() => setMetodePembayaran("qris")}
-                      className="sr-only"
-                    />
-                    <QrCodeIcon className="h-7 w-7 text-[#3B82F6]" />
-                    <span className="font-semibold text-base">QRIS</span>
                   </label>
                   {/* Cash */}
                   <label

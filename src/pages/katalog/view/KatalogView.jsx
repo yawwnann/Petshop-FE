@@ -80,21 +80,13 @@ function FilterChips({ filters, onRemoveFilter, onResetAll }) {
   );
 }
 
-function ProdukCard({ produk, presenter, navigate }) {
+function ProdukCard({ produk, presenter}) {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   // Removed unused feedback state to resolve compile error.
   const [isLiked, setIsLiked] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const viewDetail = (e) => {
-    if (
-      e.target.closest(".add-to-cart-button") ||
-      e.target.closest(".view-detail-button") ||
-      e.target.closest(".like-button")
-    )
-      return;
-    presenter.handleNavigateToDetail(navigate, produk);
-  };
+
 
   const isTersedia = presenter.isProductAvailable(produk);
 
@@ -138,7 +130,7 @@ function ProdukCard({ produk, presenter, navigate }) {
   return (
     <div
       className="group bg-white rounded-3xl overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-2 flex flex-col h-full relative shadow-lg border border-slate-100 hover:border-[#8CBCC7]"
-      onClick={viewDetail}
+
     >
       {/* Gambar Produk */}
       <div className="relative overflow-hidden aspect-[4/3] cursor-pointer">
