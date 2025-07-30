@@ -1,6 +1,13 @@
+// src/app/katalog/KatalogPage.jsx
 "use client";
 
-import React, { useState, useEffect, Fragment } from "react";
+import React, {
+  useState,
+  useEffect,
+  Fragment,
+  useRef,
+  useCallback,
+} from "react";
 import { KatalogPresenter } from "../presenter/KatalogPresenter";
 import {
   MagnifyingGlassIcon,
@@ -8,22 +15,19 @@ import {
   ArrowPathIcon,
   ChevronDownIcon,
   FunnelIcon,
-  InboxIcon,
   ExclamationTriangleIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  EyeIcon,
-  TagIcon,
-  SparklesIcon,
-  FireIcon,
-  StarIcon,
   XMarkIcon,
+  TagIcon,
+  StarIcon,
 } from "@heroicons/react/24/solid";
 import { ArrowsUpDownIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { cn } from "../../../lib/utils";
-import { Dialog, Transition, Menu } from "@headlessui/react";
-import { useNavigate } from "react-router-dom";
+import { Transition, Menu } from "@headlessui/react";
+// import { useNavigate } from "react-router-dom"; // Uncomment if using React Router for navigation
 
+// --- Helper Function: formatRupiah ---
 const formatRupiah = (angka) => {
   const number = typeof angka === "string" ? parseInt(angka, 10) : angka;
   if (isNaN(number) || number === null || number === undefined) return "Rp -";
@@ -35,6 +39,7 @@ const formatRupiah = (angka) => {
   }).format(number);
 };
 
+// --- Component: FilterChips ---
 function FilterChips({ filters, onRemoveFilter, onResetAll }) {
   const activeFilters = [];
   if (filters.search)
@@ -49,8 +54,16 @@ function FilterChips({ filters, onRemoveFilter, onResetAll }) {
       name_asc: "Nama A-Z",
       name_desc: "Nama Z-A",
     };
-    activeFilters.push({ type: "sort", label: sortLabels[filters.sort] });
+    // Hanya tambahkan chip jika label sort spesifik tersedia
+    if (sortLabels[filters.sort]) {
+      activeFilters.push({ type: "sort", label: sortLabels[filters.sort] });
+    }
   }
+  // Anda bisa menambahkan filter harga di sini jika diimplementasikan
+  // if (filters.minPrice || filters.maxPrice) {
+  //   activeFilters.push({ type: "price", label: `Harga: ${filters.minPrice || 'Min'} - ${filters.maxPrice || 'Max'}` });
+  // }
+
   if (activeFilters.length === 0) return null;
   return (
     <div className="flex flex-wrap items-center gap-2 mb-6">
@@ -58,13 +71,14 @@ function FilterChips({ filters, onRemoveFilter, onResetAll }) {
       {activeFilters.map((filter, idx) => (
         <span
           key={idx}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-100 text-emerald-800 text-xs font-medium rounded-full border border-emerald-200"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#e6f0f2] text-[#598c96] text-xs font-medium rounded-full border border-[#c5dde2] shadow-sm"
         >
           <FunnelIcon className="w-3 h-3" />
           {filter.label}
           <button
             onClick={() => onRemoveFilter(filter.type)}
-            className="ml-1 hover:bg-emerald-200 rounded-full p-0.5 transition-colors"
+            className="ml-1 hover:bg-[#c5dde2] rounded-full p-0.5 transition-all duration-200"
+            aria-label={`Hapus filter ${filter.label}`}
           >
             <XMarkIcon className="w-3 h-3" />
           </button>
@@ -72,7 +86,7 @@ function FilterChips({ filters, onRemoveFilter, onResetAll }) {
       ))}
       <button
         onClick={onResetAll}
-        className="text-xs text-slate-500 hover:text-slate-700 font-medium underline"
+        className="text-xs text-[#598c96] hover:text-[#3a5c63] font-medium underline transition-all duration-200"
       >
         Reset Semua
       </button>
@@ -80,13 +94,11 @@ function FilterChips({ filters, onRemoveFilter, onResetAll }) {
   );
 }
 
-function ProdukCard({ produk, presenter}) {
+// --- Component: ProdukCard ---
+function ProdukCard({ produk, presenter }) {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  // Removed unused feedback state to resolve compile error.
   const [isLiked, setIsLiked] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-
-
+  const [showSuccessModal, setShowSuccessModal] = useState(false); // Untuk notifikasi sukses tambah keranjang
 
   const isTersedia = presenter.isProductAvailable(produk);
 
@@ -98,20 +110,19 @@ function ProdukCard({ produk, presenter}) {
   const handleAddToCart = async (e) => {
     e.stopPropagation();
     if (isAddingToCart || !isTersedia) return;
-    setIsAddingToCart(true);
-    // Removed feedback usage to resolve compile error.
 
-    const result = await presenter.handleAddToCart(produk.id, 1);
+    setIsAddingToCart(true);
+    const result = await presenter.addToCart(produk.id, 1);
 
     if (result.success) {
       setShowSuccessModal(true);
       setTimeout(() => {
         setShowSuccessModal(false);
-      }, 2000);
+      }, 2000); // Sembunyikan setelah 2 detik
     } else {
-      // Optionally handle error feedback with another method if needed.
+      // Handle error display if needed (e.g., toast notification)
+      console.error("Gagal menambahkan ke keranjang:", result.error);
     }
-
     setIsAddingToCart(false);
   };
 
@@ -120,19 +131,8 @@ function ProdukCard({ produk, presenter}) {
     setIsLiked(!isLiked);
   };
 
-  useEffect(() => {
-    if (showSuccessModal) {
-      // Modal sukses sedang dirender
-    }
-  }, [showSuccessModal]);
-
-  // STATUS KETERSEDIAAN DI ATAS GAMBAR
   return (
-    <div
-      className="group bg-white rounded-3xl overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-2 flex flex-col h-full relative shadow-lg border border-slate-100 hover:border-[#8CBCC7]"
-
-    >
-      {/* Gambar Produk */}
+    <div className="group bg-white rounded-3xl overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-2 flex flex-col h-full relative shadow-lg border border-slate-100 hover:border-[#8CBCC7]">
       <div className="relative overflow-hidden aspect-[4/3] cursor-pointer">
         <img
           src={
@@ -202,13 +202,6 @@ function ProdukCard({ produk, presenter}) {
         </p>
 
         <div className="mt-auto ">
-          {/* <button
-            onClick={navigateToDetailFromButton}
-            className="view-detail-button w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-2xl shadow-sm transition-all duration-200 flex items-center justify-center text-sm focus:outline-none focus:ring-2 focus:ring-[#598c96] focus:ring-offset-1"
-            aria-label={`Lihat detail ${namaProdukDisplay}`}
-          >
-            <EyeIcon className="w-4 h-4 mr-2" /> Detail
-          </button> */}
           <button
             onClick={handleAddToCart}
             disabled={!isTersedia || isAddingToCart}
@@ -226,10 +219,21 @@ function ProdukCard({ produk, presenter}) {
           </button>
         </div>
       </div>
+      {showSuccessModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl text-center flex items-center gap-3">
+            <ShoppingCartIcon className="w-6 h-6 text-emerald-500" />
+            <p className="text-slate-700 font-medium">
+              Berhasil ditambahkan ke keranjang!
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
+// --- Component: Pagination ---
 function Pagination({ meta, onPageChange }) {
   if (!meta || !meta.links || meta.last_page <= 1) return null;
 
@@ -240,6 +244,7 @@ function Pagination({ meta, onPageChange }) {
       const page = url.searchParams.get("page");
       if (page) onPageChange(page);
     } catch (e) {
+      // Fallback for relative URLs or non-standard formats
       const match = pageUrl.match(/[?&]page=(\d+)/);
       if (match && match[1]) onPageChange(match[1]);
       else console.error("Invalid URL for pagination:", pageUrl, e);
@@ -322,6 +327,7 @@ function Pagination({ meta, onPageChange }) {
   );
 }
 
+// --- Component: SkeletonCard ---
 const SkeletonCard = () => (
   <div className="bg-white rounded-3xl border border-slate-200/70 overflow-hidden animate-pulse shadow-lg">
     <div className="aspect-[4/3] bg-gradient-to-br from-slate-200 to-slate-300"></div>
@@ -344,13 +350,25 @@ const SkeletonCard = () => (
   </div>
 );
 
-// Update the FilterDropdown component
+// --- Component: FilterDropdown (for Sorting) ---
 const FilterDropdown = ({ filters, onFilterChange }) => {
-  // Helper function to get button label based on current filter
   const getButtonLabel = () => {
-    if (filters?.sort === "latest") return "Terbaru";
-    if (filters?.sort === "oldest") return "Terlama";
-    return "Urutan";
+    switch (filters?.sort) {
+      case "latest":
+        return "Terbaru";
+      case "oldest":
+        return "Terlama";
+      case "price_low":
+        return "Harga Terendah";
+      case "price_high":
+        return "Harga Tertinggi";
+      case "name_asc":
+        return "Nama A-Z";
+      case "name_desc":
+        return "Nama Z-A";
+      default:
+        return "Urutan";
+    }
   };
 
   const handleReset = () => {
@@ -359,15 +377,16 @@ const FilterDropdown = ({ filters, onFilterChange }) => {
 
   return (
     <Menu as="div" className="relative">
-      <Menu.Button className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition-colors duration-200 min-w-[140px]">
-        <FunnelIcon className="w-5 h-5 text-slate-600" />
+      <Menu.Button className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 bg-white shadow-sm hover:bg-slate-50 transition-all duration-200 min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#598c96] focus:border-transparent">
+        <FunnelIcon className="w-4 h-4 text-slate-400" />
         <span className="text-sm font-medium text-slate-700">
           {getButtonLabel()}
         </span>
-        <ChevronDownIcon className="w-4 h-4 text-slate-600 ml-auto" />
+        <ChevronDownIcon className="w-4 h-4 text-slate-400 ml-auto" />
       </Menu.Button>
 
       <Transition
+        as={Fragment}
         enter="transition duration-100 ease-out"
         enterFrom="transform scale-95 opacity-0"
         enterTo="transform scale-100 opacity-100"
@@ -375,8 +394,7 @@ const FilterDropdown = ({ filters, onFilterChange }) => {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-slate-100 z-50 divide-y divide-slate-100">
-          {/* Sort Options */}
+        <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-lg ring-1 ring-slate-200 focus:outline-none border border-slate-100 z-50 divide-y divide-slate-100 overflow-hidden">
           <div className="p-2">
             <div className="px-2 py-1.5">
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -390,7 +408,7 @@ const FilterDropdown = ({ filters, onFilterChange }) => {
                     filters?.sort === "latest"
                       ? "text-[#598c96] font-medium"
                       : "text-slate-700"
-                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-colors`}
+                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
                   onClick={() => onFilterChange("sort", "latest")}
                 >
                   <ArrowPathIcon className="w-4 h-4" />
@@ -405,7 +423,7 @@ const FilterDropdown = ({ filters, onFilterChange }) => {
                     filters?.sort === "oldest"
                       ? "text-[#598c96] font-medium"
                       : "text-slate-700"
-                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-colors`}
+                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
                   onClick={() => onFilterChange("sort", "oldest")}
                 >
                   <ArrowsUpDownIcon className="w-4 h-4" />
@@ -413,16 +431,75 @@ const FilterDropdown = ({ filters, onFilterChange }) => {
                 </button>
               )}
             </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${active ? "bg-slate-50" : ""} ${
+                    filters?.sort === "price_low"
+                      ? "text-[#598c96] font-medium"
+                      : "text-slate-700"
+                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
+                  onClick={() => onFilterChange("sort", "price_low")}
+                >
+                  <TagIcon className="w-4 h-4" />
+                  Harga Terendah
+                </button>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${active ? "bg-slate-50" : ""} ${
+                    filters?.sort === "price_high"
+                      ? "text-[#598c96] font-medium"
+                      : "text-slate-700"
+                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
+                  onClick={() => onFilterChange("sort", "price_high")}
+                >
+                  <TagIcon className="w-4 h-4" />
+                  Harga Tertinggi
+                </button>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${active ? "bg-slate-50" : ""} ${
+                    filters?.sort === "name_asc"
+                      ? "text-[#598c96] font-medium"
+                      : "text-slate-700"
+                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
+                  onClick={() => onFilterChange("sort", "name_asc")}
+                >
+                  <ArrowsUpDownIcon className="w-4 h-4" />
+                  Nama A-Z
+                </button>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${active ? "bg-slate-50" : ""} ${
+                    filters?.sort === "name_desc"
+                      ? "text-[#598c96] font-medium"
+                      : "text-slate-700"
+                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
+                  onClick={() => onFilterChange("sort", "name_desc")}
+                >
+                  <ArrowsUpDownIcon className="w-4 h-4" />
+                  Nama Z-A
+                </button>
+              )}
+            </Menu.Item>
           </div>
 
-          {/* Reset Option */}
           <div className="p-2">
             <Menu.Item>
               {({ active }) => (
                 <button
                   className={`${
                     active ? "bg-red-50" : ""
-                  } text-red-600 group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-colors`}
+                  } text-red-600 group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
                   onClick={handleReset}
                 >
                   <XMarkIcon className="w-4 h-4" />
@@ -436,13 +513,129 @@ const FilterDropdown = ({ filters, onFilterChange }) => {
     </Menu>
   );
 };
+
+// --- Component: SearchBar (Sudah dirombak di jawaban sebelumnya) ---
+function SearchBar({
+  initialSearchTerm,
+  onSearchSubmit,
+  onClearSearch,
+  isSearching,
+}) {
+  const [localSearch, setLocalSearch] = useState(initialSearchTerm);
+  const searchTimeout = useRef(null);
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    setLocalSearch(initialSearchTerm);
+  }, [initialSearchTerm]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setLocalSearch(value);
+
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current);
+    }
+
+    searchTimeout.current = setTimeout(() => {
+      onSearchSubmit(value.trim());
+    }, 500);
+  };
+
+  const handleSubmit = () => {
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current);
+    }
+    onSearchSubmit(localSearch.trim());
+  };
+
+  const handleClear = () => {
+    setLocalSearch("");
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current);
+    }
+    onClearSearch();
+    searchInputRef.current?.focus();
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
+  return (
+    <div className="relative w-full max-w-md">
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <MagnifyingGlassIcon
+          className={`h-5 w-5 ${
+            isSearching ? "text-[#598c96] animate-pulse" : "text-slate-400"
+          }`}
+        />
+      </div>
+
+      <input
+        type="text"
+        placeholder="Cari nama hewan, ras, atau kategori..."
+        value={localSearch}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        ref={searchInputRef}
+        className="block w-full pl-10 pr-24 py-3 border border-slate-200 rounded-xl
+                   text-sm placeholder-slate-400 bg-white shadow-sm
+                   focus:outline-none focus:ring-2 focus:ring-[#598c96] focus:border-transparent
+                   transition-all duration-200 disabled:bg-slate-50 disabled:text-slate-500"
+        disabled={isSearching}
+      />
+
+      {localSearch && (
+        <button
+          onClick={handleClear}
+          className="absolute inset-y-0 right-16 px-2 flex items-center
+                      text-slate-400 hover:text-slate-600 transition-colors"
+          aria-label="Hapus pencarian"
+        >
+          <XMarkIcon className="h-5 w-5" />
+        </button>
+      )}
+
+      <button
+        onClick={handleSubmit}
+        disabled={!localSearch.trim() || isSearching}
+        className={`absolute inset-y-0 right-0 px-4 flex items-center rounded-r-xl
+                     ${
+                       !localSearch.trim() || isSearching
+                         ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                         : "bg-[#598c96] text-white hover:bg-[#3a5c63]"
+                     } transition-colors`}
+        aria-label="Cari"
+      >
+        {isSearching ? (
+          <ArrowPathIcon className="h-4 w-4 animate-spin" />
+        ) : (
+          <MagnifyingGlassIcon className="h-4 w-4" />
+        )}
+      </button>
+    </div>
+  );
+}
+
+// --- Main Component: KatalogPage ---
 function KatalogPage() {
-  const [presenter] = useState(() => new KatalogPresenter());
+  const presenterRef = useRef(null);
+  // Inisialisasi presenter hanya sekali
+  if (!presenterRef.current) {
+    presenterRef.current = new KatalogPresenter();
+  }
+
+  // State untuk data yang ditampilkan di UI
   const [produkList, setProdukList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Loading umum untuk seluruh halaman
   const [error, setError] = useState(null);
   const [meta, setMeta] = useState(null);
-  const [kategoriList, setKategoriList] = useState([]); // Tambahan
+  const [kategoriList, setKategoriList] = useState([]);
+
+  // State untuk filters, ini adalah state "source of truth" untuk filter yang diterapkan
   const [filters, setFilters] = useState({
     search: "",
     kategori: "",
@@ -450,40 +643,216 @@ function KatalogPage() {
     minPrice: "",
     maxPrice: "",
   });
-  const navigate = useNavigate();
 
+  // State khusus untuk indikator loading search bar (debounce)
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Fungsi untuk memperbarui semua state terkait data dari presenter
+  const updateStateFromPresenter = useCallback(() => {
+    try {
+      setProdukList(presenterRef.current.getProdukList() || []);
+      setMeta(presenterRef.current.getMeta());
+      // Sangat penting: Sinkronkan state `filters` di komponen dengan yang di presenter
+      setFilters(presenterRef.current.getFilters());
+
+      // Atur pesan error "Tidak ada produk" jika tidak ada produk setelah loading selesai
+      if (
+        !presenterRef.current.getLoading() &&
+        (!presenterRef.current.getProdukList() ||
+          presenterRef.current.getProdukList().length === 0) &&
+        !presenterRef.current.getError() // Jangan menimpa error dari jaringan/server
+      ) {
+        setError("Tidak ada produk yang sesuai dengan kriteria pencarian.");
+      } else {
+        // Ambil error dari presenter (misal: error jaringan)
+        setError(presenterRef.current.getError());
+      }
+    } catch (err) {
+      console.error("Error updating state from presenter:", err);
+      setError("Terjadi kesalahan saat memperbarui tampilan data.");
+      setProdukList([]);
+    }
+  }, []);
+
+  // Fungsi penanganan error terpusat
+  const handleError = useCallback((err) => {
+    console.error("Operation failed:", err);
+    let errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
+
+    if (err.response) {
+      const status = err.response.status;
+      switch (status) {
+        case 500:
+          errorMessage = "Terjadi kesalahan server. Silakan coba lagi nanti.";
+          break;
+        case 404:
+          errorMessage = "Data tidak ditemukan.";
+          break;
+        case 401:
+          errorMessage = "Sesi Anda telah berakhir. Silakan login kembali.";
+          break;
+        default:
+          errorMessage =
+            err.response.data?.message ||
+            "Terjadi kesalahan. Silakan coba lagi.";
+      }
+    } else if (err.request) {
+      errorMessage =
+        "Tidak dapat terhubung ke server. Periksa koneksi internet Anda.";
+    } else if (err.message) {
+      errorMessage = err.message;
+    }
+
+    setError(errorMessage);
+    setProdukList([]); // Kosongkan daftar produk jika terjadi error
+  }, []);
+
+  // Effect untuk inisialisasi data saat komponen pertama kali di-mount
   useEffect(() => {
     const initializeData = async () => {
-      await presenter.initialize();
-      setProdukList(presenter.getProdukList());
-      setLoading(presenter.getLoading());
-      setError(presenter.getError());
-      setMeta(presenter.getMeta());
-
-      // Ambil kategori dari presenter
-      const kategoriData = await presenter.getCategories();
-      setKategoriList(kategoriData);
+      setLoading(true);
+      setError(null);
+      try {
+        const result = await presenterRef.current.initialize();
+        if (result.error) {
+          throw new Error(result.error);
+        }
+        const categories = presenterRef.current.getKategoriList();
+        setKategoriList(categories || []);
+        updateStateFromPresenter(); // Perbarui state UI dari data awal presenter
+      } catch (err) {
+        handleError(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     initializeData();
-  }, [presenter]);
+  }, [updateStateFromPresenter, handleError]);
 
-  const handleFilterOrSortChange = async (type, value) => {
-    setFilters((prev) => ({ ...prev, [type]: value }));
-    await presenter.handleFilterOrSortChange(type, value);
-    setProdukList(presenter.getProdukList());
-    setMeta(presenter.getMeta());
-    setLoading(presenter.getLoading());
-    setError(presenter.getError());
-  };
+  // Fungsi sentral untuk memicu perubahan filter/sort (kecuali search)
+  const handleFilterOrSortChange = useCallback(
+    async (type, value) => {
+      setLoading(true); // Aktifkan loading umum
+      setError(null); // Bersihkan error sebelumnya
 
-  const handlePageChange = async (page) => {
-    await presenter.handlePageChange(page);
-    setProdukList(presenter.getProdukList());
-    setMeta(presenter.getMeta());
-    setLoading(presenter.getLoading());
-    setError(presenter.getError());
-  };
+      // Perbarui state `filters` di komponen secara optimis (UI responsif)
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [type]: value,
+      }));
+
+      try {
+        const result = await presenterRef.current.handleFilterOrSortChange(
+          type,
+          value
+        );
+
+        if (result.error) {
+          throw new Error(result.error);
+        }
+        updateStateFromPresenter(); // Perbarui state UI dari presenter setelah fetch
+      } catch (err) {
+        handleError(err);
+      } finally {
+        setLoading(false); // Nonaktifkan loading umum
+      }
+    },
+    [updateStateFromPresenter, handleError]
+  );
+
+  // Fungsi khusus untuk menangani submit pencarian (dipanggil dari SearchBar)
+  const handleSearchSubmit = useCallback(
+    async (searchTerm) => {
+      setIsSearching(true); // Aktifkan indikator loading khusus search bar
+      setLoading(true); // Aktifkan loading umum juga
+      setError(null); // Bersihkan error sebelumnya
+
+      // Perbarui state `filters` di komponen secara optimis (UI responsif)
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        search: searchTerm,
+      }));
+
+      try {
+        const result = await presenterRef.current.handleFilterOrSortChange(
+          "search", // Selalu "search" untuk pencarian
+          searchTerm
+        );
+
+        if (result.error) {
+          throw new Error(result.error);
+        }
+        updateStateFromPresenter(); // Perbarui state UI dari presenter setelah fetch
+      } catch (err) {
+        handleError(err);
+      } finally {
+        setIsSearching(false); // Nonaktifkan indikator loading search bar
+        setLoading(false); // Nonaktifkan loading umum
+      }
+    },
+    [updateStateFromPresenter, handleError]
+  );
+
+  // Fungsi khusus untuk membersihkan pencarian (dipanggil dari SearchBar)
+  const handleClearSearch = useCallback(() => {
+    handleSearchSubmit(""); // Memicu pencarian dengan string kosong
+  }, [handleSearchSubmit]);
+
+  // Fungsi untuk menangani perubahan halaman
+  const handlePageChange = useCallback(
+    async (page) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const result = await presenterRef.current.handlePageChange(page);
+        if (result.error) {
+          throw new Error(result.error);
+        }
+        updateStateFromPresenter();
+      } catch (err) {
+        handleError(err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [updateStateFromPresenter, handleError]
+  );
+
+  // Fungsi untuk menghapus filter individu dari chip
+  const handleRemoveFilter = useCallback(
+    async (type) => {
+      let newValue = "";
+      if (type === "search") {
+        handleClearSearch(); // Panggil fungsi khusus untuk membersihkan search
+        return;
+      } else if (type === "kategori") {
+        newValue = ""; // Nilai default untuk kategori
+      } else if (type === "sort") {
+        newValue = "latest"; // Nilai default untuk sort
+      }
+      // Untuk filter non-search, gunakan handleFilterOrSortChange umum
+      handleFilterOrSortChange(type, newValue);
+    },
+    [handleFilterOrSortChange, handleClearSearch]
+  );
+
+  // Fungsi untuk mereset semua filter
+  const handleResetAllFilters = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await presenterRef.current.resetAllFilters(); // Memanggil metode reset di presenter
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      updateStateFromPresenter(); // Perbarui state UI dari presenter setelah reset
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [updateStateFromPresenter, handleError]);
 
   return (
     <div style={{ minHeight: "100vh", background: "#fff", marginTop: "2rem" }}>
@@ -511,42 +880,38 @@ function KatalogPage() {
       </header>
 
       <div className="container mx-auto px-4 sm:px-5 lg:px-6 py-4 md:py-6">
-        {/* Filter Search + Kategori + Sort */}
-        <div className="mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
-          <input
-            type="text"
-            placeholder="Cari hewan, ras, atau kategori..."
-            value={filters.search}
-            onChange={(e) => handleFilterOrSortChange("search", e.target.value)}
-            style={{
-              border: "1px solid #eee",
-              borderRadius: 12,
-              padding: "0.75rem 1rem",
-              fontSize: 15,
-              width: "100%",
-              maxWidth: 340,
-              background: "#fafafa",
-              color: "var(--atk-dark)",
-            }}
+        <div className="mb-8 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between bg-white p-4 rounded-2xl shadow-md border border-slate-100">
+          {/* Menggunakan SearchBar yang sudah dirombak */}
+          <SearchBar
+            initialSearchTerm={filters.search} // Memberikan nilai awal dari state filters
+            isSearching={isSearching} // Memberikan state loading khusus search
+            onSearchSubmit={handleSearchSubmit} // Callback saat pencarian di-submit
+            onClearSearch={handleClearSearch} // Callback saat pencarian dibersihkan
           />
           <div className="flex gap-3">
-            {/* Dropdown kategori */}
-            <select
-              value={filters.kategori}
-              onChange={(e) =>
-                handleFilterOrSortChange("kategori", e.target.value)
-              }
-              className="border border-slate-200 rounded-xl px-4 py-2.5 bg-white text-sm text-slate-700 min-w-[140px]"
-            >
-              <option value="">Semua Kategori</option>
-              {kategoriList.map((kategori) => (
-                <option key={kategori.id} value={kategori.slug}>
-                  {kategori.nama_kategori}
-                </option>
-              ))}
-            </select>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <TagIcon className="h-4 w-4 text-slate-400" />
+              </div>
+              <select
+                value={filters.kategori}
+                onChange={(e) =>
+                  handleFilterOrSortChange("kategori", e.target.value)
+                }
+                className="block pl-9 pr-8 py-2.5 border border-slate-200 rounded-xl text-sm text-slate-700 bg-white appearance-none min-w-[160px] focus:outline-none focus:ring-2 focus:ring-[#598c96] focus:border-transparent shadow-sm transition-all duration-200"
+              >
+                <option value="">Semua Kategori</option>
+                {kategoriList.map((kategori) => (
+                  <option key={kategori.id} value={kategori.slug}>
+                    {kategori.nama_kategori}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none">
+                <ChevronDownIcon className="h-4 w-4 text-slate-400" />
+              </div>
+            </div>
 
-            {/* Dropdown sorting */}
             <FilterDropdown
               filters={filters}
               onFilterChange={handleFilterOrSortChange}
@@ -554,39 +919,48 @@ function KatalogPage() {
           </div>
         </div>
 
-        {/* Produk List */}
+        {/* Filter Chips Display */}
+        <FilterChips
+          filters={filters}
+          onRemoveFilter={handleRemoveFilter}
+          onResetAll={handleResetAllFilters}
+        />
+
+        {error && (
+          <div className="mb-8 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700">
+            <p className="flex items-center gap-2">
+              <ExclamationTriangleIcon className="h-5 w-5 text-red-500" />
+              {error}
+            </p>
+          </div>
+        )}
+
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {loading
-            ? Array.from({ length: meta?.per_page || 12 }).map((_, index) => (
-                <SkeletonCard key={index} />
-              ))
-            : produkList.length > 0
-            ? produkList.map((produk) => (
-                <ProdukCard
-                  key={produk.id}
-                  produk={produk}
-                  presenter={presenter}
-                  navigate={navigate}
-                />
-              ))
-            : !error && (
-                <div
-                  className="col-span-full text-center py-16"
-                  style={{ color: "var(--atk-secondary)" }}
-                >
-                  <div
-                    style={{ fontWeight: 700, fontSize: 20, marginBottom: 8 }}
-                  >
-                    Tidak Ditemukan
-                  </div>
-                  <div style={{ fontSize: 15, marginBottom: 18 }}>
-                    Coba kata kunci lain.
-                  </div>
-                </div>
-              )}
+          {/* Menampilkan SkeletonCard jika sedang loading atau isSearching aktif */}
+          {loading || isSearching ? (
+            Array.from({ length: 8 }).map((_, index) => (
+              <SkeletonCard key={index} />
+            ))
+          ) : produkList && produkList.length > 0 ? (
+            produkList.map((produk) => (
+              <ProdukCard
+                key={produk.id}
+                produk={produk}
+                presenter={presenterRef.current}
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-16 text-slate-600">
+              <div className="font-bold text-xl mb-2">
+                {error || "Tidak ada produk yang ditemukan"}
+              </div>
+              <p className="text-slate-500">
+                Silakan coba dengan filter atau kata kunci lain
+              </p>
+            </div>
+          )}
         </div>
 
-        {/* Pagination */}
         {!loading && meta && meta.last_page > 1 && (
           <Pagination meta={meta} onPageChange={handlePageChange} />
         )}

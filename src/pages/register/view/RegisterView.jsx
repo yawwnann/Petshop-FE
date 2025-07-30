@@ -450,30 +450,25 @@ function RegisterView() {
             </p>
 
             {/* Feature highlights */}
-            <div className="grid grid-cols-2 gap-4 mt-8">
+            <div className="flex flex-col items-center gap-4 mt-8">
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
+                  <ShieldCheckIcon className="w-10 h-10" />
+                </div>
+                <span>Belanja Aman</span>
+              </div>
+
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
+                  <ClockIcon className="w-10 h-10" />
+                </div>
+                <span>Dukungan 24/7</span>
+              </div>
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-8 h-8 bg-opacity-20 rounded-full flex items-center justify-center">
                   <StarIcon className="w-10 h-10" />
                 </div>
-                <span>Produk Berkualitas</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <div className="w-8 h-8  bg-opacity-20 rounded-full flex items-center justify-center">
-                  <TruckIcon className="w-10 h-10" />
-                </div>
-                <span>Gratis Ongkir</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <div className="w-8 h-8  bg-opacity-20 rounded-full flex items-center justify-center">
-                  <ChatBubbleLeftRightIcon className="w-10 h-10" />
-                </div>
-                <span>Dukungan Ahli</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <div className="w-8 h-8  bg-opacity-20 rounded-full flex items-center justify-center">
-                  <ShieldCheckIcon className="w-10 h-10" />
-                </div>
-                <span>Aman & Terjamin</span>
+                <span>Kualitas Terbaik</span>
               </div>
             </div>
           </div>
