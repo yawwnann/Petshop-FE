@@ -89,7 +89,7 @@ export default function ServiceView() {
   };
 
   const handleLihatLayanan = () => {
-    navigate("/katalog");
+    navigate("/service");
   };
 
   return (
