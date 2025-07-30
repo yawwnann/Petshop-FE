@@ -210,3 +210,5 @@ const ContactView = () => {
     </div>
   );
 }
+
+export default ContactView;
