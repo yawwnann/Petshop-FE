@@ -1,6 +1,8 @@
 import React from "react";
 import logo from "../assets/logo.png";
 
+const BUSINESS_HOURS = 'Setiap hari 09:00 - 20:00 WIB';
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -61,20 +63,7 @@ const Footer = () => {
           {/* Business Hours */}
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">Jam Operasional</h4>
-            <ul className="space-y-2 text-white/80">
-              <li className="flex justify-between">
-                <span>Senin - Jumat</span>
-                <span>08:00 - 21:00 WIB</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Sabtu - Minggu</span>
-                <span>09:00 - 20:00 WIB</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Hari Libur</span>
-                <span>10:00 - 18:00 WIB</span>
-              </li>
-            </ul>
+            <p className="text-white/80">{BUSINESS_HOURS}</p>
           </div>
         </div>
       </div>

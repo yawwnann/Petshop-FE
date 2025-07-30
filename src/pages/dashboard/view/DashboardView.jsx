@@ -164,13 +164,7 @@ export default function DashboardView() {
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   {item.desc}
                 </p>
-                <div
-                  style={{ color: item.color }}
-                  className="flex items-center text-sm font-bold group-hover:translate-x-1 transition-transform"
-                >
-                  Pelajari lebih lanjut{" "}
-                  <ArrowRight size={18} className="ml-2" />
-                </div>
+
               </div>
             ))}
           </div>
