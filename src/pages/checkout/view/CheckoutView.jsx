@@ -183,8 +183,7 @@ function CheckoutPage() {
     }, 0);
   }, [cartItems]);
 
-  const ongkosKirim = 15000;
-  const totalPembayaran = totalBelanja + ongkosKirim;
+  const totalPembayaran = totalBelanja ;
 
   const handleCreateOrder = async (e) => {
     e.preventDefault();
@@ -453,12 +452,7 @@ function CheckoutPage() {
                     {formatRupiah(totalBelanja)}
                   </dd>
                 </div>
-                <div className="flex items-center justify-between">
-                  <dt className="text-sm text-slate-600">Ongkos Kirim</dt>
-                  <dd className="text-sm font-medium text-slate-900">
-                    {formatRupiah(ongkosKirim)}
-                  </dd>
-                </div>
+
                 <div className="flex items-center justify-between border-t border-slate-200 pt-4">
                   <dt className="text-base font-bold text-atk-dark">
                     Total Pembayaran

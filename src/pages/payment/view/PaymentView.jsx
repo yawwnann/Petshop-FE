@@ -245,24 +245,24 @@ function PaymentPage() {
                     <div className="space-y-4">
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition-colors">
                         <p className="text-sm font-medium text-gray-700 mb-1">
-                          Bank BCA
+                          BCA
                         </p>
                         <p className="text-lg font-bold text-atk-primary">
-                          1234567890
+                          4452355896
                         </p>
                         <p className="text-sm text-gray-500">
-                          a/n: Buana Petshop
+                          a/n: Bibit S L
                         </p>
                       </div>
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition-colors">
                         <p className="text-sm font-medium text-gray-700 mb-1">
-                          Bank Mandiri
+                          Bank BPD DIY
                         </p>
                         <p className="text-lg font-bold text-atk-primary">
-                          0987654321
+                          030211012575
                         </p>
                         <p className="text-sm text-gray-500">
-                          a/n: Buana Petshop
+                          a/n: Bibit S L
                         </p>
                       </div>
                     </div>
