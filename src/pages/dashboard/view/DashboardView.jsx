@@ -255,19 +255,19 @@ export default function DashboardView() {
             {[
               {
                 name: "Rina",
-                location: "Surabaya",
+                location: "Yogyakarta",
                 text: "Setelah rutin vaksin dan perawatan, kucing saya jadi lebih sehat dan aktif! Pelayanannya sangat memuaskan.",
                 color: "var(--petshop-blue)",
               },
               {
                 name: "Budi",
-                location: "Jakarta",
+                location: "Yogyakarta",
                 text: "Tips nutrisinya sangat bermanfaat, anjing saya sekarang lebih lahap makan dan terlihat lebih sehat.",
                 color: "var(--petshop-pink-accent)",
               },
               {
                 name: "Sari",
-                location: "Bandung",
+                location: "Yogyakarta",
                 text: "Dashboard ini sangat membantu, edukasinya mudah dipahami. Tim yang profesional!",
                 color: "var(--petshop-pink-dark)",
               },

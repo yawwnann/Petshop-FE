@@ -529,27 +529,7 @@ function KeranjangPage() {
                     {formatRupiah(totalBelanja)}
                   </dd>
                 </div>
-                <div className="flex items-center justify-between border-t border-slate-200 pt-4">
-                  <dt className="flex items-center text-sm text-slate-600">
-                    <TruckIcon className="h-5 w-5 mr-1 text-[#8CBCC7]" />
-                    <span>Ongkos Kirim</span>
-                    <a
-                      href="#"
-                      className="ml-2 flex-shrink-0 text-slate-400 hover:text-slate-500"
-                    >
-                      <span className="sr-only">
-                        Pelajari tentang estimasi ongkos kirim
-                      </span>
-                      <InformationCircleIcon
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </dt>
-                  <dd className="text-sm font-medium text-slate-900">
-                    {formatRupiah(ongkosKirim)}
-                  </dd>
-                </div>
+                
                 <div className="flex items-center justify-between border-t border-slate-200 pt-4">
                   <dt className="flex items-center text-base font-bold text-atk-dark">
                     <CreditCardIcon className="h-5 w-5 mr-1 text-[#6BA4B0]" />
