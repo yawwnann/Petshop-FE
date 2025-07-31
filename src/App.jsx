@@ -27,6 +27,7 @@ import ContactView from "./pages/contact/ContactView";
 import KonsultasiView from "./pages/konsultasi/view/KonsultasiView";
 
 import "@fontsource/inter";
+import { CartProvider } from "./context/CartContext";
 
 // Layout utama yang mencakup Navbar dan Footer
 const MainLayout = () => {
@@ -43,7 +44,8 @@ const MainLayout = () => {
 
 function App() {
   return (
-    <Router>
+    <CartProvider>
+      <Router>
       <Routes>
         {/* Route tanpa layout utama (misal: halaman autentikasi) */}
         <Route path="/" element={<LoginView />} />{" "}
@@ -77,6 +79,7 @@ function App() {
         </Route>
       </Routes>
     </Router>
+    </CartProvider>
   );
 }
 

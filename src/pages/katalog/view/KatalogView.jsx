@@ -21,9 +21,12 @@ import {
   XMarkIcon,
   TagIcon,
   StarIcon,
+  CheckCircleIcon,
+  XCircleIcon,
 } from "@heroicons/react/24/solid";
 import { ArrowsUpDownIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { cn } from "../../../lib/utils";
+import { useCart } from "../../../context/CartContext";
 import { Transition, Menu } from "@headlessui/react";
 // import { useNavigate } from "react-router-dom"; // Uncomment if using React Router for navigation
 
@@ -96,9 +99,9 @@ function FilterChips({ filters, onRemoveFilter, onResetAll }) {
 
 // --- Component: ProdukCard ---
 function ProdukCard({ produk, presenter }) {
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const { addToCart } = useCart();
+  const [feedback, setFeedback] = useState({ type: '', message: '' });
   const [isLiked, setIsLiked] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false); // Untuk notifikasi sukses tambah keranjang
 
   const isTersedia = presenter.isProductAvailable(produk);
 
@@ -109,21 +112,20 @@ function ProdukCard({ produk, presenter }) {
 
   const handleAddToCart = async (e) => {
     e.stopPropagation();
-    if (isAddingToCart || !isTersedia) return;
+    if (feedback.type === 'loading' || !isTersedia) return;
 
-    setIsAddingToCart(true);
-    const result = await presenter.addToCart(produk.id, 1);
+    setFeedback({ type: 'loading', message: 'Menambahkan...' });
+    const result = await addToCart(produk, 'produk');
 
     if (result.success) {
-      setShowSuccessModal(true);
-      setTimeout(() => {
-        setShowSuccessModal(false);
-      }, 2000); // Sembunyikan setelah 2 detik
+      alert('Produk berhasil ditambahkan!');
+      setFeedback({ type: null, message: '' }); // Reset loading state
     } else {
-      // Handle error display if needed (e.g., toast notification)
-      console.error("Gagal menambahkan ke keranjang:", result.error);
+      alert('Gagal menambahkan produk.');
+      setFeedback({ type: 'error', message: 'Gagal menambahkan produk.' });
+      // Optionally keep error state for a bit before resetting
+      setTimeout(() => setFeedback({ type: null, message: '' }), 2000);
     }
-    setIsAddingToCart(false);
   };
 
   const handleLike = (e) => {
@@ -164,20 +166,7 @@ function ProdukCard({ produk, presenter }) {
           />
         </button>
 
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <button
-            onClick={handleAddToCart}
-            disabled={!isTersedia || isAddingToCart}
-            className="add-to-cart-button bg-[#598c96] hover:bg-[#8CBCC7] text-white font-bold py-3 px-6 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2 transform scale-90 group-hover:scale-100"
-          >
-            {isAddingToCart ? (
-              <ArrowPathIcon className="w-5 h-5 animate-spin" />
-            ) : (
-              <ShoppingCartIcon className="w-5 h-5" />
-            )}
-            {isAddingToCart ? "Menambahkan..." : "Tambah ke Keranjang"}
-          </button>
-        </div>
+
       </div>
 
       <div className="p-6 flex flex-col flex-grow">
@@ -204,31 +193,28 @@ function ProdukCard({ produk, presenter }) {
         <div className="mt-auto ">
           <button
             onClick={handleAddToCart}
-            disabled={!isTersedia || isAddingToCart}
+            disabled={!isTersedia || feedback.type === 'loading'}
             title={isTersedia ? "Beli Sekarang" : "Stok Habis"}
             className="add-to-cart-button w-full bg-gradient-to-r from-[#598c96] to-[#8CBCC7] hover:from-[#8CBCC7] hover:to-[#598c96] text-white font-semibold py-3 px-4 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 ease-in-out flex items-center justify-center text-sm focus:outline-none focus:ring-2 focus:ring-[#598c96] focus:ring-offset-2 disabled:bg-slate-400/70 disabled:text-slate-100 disabled:cursor-not-allowed disabled:hover:shadow-md disabled:hover:bg-slate-400/70 group/button"
           >
-            {isAddingToCart ? (
-              <ArrowPathIcon className="w-4 h-4 animate-spin" />
+            {feedback.type === 'loading' ? (
+              <>
+                <ArrowPathIcon className="w-4 h-4 animate-spin" />
+                <span className="transition-all duration-200">...</span>
+              </>
             ) : (
-              <ShoppingCartIcon className="w-4 h-4 mr-2 transition-transform duration-200 group-hover/button:scale-110" />
+              <>
+                <ShoppingCartIcon className="w-4 h-4 mr-2 transition-transform duration-200 group-hover/button:scale-110" />
+                <span className="transition-all duration-200">
+                  {isTersedia ? "Beli" : "Habis"}
+                </span>
+              </>
             )}
-            <span className="transition-all duration-200">
-              {isAddingToCart ? "..." : isTersedia ? "Beli" : "Habis"}
-            </span>
           </button>
         </div>
       </div>
-      {showSuccessModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl text-center flex items-center gap-3">
-            <ShoppingCartIcon className="w-6 h-6 text-emerald-500" />
-            <p className="text-slate-700 font-medium">
-              Berhasil ditambahkan ke keranjang!
-            </p>
-          </div>
-        </div>
-      )}
+
+
     </div>
   );
 }
