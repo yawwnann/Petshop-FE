@@ -337,168 +337,77 @@ const SkeletonCard = () => (
 );
 
 // --- Component: FilterDropdown (for Sorting) ---
-const FilterDropdown = ({ filters, onFilterChange }) => {
+function FilterDropdown({ filters, onFilterChange }) {
   const getButtonLabel = () => {
-    switch (filters?.sort) {
-      case "latest":
-        return "Terbaru";
-      case "oldest":
-        return "Terlama";
-      case "price_low":
-        return "Harga Terendah";
-      case "price_high":
-        return "Harga Tertinggi";
-      case "name_asc":
-        return "Nama A-Z";
-      case "name_desc":
-        return "Nama Z-A";
-      default:
-        return "Urutan";
+    if (filters.sort === 'created_at' && filters.order === 'asc') {
+      return 'Terlama';
     }
+    return 'Terbaru'; // Default
   };
 
-  const handleReset = () => {
-    onFilterChange("sort", "latest");
-  };
+  const sortOptions = [
+    {
+      label: "Terbaru",
+      sort: "created_at",
+      order: "desc",
+      icon: <ArrowPathIcon className="w-4 h-4 text-slate-500" />,
+    },
+    {
+      label: "Terlama",
+      sort: "created_at",
+      order: "asc",
+      icon: <ArrowsUpDownIcon className="w-4 h-4 text-slate-500" />,
+    },
+  ];
 
   return (
-    <Menu as="div" className="relative">
-      <Menu.Button className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 bg-white shadow-sm hover:bg-slate-50 transition-all duration-200 min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#598c96] focus:border-transparent">
-        <FunnelIcon className="w-4 h-4 text-slate-400" />
-        <span className="text-sm font-medium text-slate-700">
-          {getButtonLabel()}
-        </span>
-        <ChevronDownIcon className="w-4 h-4 text-slate-400 ml-auto" />
-      </Menu.Button>
+    <Menu as="div" className="relative inline-block text-left">
+      <div>
+        <Menu.Button className="inline-flex w-full justify-center items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#598c96] focus:ring-offset-0 transition-all duration-200">
+          <span className="hidden sm:inline">Urutkan:</span>
+          <span className="font-semibold">{getButtonLabel()}</span>
+          <ChevronDownIcon
+            className="-mr-1 ml-1 h-4 w-4 text-slate-400"
+            aria-hidden="true"
+          />
+        </Menu.Button>
+      </div>
 
       <Transition
         as={Fragment}
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-lg ring-1 ring-slate-200 focus:outline-none border border-slate-100 z-50 divide-y divide-slate-100 overflow-hidden">
-          <div className="p-2">
-            <div className="px-2 py-1.5">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Urutan
-              </p>
-            </div>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${active ? "bg-slate-50" : ""} ${
-                    filters?.sort === "latest"
-                      ? "text-[#598c96] font-medium"
-                      : "text-slate-700"
-                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
-                  onClick={() => onFilterChange("sort", "latest")}
-                >
-                  <ArrowPathIcon className="w-4 h-4" />
-                  Terbaru
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${active ? "bg-slate-50" : ""} ${
-                    filters?.sort === "oldest"
-                      ? "text-[#598c96] font-medium"
-                      : "text-slate-700"
-                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
-                  onClick={() => onFilterChange("sort", "oldest")}
-                >
-                  <ArrowsUpDownIcon className="w-4 h-4" />
-                  Terlama
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${active ? "bg-slate-50" : ""} ${
-                    filters?.sort === "price_low"
-                      ? "text-[#598c96] font-medium"
-                      : "text-slate-700"
-                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
-                  onClick={() => onFilterChange("sort", "price_low")}
-                >
-                  <TagIcon className="w-4 h-4" />
-                  Harga Terendah
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${active ? "bg-slate-50" : ""} ${
-                    filters?.sort === "price_high"
-                      ? "text-[#598c96] font-medium"
-                      : "text-slate-700"
-                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
-                  onClick={() => onFilterChange("sort", "price_high")}
-                >
-                  <TagIcon className="w-4 h-4" />
-                  Harga Tertinggi
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${active ? "bg-slate-50" : ""} ${
-                    filters?.sort === "name_asc"
-                      ? "text-[#598c96] font-medium"
-                      : "text-slate-700"
-                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
-                  onClick={() => onFilterChange("sort", "name_asc")}
-                >
-                  <ArrowsUpDownIcon className="w-4 h-4" />
-                  Nama A-Z
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${active ? "bg-slate-50" : ""} ${
-                    filters?.sort === "name_desc"
-                      ? "text-[#598c96] font-medium"
-                      : "text-slate-700"
-                  } group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
-                  onClick={() => onFilterChange("sort", "name_desc")}
-                >
-                  <ArrowsUpDownIcon className="w-4 h-4" />
-                  Nama Z-A
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-
-          <div className="p-2">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? "bg-red-50" : ""
-                  } text-red-600 group flex w-full items-center rounded-md px-3 py-2 text-sm gap-2 transition-all duration-200`}
-                  onClick={handleReset}
-                >
-                  <XMarkIcon className="w-4 h-4" />
-                  Reset Urutan
-                </button>
-              )}
-            </Menu.Item>
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-2xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-2">
+            {sortOptions.map((option) => (
+              <Menu.Item key={option.value}>
+                {({ active }) => (
+                  <button
+                    onClick={() => onFilterChange("sort", option.sort, option.order)}
+                    className={`${active ? "bg-slate-50" : ""}
+                      group flex w-full items-center rounded-lg px-4 py-2.5 text-sm ${
+                      filters.sort === option.sort && filters.order === option.order
+                        ? "font-bold text-[#598c96]"
+                        : "text-slate-700"
+                    }`}
+                  >
+                    <div className="mr-3">{option.icon}</div>
+                    {option.label}
+                  </button>
+                )}
+              </Menu.Item>
+            ))}
           </div>
         </Menu.Items>
       </Transition>
     </Menu>
   );
-};
+}
 
 // --- Component: SearchBar (Sudah dirombak di jawaban sebelumnya) ---
 function SearchBar({
@@ -605,16 +514,9 @@ function SearchBar({
     </div>
   );
 }
+function KatalogView() {
+  const presenterRef = useRef(new KatalogPresenter());
 
-// --- Main Component: KatalogPage ---
-function KatalogPage() {
-  const presenterRef = useRef(null);
-  // Inisialisasi presenter hanya sekali
-  if (!presenterRef.current) {
-    presenterRef.current = new KatalogPresenter();
-  }
-
-  // State untuk data yang ditampilkan di UI
   const [produkList, setProdukList] = useState([]);
   const [loading, setLoading] = useState(true); // Loading umum untuk seluruh halaman
   const [error, setError] = useState(null);
@@ -846,23 +748,11 @@ function KatalogPage() {
         <h1
           style={{
             fontWeight: 800,
-            fontSize: "2.2rem",
-            color: "var(--atk-dark)",
-            marginBottom: "0.5rem",
-          }}
-        >
-          Katalog Hewan Peliharaan
-        </h1>
-        <p
-          style={{
-            color: "var(--atk-secondary)",
-            fontSize: "1.1rem",
-            maxWidth: 480,
             margin: "0 auto",
           }}
         >
           Temukan hewan peliharaan berkualitas untuk menemani hari-hari Anda.
-        </p>
+        </h1>
       </header>
 
       <div className="container mx-auto px-4 sm:px-5 lg:px-6 py-4 md:py-6">
@@ -900,7 +790,7 @@ function KatalogPage() {
 
             <FilterDropdown
               filters={filters}
-              onFilterChange={handleFilterOrSortChange}
+              onFilterChange={handleFilterOrSortChange} // Pass the handler directly
             />
           </div>
         </div>
@@ -955,4 +845,4 @@ function KatalogPage() {
   );
 }
 
-export default KatalogPage;
+export default KatalogView;

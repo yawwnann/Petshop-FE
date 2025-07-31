@@ -13,7 +13,8 @@ export class KatalogPresenter {
       filters: {
         search: "",
         kategori: "",
-        sort: "", // Removed default sort
+        sort: "created_at",
+        order: "desc",
         minPrice: "",
         maxPrice: "",
       },
@@ -121,6 +122,7 @@ export class KatalogPresenter {
       // Jika tidak mencari, kirim filter lain seperti biasa
       if (filters.kategori) params.kategori_slug = filters.kategori;
       if (filters.sort) params.sort = filters.sort;
+      if (filters.order) params.order = filters.order;
       if (filters.minPrice) params.minPrice = filters.minPrice;
       if (filters.maxPrice) params.maxPrice = filters.maxPrice;
     }
@@ -134,8 +136,13 @@ export class KatalogPresenter {
     return response; // Mengembalikan seluruh response
   }
 
-  async handleFilterOrSortChange(type, value) {
-    const newFilters = { ...this.model.filters, [type]: value };
+  async handleFilterOrSortChange(type, value, order = null) {
+    let newFilters;
+    if (type === 'sort' && order) {
+      newFilters = { ...this.model.filters, sort: value, order: order };
+    } else {
+      newFilters = { ...this.model.filters, [type]: value };
+    }
     this.setFilters(newFilters);
     this.setCurrentPage(1);
 
@@ -209,7 +216,8 @@ export class KatalogPresenter {
     const defaultFilters = {
       search: "",
       kategori: "",
-      sort: "", // latest, oldest, price_low, price_high, name_asc, name_desce: "",
+      sort: "created_at",
+      order: "desc",
     };
     this.setFilters(defaultFilters); // Update filters in the model
     this.setCurrentPage(1); // Reset page to 1
