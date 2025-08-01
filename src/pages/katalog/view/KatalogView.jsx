@@ -100,7 +100,7 @@ function FilterChips({ filters, onRemoveFilter, onResetAll }) {
 // --- Component: ProdukCard ---
 function ProdukCard({ produk, presenter }) {
   const { addToCart } = useCart();
-  const [feedback, setFeedback] = useState({ type: '', message: '' });
+  const [feedback, setFeedback] = useState({ type: "", message: "" });
   const [isLiked, setIsLiked] = useState(false);
 
   const isTersedia = presenter.isProductAvailable(produk);
@@ -112,19 +112,19 @@ function ProdukCard({ produk, presenter }) {
 
   const handleAddToCart = async (e) => {
     e.stopPropagation();
-    if (feedback.type === 'loading' || !isTersedia) return;
+    if (feedback.type === "loading" || !isTersedia) return;
 
-    setFeedback({ type: 'loading', message: 'Menambahkan...' });
-    const result = await addToCart(produk, 'produk');
+    setFeedback({ type: "loading", message: "Menambahkan..." });
+    const result = await addToCart(produk, "produk");
 
     if (result.success) {
-      alert('Produk berhasil ditambahkan!');
-      setFeedback({ type: null, message: '' }); // Reset loading state
+      alert("Produk berhasil ditambahkan!");
+      setFeedback({ type: null, message: "" }); // Reset loading state
     } else {
-      alert('Gagal menambahkan produk.');
-      setFeedback({ type: 'error', message: 'Gagal menambahkan produk.' });
+      alert("Gagal menambahkan produk.");
+      setFeedback({ type: "error", message: "Gagal menambahkan produk." });
       // Optionally keep error state for a bit before resetting
-      setTimeout(() => setFeedback({ type: null, message: '' }), 2000);
+      setTimeout(() => setFeedback({ type: null, message: "" }), 2000);
     }
   };
 
@@ -165,8 +165,6 @@ function ProdukCard({ produk, presenter }) {
             )}
           />
         </button>
-
-
       </div>
 
       <div className="p-6 flex flex-col flex-grow">
@@ -193,11 +191,11 @@ function ProdukCard({ produk, presenter }) {
         <div className="mt-auto ">
           <button
             onClick={handleAddToCart}
-            disabled={!isTersedia || feedback.type === 'loading'}
+            disabled={!isTersedia || feedback.type === "loading"}
             title={isTersedia ? "Beli Sekarang" : "Stok Habis"}
             className="add-to-cart-button w-full bg-gradient-to-r from-[#598c96] to-[#8CBCC7] hover:from-[#8CBCC7] hover:to-[#598c96] text-white font-semibold py-3 px-4 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 ease-in-out flex items-center justify-center text-sm focus:outline-none focus:ring-2 focus:ring-[#598c96] focus:ring-offset-2 disabled:bg-slate-400/70 disabled:text-slate-100 disabled:cursor-not-allowed disabled:hover:shadow-md disabled:hover:bg-slate-400/70 group/button"
           >
-            {feedback.type === 'loading' ? (
+            {feedback.type === "loading" ? (
               <>
                 <ArrowPathIcon className="w-4 h-4 animate-spin" />
                 <span className="transition-all duration-200">...</span>
@@ -213,8 +211,6 @@ function ProdukCard({ produk, presenter }) {
           </button>
         </div>
       </div>
-
-
     </div>
   );
 }
@@ -339,10 +335,10 @@ const SkeletonCard = () => (
 // --- Component: FilterDropdown (for Sorting) ---
 function FilterDropdown({ filters, onFilterChange }) {
   const getButtonLabel = () => {
-    if (filters.sort === 'created_at' && filters.order === 'asc') {
-      return 'Terlama';
+    if (filters.sort === "created_at" && filters.order === "asc") {
+      return "Terlama";
     }
-    return 'Terbaru'; // Default
+    return "Terbaru"; // Default
   };
 
   const sortOptions = [
@@ -388,13 +384,16 @@ function FilterDropdown({ filters, onFilterChange }) {
               <Menu.Item key={option.value}>
                 {({ active }) => (
                   <button
-                    onClick={() => onFilterChange("sort", option.sort, option.order)}
+                    onClick={() =>
+                      onFilterChange("sort", option.sort, option.order)
+                    }
                     className={`${active ? "bg-slate-50" : ""}
                       group flex w-full items-center rounded-lg px-4 py-2.5 text-sm ${
-                      filters.sort === option.sort && filters.order === option.order
-                        ? "font-bold text-[#598c96]"
-                        : "text-slate-700"
-                    }`}
+                        filters.sort === option.sort &&
+                        filters.order === option.order
+                          ? "font-bold text-[#598c96]"
+                          : "text-slate-700"
+                      }`}
                   >
                     <div className="mr-3">{option.icon}</div>
                     {option.label}
@@ -749,10 +748,23 @@ function KatalogView() {
           style={{
             fontWeight: 800,
             margin: "0 auto",
+            fontSize: "3rem",
+            color: "#1f2937",
+            marginBottom: "0.75rem",
+          }}
+        >
+          Katalog Toko
+        </h1>
+        <h2
+          style={{
+            fontWeight: 600,
+            margin: "0 auto",
+            color: "#4b5563",
+            fontSize: "1.25rem",
           }}
         >
           Temukan hewan peliharaan berkualitas untuk menemani hari-hari Anda.
-        </h1>
+        </h2>
       </header>
 
       <div className="container mx-auto px-4 sm:px-5 lg:px-6 py-4 md:py-6">

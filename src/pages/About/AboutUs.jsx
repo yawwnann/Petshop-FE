@@ -128,16 +128,18 @@ export default function AboutUs() {
                 </h2>
               </div>
               <p className="text-gray-700 text-xl leading-relaxed mb-8">
-                Di Buana Petshop, kami percaya bahwa setiap hewan adalah bagian
-                dari keluarga. Dengan kasih sayang, kami menciptakan lingkungan
-                yang aman, nyaman, dan menyenangkan untuk sahabat berbulu Anda.
+                Buana Petshop didirikan atas dasar kepedulian dan rasa sayang
+                yang mendalam terhadap hewan peliharaan. Setiap langkah yang
+                kami ambil selalu dilandasi keinginan untuk memberikan yang
+                terbaik bagi hewan, dari segi perawatan, kenyamanan, hingga
+                kesejahteraan mereka.
               </p>
               <p className="text-gray-700 text-xl leading-relaxed">
-                Tim kami tidak hanya merawat, tetapi juga berinteraksi dan
-                memahami kebutuhan unik setiap hewan. Mulai dari bermain,
-                memberi makan, hingga perawatan dan layanan kesehatan, kami
-                hadir untuk memastikan kebahagiaan mereka saat Anda tidak di
-                sisi mereka.
+                Selain menyediakan kebutuhan hewan, kami juga berkomitmen
+                memberikan layanan yang ramah, edukatif, dan penuh kasih sayang
+                baik dalam penanganan hewan maupun pelayanan kepada pemiliknya.
+                Bagi kami, hewan bukan sekadar peliharaan, tapi bagian dari
+                keluarga.
               </p>
             </div>
           </div>
