@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL =
   // import.meta.env.VITE_API_BASE_URL ||
-  "https://sincere-encouragement-production-d886.up.railway.app/api";
+  "https://petshop-admin.up.railway.app/api";
 // "http://localhost:8000/api";
 
 const apiClient = axios.create({
